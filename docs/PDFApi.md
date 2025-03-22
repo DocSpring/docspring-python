@@ -25,7 +25,7 @@ Method | HTTP request | Description
 [**generate_preview**](PDFApi.md#generate_preview) | **POST** /submissions/{submission_id}/generate_preview | Generated a preview PDF for partially completed data requests
 [**get_combined_submission**](PDFApi.md#get_combined_submission) | **GET** /combined_submissions/{combined_submission_id} | Check the status of a combined submission (merged PDFs)
 [**get_data_request**](PDFApi.md#get_data_request) | **GET** /data_requests/{data_request_id} | Look up a submission data request
-[**get_full_template**](PDFApi.md#get_full_template) | **GET** /templates/{template_id}?full&#x3D;true | Fetch the full template attributes
+[**get_full_template**](PDFApi.md#get_full_template) | **GET** /templates/{template_id}?full&#x3D;true | Fetch the full attributes for a PDF template
 [**get_presign_url**](PDFApi.md#get_presign_url) | **GET** /uploads/presign | Get a presigned URL so that you can upload a file to our AWS S3 bucket
 [**get_submission**](PDFApi.md#get_submission) | **GET** /submissions/{submission_id} | Check the status of a PDF
 [**get_submission_batch**](PDFApi.md#get_submission_batch) | **GET** /submissions/batches/{submission_batch_id} | Check the status of a submission batch job
@@ -38,7 +38,9 @@ Method | HTTP request | Description
 [**list_templates**](PDFApi.md#list_templates) | **GET** /templates | Get a list of all templates
 [**move_folder_to_folder**](PDFApi.md#move_folder_to_folder) | **POST** /folders/{folder_id}/move | Move a folder
 [**move_template_to_folder**](PDFApi.md#move_template_to_folder) | **POST** /templates/{template_id}/move | Move Template to folder
+[**publish_template_version**](PDFApi.md#publish_template_version) | **POST** /templates/{template_id}/publish_version | Publish a template version
 [**rename_folder**](PDFApi.md#rename_folder) | **POST** /folders/{folder_id}/rename | Rename a folder
+[**restore_template_version**](PDFApi.md#restore_template_version) | **POST** /templates/{template_id}/restore_version | Restore a template version
 [**test_authentication**](PDFApi.md#test_authentication) | **GET** /authentication | Test Authentication
 [**update_data_request**](PDFApi.md#update_data_request) | **PUT** /data_requests/{data_request_id} | Update a submission data request
 [**update_template**](PDFApi.md#update_template) | **PUT** /templates/{template_id} | Update a Template
@@ -1102,7 +1104,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_template**
-> SuccessMultipleErrorsResponse delete_template(template_id)
+> TemplateDeleteResponse delete_template(template_id, version=version)
 
 Delete a template
 
@@ -1112,7 +1114,7 @@ Delete a template
 
 ```python
 import docspring
-from docspring.models.success_multiple_errors_response import SuccessMultipleErrorsResponse
+from docspring.models.template_delete_response import TemplateDeleteResponse
 from docspring.rest import ApiException
 from pprint import pprint
 
@@ -1138,10 +1140,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.PDFApi(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
+    version = '0.1.0' # str |  (optional)
 
     try:
         # Delete a template
-        api_response = api_instance.delete_template(template_id)
+        api_response = api_instance.delete_template(template_id, version=version)
         print("The response of PDFApi->delete_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -1156,10 +1159,11 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**|  | 
+ **version** | **str**|  | [optional] 
 
 ### Return type
 
-[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
+[**TemplateDeleteResponse**](TemplateDeleteResponse.md)
 
 ### Authorization
 
@@ -1174,7 +1178,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | template deleted |  -  |
+**200** | template version deleted successfully |  -  |
 **404** | template not found |  -  |
 **401** | authentication failed |  -  |
 
@@ -1746,7 +1750,7 @@ Name | Type | Description  | Notes
 # **get_full_template**
 > Template get_full_template(template_id)
 
-Fetch the full template attributes
+Fetch the full attributes for a PDF template
 
 ### Example
 
@@ -1782,7 +1786,7 @@ with docspring.ApiClient(configuration) as api_client:
     template_id = 'tpl_1234567890abcdef01' # str | 
 
     try:
-        # Fetch the full template attributes
+        # Fetch the full attributes for a PDF template
         api_response = api_instance.get_full_template(template_id)
         print("The response of PDFApi->get_full_template:\n")
         pprint(api_response)
@@ -2801,6 +2805,89 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **publish_template_version**
+> TemplatePublishVersionResponse publish_template_version(template_id, data)
+
+Publish a template version
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.publish_version_data import PublishVersionData
+from docspring.models.template_publish_version_response import TemplatePublishVersionResponse
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.PDFApi(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | 
+    data = docspring.PublishVersionData() # PublishVersionData | 
+
+    try:
+        # Publish a template version
+        api_response = api_instance.publish_template_version(template_id, data)
+        print("The response of PDFApi->publish_template_version:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling PDFApi->publish_template_version: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**|  | 
+ **data** | [**PublishVersionData**](PublishVersionData.md)|  | 
+
+### Return type
+
+[**TemplatePublishVersionResponse**](TemplatePublishVersionResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | version published successfully |  -  |
+**422** | invalid version type |  -  |
+**404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **rename_folder**
 > Folder rename_folder(folder_id, data)
 
@@ -2880,6 +2967,89 @@ Name | Type | Description  | Notes
 **422** | name already exist |  -  |
 **404** | folder doesn&#39;t belong to me |  -  |
 **200** | successful rename |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **restore_template_version**
+> SuccessErrorResponse restore_template_version(template_id, data)
+
+Restore a template version
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.restore_version_data import RestoreVersionData
+from docspring.models.success_error_response import SuccessErrorResponse
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.PDFApi(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | 
+    data = docspring.RestoreVersionData() # RestoreVersionData | 
+
+    try:
+        # Restore a template version
+        api_response = api_instance.restore_template_version(template_id, data)
+        print("The response of PDFApi->restore_template_version:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling PDFApi->restore_template_version: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**|  | 
+ **data** | [**RestoreVersionData**](RestoreVersionData.md)|  | 
+
+### Return type
+
+[**SuccessErrorResponse**](SuccessErrorResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | version restored successfully |  -  |
+**422** | draft version not allowed |  -  |
+**404** | template version not found |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -43,7 +43,8 @@ class TestCreateHtmlSubmissionData(unittest.TestCase):
                 html = '',
                 metadata = docspring.models.submission_metadata.submission_metadata(),
                 password = '',
-                test = True
+                test = True,
+                version = ''
             )
         else:
             return CreateHtmlSubmissionData(

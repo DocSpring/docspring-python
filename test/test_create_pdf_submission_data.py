@@ -51,7 +51,8 @@ class TestCreatePdfSubmissionData(unittest.TestCase):
                 field_overrides = docspring.models.submission_field_overrides.submission_field_overrides(),
                 metadata = docspring.models.submission_metadata.submission_metadata(),
                 password = '',
-                test = True
+                test = True,
+                version = ''
             )
         else:
             return CreatePdfSubmissionData(

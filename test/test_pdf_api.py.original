@@ -176,7 +176,7 @@ class TestPDFApi(unittest.TestCase):
     def test_get_full_template(self) -> None:
         """Test case for get_full_template
 
-        Fetch the full template attributes
+        Fetch the full attributes for a PDF template
         """
         pass
 
@@ -264,10 +264,24 @@ class TestPDFApi(unittest.TestCase):
         """
         pass
 
+    def test_publish_template_version(self) -> None:
+        """Test case for publish_template_version
+
+        Publish a template version
+        """
+        pass
+
     def test_rename_folder(self) -> None:
         """Test case for rename_folder
 
         Rename a folder
+        """
+        pass
+
+    def test_restore_template_version(self) -> None:
+        """Test case for restore_template_version
+
+        Restore a template version
         """
         pass
 

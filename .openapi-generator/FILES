@@ -33,7 +33,9 @@ docs/MoveFolderData.md
 docs/MoveTemplateData.md
 docs/MultipleErrorsResponse.md
 docs/PDFApi.md
+docs/PublishVersionData.md
 docs/RenameFolderData.md
+docs/RestoreVersionData.md
 docs/Submission.md
 docs/SubmissionAction.md
 docs/SubmissionBatch.md
@@ -48,7 +50,9 @@ docs/SuccessErrorResponse.md
 docs/SuccessMultipleErrorsResponse.md
 docs/Template.md
 docs/TemplateAddFieldsResponse.md
+docs/TemplateDeleteResponse.md
 docs/TemplatePreview.md
+docs/TemplatePublishVersionResponse.md
 docs/UpdateHtmlTemplate.md
 docs/UpdateSubmissionDataRequestData.md
 docs/UploadPresignResponse.md
@@ -89,7 +93,9 @@ docspring/models/list_submissions_response.py
 docspring/models/move_folder_data.py
 docspring/models/move_template_data.py
 docspring/models/multiple_errors_response.py
+docspring/models/publish_version_data.py
 docspring/models/rename_folder_data.py
+docspring/models/restore_version_data.py
 docspring/models/submission.py
 docspring/models/submission_action.py
 docspring/models/submission_batch.py
@@ -104,7 +110,9 @@ docspring/models/success_error_response.py
 docspring/models/success_multiple_errors_response.py
 docspring/models/template.py
 docspring/models/template_add_fields_response.py
+docspring/models/template_delete_response.py
 docspring/models/template_preview.py
+docspring/models/template_publish_version_response.py
 docspring/models/update_html_template.py
 docspring/models/update_submission_data_request_data.py
 docspring/models/upload_presign_response.py
@@ -147,7 +155,9 @@ test/test_move_folder_data.py
 test/test_move_template_data.py
 test/test_multiple_errors_response.py
 test/test_pdf_api.py
+test/test_publish_version_data.py
 test/test_rename_folder_data.py
+test/test_restore_version_data.py
 test/test_submission.py
 test/test_submission_action.py
 test/test_submission_batch.py
@@ -162,7 +172,9 @@ test/test_success_error_response.py
 test/test_success_multiple_errors_response.py
 test/test_template.py
 test/test_template_add_fields_response.py
+test/test_template_delete_response.py
 test/test_template_preview.py
+test/test_template_publish_version_response.py
 test/test_update_html_template.py
 test/test_update_submission_data_request_data.py
 test/test_upload_presign_response.py

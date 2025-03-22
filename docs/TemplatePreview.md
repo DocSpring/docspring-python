@@ -39,8 +39,14 @@ Name | Type | Description | Notes
 **slack_webhook_url** | **str** |  | 
 **template_type** | **str** |  | 
 **updated_at** | **str** |  | 
+**version_published_at** | **str** |  | 
+**version** | **str** |  | 
 **webhook_url** | **str** |  | 
 **demo** | **bool** |  | 
+**latest_version** | **str** |  | 
+**last_changed_at** | **str** |  | 
+**last_changed_by_type** | **str** |  | 
+**last_changed_by_id** | **str** |  | 
 
 ## Example
 

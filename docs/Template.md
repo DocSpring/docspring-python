@@ -39,8 +39,14 @@ Name | Type | Description | Notes
 **slack_webhook_url** | **str** |  | 
 **template_type** | **str** |  | 
 **updated_at** | **str** |  | 
+**version_published_at** | **str** |  | 
+**version** | **str** |  | 
 **webhook_url** | **str** |  | 
 **demo** | **bool** |  | 
+**latest_version** | **str** |  | 
+**last_changed_at** | **str** |  | 
+**last_changed_by_type** | **str** |  | 
+**last_changed_by_id** | **str** |  | 
 **defaults** | **object** |  | 
 **field_order** | **List[List[float]]** |  | 
 **fields** | **object** |  | 
@@ -51,6 +57,7 @@ Name | Type | Description | Notes
 **predefined_fields** | **List[object]** |  | 
 **scss** | **str** |  | 
 **shared_field_data** | **object** |  | 
+**versions** | **List[object]** |  | 
 
 ## Example
 

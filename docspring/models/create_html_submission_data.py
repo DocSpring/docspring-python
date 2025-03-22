@@ -35,7 +35,8 @@ class CreateHtmlSubmissionData(BaseModel):
     metadata: Optional[Dict[str, Any]] = None
     password: Optional[StrictStr] = None
     test: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["css", "data", "editable", "expires_in", "field_overrides", "html", "metadata", "password", "test"]
+    version: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["css", "data", "editable", "expires_in", "field_overrides", "html", "metadata", "password", "test", "version"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,7 +97,8 @@ class CreateHtmlSubmissionData(BaseModel):
             "html": obj.get("html"),
             "metadata": obj.get("metadata"),
             "password": obj.get("password"),
-            "test": obj.get("test")
+            "test": obj.get("test"),
+            "version": obj.get("version")
         })
         return _obj
 

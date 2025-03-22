@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **processed_at** | **str** |  | 
 **state** | **str** |  | 
 **template_id** | **str** |  | 
+**template_type** | **str** |  | 
+**template_version** | **str** |  | 
 **test** | **bool** |  | 
 **truncated_text** | **object** |  | 
 **pdf_hash** | **str** |  | 

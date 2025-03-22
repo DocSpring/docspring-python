@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 # import apis into sdk package
 from docspring.api.pdf_api import PDFApi
@@ -60,7 +60,9 @@ from docspring.models.list_submissions_response import ListSubmissionsResponse
 from docspring.models.move_folder_data import MoveFolderData
 from docspring.models.move_template_data import MoveTemplateData
 from docspring.models.multiple_errors_response import MultipleErrorsResponse
+from docspring.models.publish_version_data import PublishVersionData
 from docspring.models.rename_folder_data import RenameFolderData
+from docspring.models.restore_version_data import RestoreVersionData
 from docspring.models.submission import Submission
 from docspring.models.submission_action import SubmissionAction
 from docspring.models.submission_batch import SubmissionBatch
@@ -75,7 +77,9 @@ from docspring.models.success_error_response import SuccessErrorResponse
 from docspring.models.success_multiple_errors_response import SuccessMultipleErrorsResponse
 from docspring.models.template import Template
 from docspring.models.template_add_fields_response import TemplateAddFieldsResponse
+from docspring.models.template_delete_response import TemplateDeleteResponse
 from docspring.models.template_preview import TemplatePreview
+from docspring.models.template_publish_version_response import TemplatePublishVersionResponse
 from docspring.models.update_html_template import UpdateHtmlTemplate
 from docspring.models.update_submission_data_request_data import UpdateSubmissionDataRequestData
 from docspring.models.upload_presign_response import UploadPresignResponse

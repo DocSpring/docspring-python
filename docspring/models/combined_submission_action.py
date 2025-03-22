@@ -29,7 +29,7 @@ class CombinedSubmissionAction(BaseModel):
     id: Optional[StrictStr]
     integration_id: Optional[StrictStr]
     state: StrictStr
-    action_type: StrictStr
+    action_type: Optional[StrictStr]
     action_category: StrictStr
     result_data: Dict[str, Any]
     __properties: ClassVar[List[str]] = ["id", "integration_id", "state", "action_type", "action_category", "result_data"]
@@ -44,6 +44,9 @@ class CombinedSubmissionAction(BaseModel):
     @field_validator('action_type')
     def action_type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in set(['webhook', 'slack_webhook', 'email', 'aws_s3_upload']):
             raise ValueError("must be one of enum values ('webhook', 'slack_webhook', 'email', 'aws_s3_upload')")
         return value
@@ -103,6 +106,11 @@ class CombinedSubmissionAction(BaseModel):
         # and model_fields_set contains the field
         if self.integration_id is None and "integration_id" in self.model_fields_set:
             _dict['integration_id'] = None
+
+        # set to None if action_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.action_type is None and "action_type" in self.model_fields_set:
+            _dict['action_type'] = None
 
         return _dict
 

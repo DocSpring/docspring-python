@@ -73,8 +73,14 @@ class TestTemplate(unittest.TestCase):
                 slack_webhook_url = '',
                 template_type = 'pdf',
                 updated_at = '',
+                version_published_at = '',
+                version = '',
                 webhook_url = '',
                 demo = True,
+                latest_version = '',
+                last_changed_at = '',
+                last_changed_by_type = 'user',
+                last_changed_by_id = '',
                 defaults = docspring.models.template_defaults.template_defaults(),
                 field_order = [
                     [
@@ -90,7 +96,10 @@ class TestTemplate(unittest.TestCase):
                     docspring.models.predefined_field.predefined_field()
                     ],
                 scss = '',
-                shared_field_data = docspring.models.template_shared_field_data.template_shared_field_data()
+                shared_field_data = docspring.models.template_shared_field_data.template_shared_field_data(),
+                versions = [
+                    None
+                    ]
             )
         else:
             return Template(
@@ -132,8 +141,14 @@ class TestTemplate(unittest.TestCase):
                 slack_webhook_url = '',
                 template_type = 'pdf',
                 updated_at = '',
+                version_published_at = '',
+                version = '',
                 webhook_url = '',
                 demo = True,
+                latest_version = '',
+                last_changed_at = '',
+                last_changed_by_type = 'user',
+                last_changed_by_id = '',
                 defaults = docspring.models.template_defaults.template_defaults(),
                 field_order = [
                     [
@@ -150,6 +165,9 @@ class TestTemplate(unittest.TestCase):
                     ],
                 scss = '',
                 shared_field_data = docspring.models.template_shared_field_data.template_shared_field_data(),
+                versions = [
+                    None
+                    ],
         )
         """
 

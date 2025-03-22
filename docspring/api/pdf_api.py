@@ -43,7 +43,9 @@ from docspring.models.json_schema import JsonSchema
 from docspring.models.list_submissions_response import ListSubmissionsResponse
 from docspring.models.move_folder_data import MoveFolderData
 from docspring.models.move_template_data import MoveTemplateData
+from docspring.models.publish_version_data import PublishVersionData
 from docspring.models.rename_folder_data import RenameFolderData
+from docspring.models.restore_version_data import RestoreVersionData
 from docspring.models.submission import Submission
 from docspring.models.submission_batch_data import SubmissionBatchData
 from docspring.models.submission_batch_with_submissions import SubmissionBatchWithSubmissions
@@ -53,7 +55,9 @@ from docspring.models.success_error_response import SuccessErrorResponse
 from docspring.models.success_multiple_errors_response import SuccessMultipleErrorsResponse
 from docspring.models.template import Template
 from docspring.models.template_add_fields_response import TemplateAddFieldsResponse
+from docspring.models.template_delete_response import TemplateDeleteResponse
 from docspring.models.template_preview import TemplatePreview
+from docspring.models.template_publish_version_response import TemplatePublishVersionResponse
 from docspring.models.update_html_template import UpdateHtmlTemplate
 from docspring.models.update_submission_data_request_data import UpdateSubmissionDataRequestData
 from docspring.models.upload_presign_response import UploadPresignResponse
@@ -3813,6 +3817,7 @@ class PDFApi:
     def delete_template(
         self,
         template_id: StrictStr,
+        version: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3825,12 +3830,14 @@ class PDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> SuccessMultipleErrorsResponse:
+    ) -> TemplateDeleteResponse:
         """Delete a template
 
 
         :param template_id: (required)
         :type template_id: str
+        :param version:
+        :type version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3855,6 +3862,7 @@ class PDFApi:
 
         _param = self._delete_template_serialize(
             template_id=template_id,
+            version=version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3862,7 +3870,7 @@ class PDFApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "SuccessMultipleErrorsResponse",
+            '200': "TemplateDeleteResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
         }
@@ -3881,6 +3889,7 @@ class PDFApi:
     def delete_template_with_http_info(
         self,
         template_id: StrictStr,
+        version: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3893,12 +3902,14 @@ class PDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[SuccessMultipleErrorsResponse]:
+    ) -> ApiResponse[TemplateDeleteResponse]:
         """Delete a template
 
 
         :param template_id: (required)
         :type template_id: str
+        :param version:
+        :type version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3923,6 +3934,7 @@ class PDFApi:
 
         _param = self._delete_template_serialize(
             template_id=template_id,
+            version=version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3930,7 +3942,7 @@ class PDFApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "SuccessMultipleErrorsResponse",
+            '200': "TemplateDeleteResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
         }
@@ -3949,6 +3961,7 @@ class PDFApi:
     def delete_template_without_preload_content(
         self,
         template_id: StrictStr,
+        version: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3967,6 +3980,8 @@ class PDFApi:
 
         :param template_id: (required)
         :type template_id: str
+        :param version:
+        :type version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3991,6 +4006,7 @@ class PDFApi:
 
         _param = self._delete_template_serialize(
             template_id=template_id,
+            version=version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3998,7 +4014,7 @@ class PDFApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "SuccessMultipleErrorsResponse",
+            '200': "TemplateDeleteResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
         }
@@ -4012,6 +4028,7 @@ class PDFApi:
     def _delete_template_serialize(
         self,
         template_id,
+        version,
         _request_auth,
         _content_type,
         _headers,
@@ -4036,6 +4053,10 @@ class PDFApi:
         if template_id is not None:
             _path_params['template_id'] = template_id
         # process the query parameters
+        if version is not None:
+            
+            _query_params.append(('version', version))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -6028,7 +6049,7 @@ class PDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Template:
-        """Fetch the full template attributes
+        """Fetch the full attributes for a PDF template
 
 
         :param template_id: (required)
@@ -6096,7 +6117,7 @@ class PDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Template]:
-        """Fetch the full template attributes
+        """Fetch the full attributes for a PDF template
 
 
         :param template_id: (required)
@@ -6164,7 +6185,7 @@ class PDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Fetch the full template attributes
+        """Fetch the full attributes for a PDF template
 
 
         :param template_id: (required)
@@ -9767,6 +9788,301 @@ class PDFApi:
 
 
     @validate_call
+    def publish_template_version(
+        self,
+        template_id: StrictStr,
+        data: PublishVersionData,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplatePublishVersionResponse:
+        """Publish a template version
+
+
+        :param template_id: (required)
+        :type template_id: str
+        :param data: (required)
+        :type data: PublishVersionData
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._publish_template_version_serialize(
+            template_id=template_id,
+            data=data,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePublishVersionResponse",
+            '422': "SuccessMultipleErrorsResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def publish_template_version_with_http_info(
+        self,
+        template_id: StrictStr,
+        data: PublishVersionData,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplatePublishVersionResponse]:
+        """Publish a template version
+
+
+        :param template_id: (required)
+        :type template_id: str
+        :param data: (required)
+        :type data: PublishVersionData
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._publish_template_version_serialize(
+            template_id=template_id,
+            data=data,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePublishVersionResponse",
+            '422': "SuccessMultipleErrorsResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def publish_template_version_without_preload_content(
+        self,
+        template_id: StrictStr,
+        data: PublishVersionData,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Publish a template version
+
+
+        :param template_id: (required)
+        :type template_id: str
+        :param data: (required)
+        :type data: PublishVersionData
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._publish_template_version_serialize(
+            template_id=template_id,
+            data=data,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePublishVersionResponse",
+            '422': "SuccessMultipleErrorsResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _publish_template_version_serialize(
+        self,
+        template_id,
+        data,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if data is not None:
+            _body_params = data
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/templates/{template_id}/publish_version',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def rename_folder(
         self,
         folder_id: StrictStr,
@@ -10046,6 +10362,301 @@ class PDFApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/folders/{folder_id}/rename',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def restore_template_version(
+        self,
+        template_id: StrictStr,
+        data: RestoreVersionData,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SuccessErrorResponse:
+        """Restore a template version
+
+
+        :param template_id: (required)
+        :type template_id: str
+        :param data: (required)
+        :type data: RestoreVersionData
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._restore_template_version_serialize(
+            template_id=template_id,
+            data=data,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuccessErrorResponse",
+            '422': "SuccessMultipleErrorsResponse",
+            '404': "SuccessMultipleErrorsResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def restore_template_version_with_http_info(
+        self,
+        template_id: StrictStr,
+        data: RestoreVersionData,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SuccessErrorResponse]:
+        """Restore a template version
+
+
+        :param template_id: (required)
+        :type template_id: str
+        :param data: (required)
+        :type data: RestoreVersionData
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._restore_template_version_serialize(
+            template_id=template_id,
+            data=data,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuccessErrorResponse",
+            '422': "SuccessMultipleErrorsResponse",
+            '404': "SuccessMultipleErrorsResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def restore_template_version_without_preload_content(
+        self,
+        template_id: StrictStr,
+        data: RestoreVersionData,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Restore a template version
+
+
+        :param template_id: (required)
+        :type template_id: str
+        :param data: (required)
+        :type data: RestoreVersionData
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._restore_template_version_serialize(
+            template_id=template_id,
+            data=data,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuccessErrorResponse",
+            '422': "SuccessMultipleErrorsResponse",
+            '404': "SuccessMultipleErrorsResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _restore_template_version_serialize(
+        self,
+        template_id,
+        data,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if data is not None:
+            _body_params = data
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/templates/{template_id}/restore_version',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

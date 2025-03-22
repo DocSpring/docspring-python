@@ -30,7 +30,7 @@ class SubmissionDataRequestEvent(BaseModel):
     submission_id: Optional[StrictStr]
     submission_data_request_id: Optional[StrictStr]
     event_type: StrictStr
-    message_type: StrictStr
+    message_type: Optional[StrictStr]
     message_recipient: Optional[StrictStr]
     occurred_at: Optional[StrictStr]
     __properties: ClassVar[List[str]] = ["id", "submission_id", "submission_data_request_id", "event_type", "message_type", "message_recipient", "occurred_at"]
@@ -45,6 +45,9 @@ class SubmissionDataRequestEvent(BaseModel):
     @field_validator('message_type')
     def message_type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in set(['email', 'sms', 'fax', 'mail', 'slack', 'msteams', 'discord', 'telegram', 'whatsapp']):
             raise ValueError("must be one of enum values ('email', 'sms', 'fax', 'mail', 'slack', 'msteams', 'discord', 'telegram', 'whatsapp')")
         return value
@@ -102,6 +105,11 @@ class SubmissionDataRequestEvent(BaseModel):
         # and model_fields_set contains the field
         if self.submission_data_request_id is None and "submission_data_request_id" in self.model_fields_set:
             _dict['submission_data_request_id'] = None
+
+        # set to None if message_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.message_type is None and "message_type" in self.model_fields_set:
+            _dict['message_type'] = None
 
         # set to None if message_recipient (nullable) is None
         # and model_fields_set contains the field

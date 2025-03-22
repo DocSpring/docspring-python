@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **metadata** | **object** |  | [optional] 
 **password** | **str** |  | [optional] 
 **test** | **bool** |  | [optional] 
+**version** | **str** |  | [optional] 
 
 ## Example
 

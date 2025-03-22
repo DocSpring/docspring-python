@@ -61,8 +61,14 @@ class Template(BaseModel):
     slack_webhook_url: Optional[StrictStr]
     template_type: StrictStr
     updated_at: Optional[StrictStr]
+    version_published_at: Optional[StrictStr]
+    version: Optional[StrictStr]
     webhook_url: Optional[StrictStr]
     demo: StrictBool
+    latest_version: Optional[StrictStr]
+    last_changed_at: Optional[StrictStr]
+    last_changed_by_type: Optional[StrictStr]
+    last_changed_by_id: Optional[StrictStr]
     defaults: Dict[str, Any]
     field_order: List[List[Union[StrictFloat, StrictInt]]]
     fields: Dict[str, Any]
@@ -73,7 +79,8 @@ class Template(BaseModel):
     predefined_fields: List[Dict[str, Any]]
     scss: Optional[StrictStr]
     shared_field_data: Dict[str, Any]
-    __properties: ClassVar[List[str]] = ["add_data_request_submission_id_footers", "allow_additional_properties", "description", "document_filename", "document_md5", "document_parse_error", "document_processed", "document_state", "document_url", "editable_submissions", "embed_domains", "encrypt_pdfs_password", "encrypt_pdfs", "expiration_interval", "expire_after", "expire_submissions", "external_predefined_fields_template_id", "external_predefined_fields_template_name", "first_template", "id", "locked", "merge_audit_trail_pdf", "name", "page_count", "page_dimensions", "parent_folder_id", "path", "permanent_document_url", "public_submissions", "public_web_form", "redirect_url", "slack_webhook_url", "template_type", "updated_at", "webhook_url", "demo", "defaults", "field_order", "fields", "footer_html", "header_html", "html_engine_options", "html", "predefined_fields", "scss", "shared_field_data"]
+    versions: List[Dict[str, Any]]
+    __properties: ClassVar[List[str]] = ["add_data_request_submission_id_footers", "allow_additional_properties", "description", "document_filename", "document_md5", "document_parse_error", "document_processed", "document_state", "document_url", "editable_submissions", "embed_domains", "encrypt_pdfs_password", "encrypt_pdfs", "expiration_interval", "expire_after", "expire_submissions", "external_predefined_fields_template_id", "external_predefined_fields_template_name", "first_template", "id", "locked", "merge_audit_trail_pdf", "name", "page_count", "page_dimensions", "parent_folder_id", "path", "permanent_document_url", "public_submissions", "public_web_form", "redirect_url", "slack_webhook_url", "template_type", "updated_at", "version_published_at", "version", "webhook_url", "demo", "latest_version", "last_changed_at", "last_changed_by_type", "last_changed_by_id", "defaults", "field_order", "fields", "footer_html", "header_html", "html_engine_options", "html", "predefined_fields", "scss", "shared_field_data", "versions"]
 
     @field_validator('document_state')
     def document_state_validate_enum(cls, value):
@@ -87,6 +94,16 @@ class Template(BaseModel):
         """Validates the enum"""
         if value not in set(['pdf', 'html']):
             raise ValueError("must be one of enum values ('pdf', 'html')")
+        return value
+
+    @field_validator('last_changed_by_type')
+    def last_changed_by_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['user', 'api']):
+            raise ValueError("must be one of enum values ('user', 'api')")
         return value
 
     model_config = ConfigDict(
@@ -213,10 +230,40 @@ class Template(BaseModel):
         if self.updated_at is None and "updated_at" in self.model_fields_set:
             _dict['updated_at'] = None
 
+        # set to None if version_published_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.version_published_at is None and "version_published_at" in self.model_fields_set:
+            _dict['version_published_at'] = None
+
+        # set to None if version (nullable) is None
+        # and model_fields_set contains the field
+        if self.version is None and "version" in self.model_fields_set:
+            _dict['version'] = None
+
         # set to None if webhook_url (nullable) is None
         # and model_fields_set contains the field
         if self.webhook_url is None and "webhook_url" in self.model_fields_set:
             _dict['webhook_url'] = None
+
+        # set to None if latest_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.latest_version is None and "latest_version" in self.model_fields_set:
+            _dict['latest_version'] = None
+
+        # set to None if last_changed_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_changed_at is None and "last_changed_at" in self.model_fields_set:
+            _dict['last_changed_at'] = None
+
+        # set to None if last_changed_by_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_changed_by_type is None and "last_changed_by_type" in self.model_fields_set:
+            _dict['last_changed_by_type'] = None
+
+        # set to None if last_changed_by_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_changed_by_id is None and "last_changed_by_id" in self.model_fields_set:
+            _dict['last_changed_by_id'] = None
 
         # set to None if footer_html (nullable) is None
         # and model_fields_set contains the field
@@ -284,8 +331,14 @@ class Template(BaseModel):
             "slack_webhook_url": obj.get("slack_webhook_url"),
             "template_type": obj.get("template_type"),
             "updated_at": obj.get("updated_at"),
+            "version_published_at": obj.get("version_published_at"),
+            "version": obj.get("version"),
             "webhook_url": obj.get("webhook_url"),
             "demo": obj.get("demo"),
+            "latest_version": obj.get("latest_version"),
+            "last_changed_at": obj.get("last_changed_at"),
+            "last_changed_by_type": obj.get("last_changed_by_type"),
+            "last_changed_by_id": obj.get("last_changed_by_id"),
             "defaults": obj.get("defaults"),
             "field_order": obj.get("field_order"),
             "fields": obj.get("fields"),
@@ -295,7 +348,8 @@ class Template(BaseModel):
             "html": obj.get("html"),
             "predefined_fields": obj.get("predefined_fields"),
             "scss": obj.get("scss"),
-            "shared_field_data": obj.get("shared_field_data")
+            "shared_field_data": obj.get("shared_field_data"),
+            "versions": obj.get("versions")
         })
         return _obj
 

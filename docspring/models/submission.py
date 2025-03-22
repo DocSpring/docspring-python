@@ -40,6 +40,8 @@ class Submission(BaseModel):
     processed_at: Optional[StrictStr]
     state: StrictStr
     template_id: Optional[StrictStr]
+    template_type: StrictStr
+    template_version: Optional[StrictStr]
     test: StrictBool
     truncated_text: Optional[Dict[str, Any]]
     pdf_hash: Optional[StrictStr]
@@ -52,13 +54,20 @@ class Submission(BaseModel):
     source: StrictStr
     referrer: Optional[StrictStr]
     data: Optional[Dict[str, Any]]
-    __properties: ClassVar[List[str]] = ["batch_id", "data_requests", "editable", "expired", "expires_at", "id", "json_schema_errors", "metadata", "password", "processed_at", "state", "template_id", "test", "truncated_text", "pdf_hash", "download_url", "permanent_download_url", "preview_download_url", "preview_generated_at", "audit_trail_download_url", "actions", "source", "referrer", "data"]
+    __properties: ClassVar[List[str]] = ["batch_id", "data_requests", "editable", "expired", "expires_at", "id", "json_schema_errors", "metadata", "password", "processed_at", "state", "template_id", "template_type", "template_version", "test", "truncated_text", "pdf_hash", "download_url", "permanent_download_url", "preview_download_url", "preview_generated_at", "audit_trail_download_url", "actions", "source", "referrer", "data"]
 
     @field_validator('state')
     def state_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['pending', 'processed', 'invalid_data', 'error', 'image_download_failed', 'image_processing_failed', 'waiting_for_data_requests', 'syntax_error', 'account_suspended', 'license_revoked', 'accidental']):
             raise ValueError("must be one of enum values ('pending', 'processed', 'invalid_data', 'error', 'image_download_failed', 'image_processing_failed', 'waiting_for_data_requests', 'syntax_error', 'account_suspended', 'license_revoked', 'accidental')")
+        return value
+
+    @field_validator('template_type')
+    def template_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['pdf', 'html']):
+            raise ValueError("must be one of enum values ('pdf', 'html')")
         return value
 
     @field_validator('source')
@@ -161,6 +170,11 @@ class Submission(BaseModel):
         if self.template_id is None and "template_id" in self.model_fields_set:
             _dict['template_id'] = None
 
+        # set to None if template_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.template_version is None and "template_version" in self.model_fields_set:
+            _dict['template_version'] = None
+
         # set to None if truncated_text (nullable) is None
         # and model_fields_set contains the field
         if self.truncated_text is None and "truncated_text" in self.model_fields_set:
@@ -230,6 +244,8 @@ class Submission(BaseModel):
             "processed_at": obj.get("processed_at"),
             "state": obj.get("state"),
             "template_id": obj.get("template_id"),
+            "template_type": obj.get("template_type"),
+            "template_version": obj.get("template_version"),
             "test": obj.get("test"),
             "truncated_text": obj.get("truncated_text"),
             "pdf_hash": obj.get("pdf_hash"),

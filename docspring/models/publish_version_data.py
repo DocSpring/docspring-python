@@ -17,26 +17,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from docspring.models.create_submission_data_request_data import CreateSubmissionDataRequestData
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreatePdfSubmissionData(BaseModel):
+class PublishVersionData(BaseModel):
     """
-    CreatePdfSubmissionData
+    PublishVersionData
     """ # noqa: E501
-    data: Dict[str, Any]
-    data_requests: Optional[List[CreateSubmissionDataRequestData]] = None
-    editable: Optional[StrictBool] = None
-    expires_in: Optional[StrictInt] = None
-    field_overrides: Optional[Dict[str, Any]] = None
-    metadata: Optional[Dict[str, Any]] = None
-    password: Optional[StrictStr] = None
-    test: Optional[StrictBool] = None
-    version: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["data", "data_requests", "editable", "expires_in", "field_overrides", "metadata", "password", "test", "version"]
+    description: Optional[StrictStr] = None
+    version_type: StrictStr
+    __properties: ClassVar[List[str]] = ["description", "version_type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -56,7 +48,7 @@ class CreatePdfSubmissionData(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreatePdfSubmissionData from a JSON string"""
+        """Create an instance of PublishVersionData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,18 +69,11 @@ class CreatePdfSubmissionData(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in data_requests (list)
-        _items = []
-        if self.data_requests:
-            for _item_data_requests in self.data_requests:
-                if _item_data_requests:
-                    _items.append(_item_data_requests.to_dict())
-            _dict['data_requests'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreatePdfSubmissionData from a dict"""
+        """Create an instance of PublishVersionData from a dict"""
         if obj is None:
             return None
 
@@ -96,15 +81,8 @@ class CreatePdfSubmissionData(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "data": obj.get("data"),
-            "data_requests": [CreateSubmissionDataRequestData.from_dict(_item) for _item in obj["data_requests"]] if obj.get("data_requests") is not None else None,
-            "editable": obj.get("editable"),
-            "expires_in": obj.get("expires_in"),
-            "field_overrides": obj.get("field_overrides"),
-            "metadata": obj.get("metadata"),
-            "password": obj.get("password"),
-            "test": obj.get("test"),
-            "version": obj.get("version")
+            "description": obj.get("description"),
+            "version_type": obj.get("version_type")
         })
         return _obj
 

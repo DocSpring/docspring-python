@@ -84,6 +84,8 @@ class TestSubmissionBatchWithSubmissions(unittest.TestCase):
                         processed_at = '', 
                         state = 'pending', 
                         template_id = '', 
+                        template_type = 'pdf', 
+                        template_version = '', 
                         test = True, 
                         truncated_text = docspring.models.truncated_text.truncated_text(), 
                         pdf_hash = '', 

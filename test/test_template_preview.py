@@ -73,8 +73,14 @@ class TestTemplatePreview(unittest.TestCase):
                 slack_webhook_url = '',
                 template_type = 'pdf',
                 updated_at = '',
+                version_published_at = '',
+                version = '',
                 webhook_url = '',
-                demo = True
+                demo = True,
+                latest_version = '',
+                last_changed_at = '',
+                last_changed_by_type = 'user',
+                last_changed_by_id = ''
             )
         else:
             return TemplatePreview(
@@ -116,8 +122,14 @@ class TestTemplatePreview(unittest.TestCase):
                 slack_webhook_url = '',
                 template_type = 'pdf',
                 updated_at = '',
+                version_published_at = '',
+                version = '',
                 webhook_url = '',
                 demo = True,
+                latest_version = '',
+                last_changed_at = '',
+                last_changed_by_type = 'user',
+                last_changed_by_id = '',
         )
         """
 
