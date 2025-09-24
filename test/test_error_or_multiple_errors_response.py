@@ -14,10 +14,10 @@
 
 import unittest
 
-from docspring.models.add_fields_data import AddFieldsData
+from docspring.models.error_or_multiple_errors_response import ErrorOrMultipleErrorsResponse
 
-class TestAddFieldsData(unittest.TestCase):
-    """AddFieldsData unit test stubs"""
+class TestErrorOrMultipleErrorsResponse(unittest.TestCase):
+    """ErrorOrMultipleErrorsResponse unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,30 +25,30 @@ class TestAddFieldsData(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> AddFieldsData:
-        """Test AddFieldsData
+    def make_instance(self, include_optional) -> ErrorOrMultipleErrorsResponse:
+        """Test ErrorOrMultipleErrorsResponse
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `AddFieldsData`
+        # uncomment below to create an instance of `ErrorOrMultipleErrorsResponse`
         """
-        model = AddFieldsData()
+        model = ErrorOrMultipleErrorsResponse()
         if include_optional:
-            return AddFieldsData(
-                fields = [
-                    None
+            return ErrorOrMultipleErrorsResponse(
+                status = 'error',
+                error = '',
+                errors = [
+                    ''
                     ]
             )
         else:
-            return AddFieldsData(
-                fields = [
-                    None
-                    ],
+            return ErrorOrMultipleErrorsResponse(
+                status = 'error',
         )
         """
 
-    def testAddFieldsData(self):
-        """Test AddFieldsData"""
+    def testErrorOrMultipleErrorsResponse(self):
+        """Test ErrorOrMultipleErrorsResponse"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

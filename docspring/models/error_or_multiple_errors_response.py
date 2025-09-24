@@ -17,18 +17,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ErrorResponse(BaseModel):
+class ErrorOrMultipleErrorsResponse(BaseModel):
     """
-    ErrorResponse
+    ErrorOrMultipleErrorsResponse
     """ # noqa: E501
     status: StrictStr
-    error: StrictStr
-    __properties: ClassVar[List[str]] = ["status", "error"]
+    error: Optional[StrictStr] = Field(default=None, description="Single error message (when only one error occurred)")
+    errors: Optional[List[StrictStr]] = Field(default=None, description="Array of error messages (when multiple validation errors occurred)")
+    __properties: ClassVar[List[str]] = ["status", "error", "errors"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -55,7 +56,7 @@ class ErrorResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ErrorResponse from a JSON string"""
+        """Create an instance of ErrorOrMultipleErrorsResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -80,7 +81,7 @@ class ErrorResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ErrorResponse from a dict"""
+        """Create an instance of ErrorOrMultipleErrorsResponse from a dict"""
         if obj is None:
             return None
 
@@ -89,7 +90,8 @@ class ErrorResponse(BaseModel):
 
         _obj = cls.model_validate({
             "status": obj.get("status"),
-            "error": obj.get("error")
+            "error": obj.get("error"),
+            "errors": obj.get("errors")
         })
         return _obj
 

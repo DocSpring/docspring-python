@@ -14,10 +14,10 @@
 
 import unittest
 
-from docspring.models.create_submission_response import CreateSubmissionResponse
+from docspring.models.submission422_response import Submission422Response
 
-class TestCreateSubmissionResponse(unittest.TestCase):
-    """CreateSubmissionResponse unit test stubs"""
+class TestSubmission422Response(unittest.TestCase):
+    """Submission422Response unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,17 +25,18 @@ class TestCreateSubmissionResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateSubmissionResponse:
-        """Test CreateSubmissionResponse
+    def make_instance(self, include_optional) -> Submission422Response:
+        """Test Submission422Response
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateSubmissionResponse`
+        # uncomment below to create an instance of `Submission422Response`
         """
-        model = CreateSubmissionResponse()
+        model = Submission422Response()
         if include_optional:
-            return CreateSubmissionResponse(
-                status = 'success',
+            return Submission422Response(
+                status = 'error',
+                error = '',
                 submission = docspring.models.submission_preview.submission_preview(
                     batch_id = '', 
                     data_requests = [
@@ -100,72 +101,13 @@ class TestCreateSubmissionResponse(unittest.TestCase):
                     ]
             )
         else:
-            return CreateSubmissionResponse(
-                status = 'success',
-                submission = docspring.models.submission_preview.submission_preview(
-                    batch_id = '', 
-                    data_requests = [
-                        docspring.models.submission_data_request.submission_data_request(
-                            id = '', 
-                            email = '', 
-                            name = '', 
-                            order = 56, 
-                            sort_order = 56, 
-                            fields = [
-                                ''
-                                ], 
-                            metadata = docspring.models.metadata.metadata(), 
-                            state = 'pending', 
-                            viewed_at = '', 
-                            completed_at = '', 
-                            data = docspring.models.data.data(), 
-                            auth_type = 'none', 
-                            auth_second_factor_type = 'none', 
-                            auth_provider = '', 
-                            auth_session_started_at = '', 
-                            auth_session_id_hash = '', 
-                            auth_user_id_hash = '', 
-                            auth_username_hash = '', 
-                            auth_phone_number_hash = '', 
-                            ip_address = '', 
-                            user_agent = '', )
-                        ], 
-                    editable = True, 
-                    expired = True, 
-                    expires_at = '', 
-                    id = '', 
-                    json_schema_errors = [
-                        ''
-                        ], 
-                    metadata = docspring.models.metadata.metadata(), 
-                    password = '', 
-                    processed_at = '', 
-                    state = 'pending', 
-                    template_id = '', 
-                    template_type = 'pdf', 
-                    template_version = '', 
-                    test = True, 
-                    truncated_text = docspring.models.truncated_text.truncated_text(), 
-                    pdf_hash = '', 
-                    download_url = '', 
-                    permanent_download_url = '', 
-                    preview_download_url = '', 
-                    preview_generated_at = '', 
-                    audit_trail_download_url = '', 
-                    actions = [
-                        docspring.models.submission_action.submission_action(
-                            id = '', 
-                            integration_id = '', 
-                            state = 'pending', 
-                            action_type = 'webhook', 
-                            action_category = 'notification', 
-                            result_data = docspring.models.result_data.result_data(), )
-                        ], ),
+            return Submission422Response(
+                status = 'error',
         )
         """
 
-    def testCreateSubmissionResponse(self):
-        """Test CreateSubmissionResponse"""
+    def testSubmission422Response(self):
+        """Test Submission422Response"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

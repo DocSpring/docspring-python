@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **submissions** | [**List[Submission]**](Submission.md) |  | 
-**limit** | **float** |  | 
+**limit** | **int** |  | 
 **next_cursor** | **str** |  | 
 
 ## Example

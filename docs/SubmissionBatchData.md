@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **metadata** | **object** |  | [optional] 
 **submissions** | **List[object]** |  | 
+**template_id** | **str** |  | [optional] 
+**template_version** | **str** |  | [optional] 
 **test** | **bool** |  | [optional] 
 
 ## Example

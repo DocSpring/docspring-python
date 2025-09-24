@@ -1,55 +1,59 @@
-# docspring.PDFApi
+# docspring.Client
 
 All URIs are relative to *https://sync.api.docspring.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_fields_to_template**](PDFApi.md#add_fields_to_template) | **PUT** /templates/{template_id}/add_fields | Add new fields to a Template
-[**batch_generate_pdfs**](PDFApi.md#batch_generate_pdfs) | **POST** /submissions/batches | Generates multiple PDFs
-[**combine_pdfs**](PDFApi.md#combine_pdfs) | **POST** /combined_submissions?v&#x3D;2 | Merge submission PDFs, template PDFs, or custom files
-[**combine_submissions**](PDFApi.md#combine_submissions) | **POST** /combined_submissions | Merge generated PDFs together
-[**copy_template**](PDFApi.md#copy_template) | **POST** /templates/{template_id}/copy | Copy a Template
-[**create_custom_file_from_upload**](PDFApi.md#create_custom_file_from_upload) | **POST** /custom_files | Create a new custom file from a cached presign upload
-[**create_data_request_event**](PDFApi.md#create_data_request_event) | **POST** /data_requests/{data_request_id}/events | Creates a new event for emailing a signee a request for signature
-[**create_data_request_token**](PDFApi.md#create_data_request_token) | **POST** /data_requests/{data_request_id}/tokens | Creates a new data request token for form authentication
-[**create_folder**](PDFApi.md#create_folder) | **POST** /folders/ | Create a folder
-[**create_html_template**](PDFApi.md#create_html_template) | **POST** /templates?endpoint_description&#x3D;html | Create a new HTML template
-[**create_pdf_template**](PDFApi.md#create_pdf_template) | **POST** /templates | Create a new PDF template with a form POST file upload
-[**create_pdf_template_from_upload**](PDFApi.md#create_pdf_template_from_upload) | **POST** /templates?endpoint_description&#x3D;cached_upload | Create a new PDF template from a cached presign upload
-[**delete_folder**](PDFApi.md#delete_folder) | **DELETE** /folders/{folder_id} | Delete a folder
-[**delete_template**](PDFApi.md#delete_template) | **DELETE** /templates/{template_id} | Delete a template
-[**expire_combined_submission**](PDFApi.md#expire_combined_submission) | **DELETE** /combined_submissions/{combined_submission_id} | Expire a combined submission
-[**expire_submission**](PDFApi.md#expire_submission) | **DELETE** /submissions/{submission_id} | Expire a PDF submission
-[**generate_pdf**](PDFApi.md#generate_pdf) | **POST** /templates/{template_id}/submissions | Generates a new PDF
-[**generate_pdf_for_html_template**](PDFApi.md#generate_pdf_for_html_template) | **POST** /templates/{template_id}/submissions?endpoint_description&#x3D;html_templates | Generates a new PDF for an HTML template
-[**generate_preview**](PDFApi.md#generate_preview) | **POST** /submissions/{submission_id}/generate_preview | Generated a preview PDF for partially completed data requests
-[**get_combined_submission**](PDFApi.md#get_combined_submission) | **GET** /combined_submissions/{combined_submission_id} | Check the status of a combined submission (merged PDFs)
-[**get_data_request**](PDFApi.md#get_data_request) | **GET** /data_requests/{data_request_id} | Look up a submission data request
-[**get_full_template**](PDFApi.md#get_full_template) | **GET** /templates/{template_id}?full&#x3D;true | Fetch the full attributes for a PDF template
-[**get_presign_url**](PDFApi.md#get_presign_url) | **GET** /uploads/presign | Get a presigned URL so that you can upload a file to our AWS S3 bucket
-[**get_submission**](PDFApi.md#get_submission) | **GET** /submissions/{submission_id} | Check the status of a PDF
-[**get_submission_batch**](PDFApi.md#get_submission_batch) | **GET** /submissions/batches/{submission_batch_id} | Check the status of a submission batch job
-[**get_template**](PDFApi.md#get_template) | **GET** /templates/{template_id} | Check the status of an uploaded template
-[**get_template_schema**](PDFApi.md#get_template_schema) | **GET** /templates/{template_id}/schema | Fetch the JSON schema for a template
-[**list_combined_submissions**](PDFApi.md#list_combined_submissions) | **GET** /combined_submissions | Get a list of all combined submissions
-[**list_folders**](PDFApi.md#list_folders) | **GET** /folders/ | Get a list of all folders
-[**list_submissions**](PDFApi.md#list_submissions) | **GET** /submissions | List all submissions
-[**list_template_submissions**](PDFApi.md#list_template_submissions) | **GET** /templates/{template_id}/submissions | List all submissions for a given template
-[**list_templates**](PDFApi.md#list_templates) | **GET** /templates | Get a list of all templates
-[**move_folder_to_folder**](PDFApi.md#move_folder_to_folder) | **POST** /folders/{folder_id}/move | Move a folder
-[**move_template_to_folder**](PDFApi.md#move_template_to_folder) | **POST** /templates/{template_id}/move | Move Template to folder
-[**publish_template_version**](PDFApi.md#publish_template_version) | **POST** /templates/{template_id}/publish_version | Publish a template version
-[**rename_folder**](PDFApi.md#rename_folder) | **POST** /folders/{folder_id}/rename | Rename a folder
-[**restore_template_version**](PDFApi.md#restore_template_version) | **POST** /templates/{template_id}/restore_version | Restore a template version
-[**test_authentication**](PDFApi.md#test_authentication) | **GET** /authentication | Test Authentication
-[**update_data_request**](PDFApi.md#update_data_request) | **PUT** /data_requests/{data_request_id} | Update a submission data request
-[**update_template**](PDFApi.md#update_template) | **PUT** /templates/{template_id} | Update a Template
+[**add_fields_to_template**](Client.md#add_fields_to_template) | **PUT** /templates/{template_id}/add_fields | Add new fields to a Template
+[**batch_generate_pdfs**](Client.md#batch_generate_pdfs) | **POST** /submissions/batches | Generate multiple PDFs
+[**combine_pdfs**](Client.md#combine_pdfs) | **POST** /combined_submissions | Merge submission PDFs, template PDFs, or custom files
+[**copy_template**](Client.md#copy_template) | **POST** /templates/{template_id}/copy | Copy a template
+[**create_custom_file_from_upload**](Client.md#create_custom_file_from_upload) | **POST** /custom_files | Create a new custom file from a cached S3 upload
+[**create_data_request_event**](Client.md#create_data_request_event) | **POST** /data_requests/{data_request_id}/events | Create a new event for emailing a signee a request for signature
+[**create_data_request_token**](Client.md#create_data_request_token) | **POST** /data_requests/{data_request_id}/tokens | Create a new data request token for form authentication
+[**create_folder**](Client.md#create_folder) | **POST** /folders/ | Create a folder
+[**create_html_template**](Client.md#create_html_template) | **POST** /templates?endpoint_variant&#x3D;create_html_template | Create a new HTML template
+[**create_pdf_template**](Client.md#create_pdf_template) | **POST** /templates | Create a new PDF template with a form POST file upload
+[**create_pdf_template_from_upload**](Client.md#create_pdf_template_from_upload) | **POST** /templates?endpoint_variant&#x3D;create_template_from_cached_upload | Create a new PDF template from a cached S3 file upload
+[**delete_folder**](Client.md#delete_folder) | **DELETE** /folders/{folder_id} | Delete a folder
+[**delete_template**](Client.md#delete_template) | **DELETE** /templates/{template_id} | Delete a template
+[**expire_combined_submission**](Client.md#expire_combined_submission) | **DELETE** /combined_submissions/{combined_submission_id} | Expire a combined submission
+[**expire_submission**](Client.md#expire_submission) | **DELETE** /submissions/{submission_id} | Expire a PDF submission
+[**generate_pdf**](Client.md#generate_pdf) | **POST** /templates/{template_id}/submissions | Generate a PDF
+[**generate_preview**](Client.md#generate_preview) | **POST** /submissions/{submission_id}/generate_preview | Generate a preview PDF for partially completed data requests
+[**get_combined_submission**](Client.md#get_combined_submission) | **GET** /combined_submissions/{combined_submission_id} | Check the status of a combined submission (merged PDFs)
+[**get_data_request**](Client.md#get_data_request) | **GET** /data_requests/{data_request_id} | Look up a submission data request
+[**get_full_template**](Client.md#get_full_template) | **GET** /templates/{template_id}?full&#x3D;true | Fetch the full attributes for a PDF template
+[**get_presign_url**](Client.md#get_presign_url) | **GET** /uploads/presign | Get a presigned S3 URL for direct file upload
+[**get_submission**](Client.md#get_submission) | **GET** /submissions/{submission_id} | Check the status of a PDF
+[**get_submission_batch**](Client.md#get_submission_batch) | **GET** /submissions/batches/{submission_batch_id} | Check the status of a submission batch job
+[**get_template**](Client.md#get_template) | **GET** /templates/{template_id} | Check the status of an uploaded template
+[**get_template_schema**](Client.md#get_template_schema) | **GET** /templates/{template_id}/schema | Fetch the JSON schema for a template
+[**list_combined_submissions**](Client.md#list_combined_submissions) | **GET** /combined_submissions | Get a list of all combined submissions
+[**list_folders**](Client.md#list_folders) | **GET** /folders/ | Get a list of all folders
+[**list_submissions**](Client.md#list_submissions) | **GET** /submissions | List all submissions
+[**list_template_submissions**](Client.md#list_template_submissions) | **GET** /templates/{template_id}/submissions | List all submissions for a given template
+[**list_templates**](Client.md#list_templates) | **GET** /templates | Get a list of all templates
+[**move_folder_to_folder**](Client.md#move_folder_to_folder) | **POST** /folders/{folder_id}/move | Move a folder
+[**move_template_to_folder**](Client.md#move_template_to_folder) | **POST** /templates/{template_id}/move | Move Template to folder
+[**publish_template_version**](Client.md#publish_template_version) | **POST** /templates/{template_id}/publish_version | Publish a template version
+[**rename_folder**](Client.md#rename_folder) | **POST** /folders/{folder_id}/rename | Rename a folder
+[**restore_template_version**](Client.md#restore_template_version) | **POST** /templates/{template_id}/restore_version | Restore a template version
+[**test_authentication**](Client.md#test_authentication) | **GET** /authentication | Test authentication
+[**update_data_request**](Client.md#update_data_request) | **PUT** /data_requests/{data_request_id} | Update a submission data request
+[**update_template**](Client.md#update_template) | **PUT** /templates/{template_id} | Update a Template
+[**update_template_document**](Client.md#update_template_document) | **PUT** /templates/{template_id}?endpoint_variant&#x3D;update_template_pdf_with_form_post | Update a template&#39;s document with a form POST file upload
+[**update_template_document_from_upload**](Client.md#update_template_document_from_upload) | **PUT** /templates/{template_id}?endpoint_variant&#x3D;update_template_pdf_with_cached_upload | Update a template&#39;s document with a cached S3 file upload
 
 
 # **add_fields_to_template**
 > TemplateAddFieldsResponse add_fields_to_template(template_id, data)
 
 Add new fields to a Template
+
+Adds fields to a PDF template. Configure field types, positions,
+defaults, and formatting options.
+
 
 ### Example
 
@@ -82,17 +86,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef02' # str | 
     data = docspring.AddFieldsData() # AddFieldsData | 
 
     try:
         # Add new fields to a Template
         api_response = api_instance.add_fields_to_template(template_id, data)
-        print("The response of PDFApi->add_fields_to_template:\n")
+        print("The response of Client->add_fields_to_template:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->add_fields_to_template: %s\n" % e)
+        print("Exception when calling Client->add_fields_to_template: %s\n" % e)
 ```
 
 
@@ -130,7 +134,15 @@ Name | Type | Description  | Notes
 # **batch_generate_pdfs**
 > BatchGeneratePdfs201Response batch_generate_pdfs(data, wait=wait)
 
-Generates multiple PDFs
+Generate multiple PDFs
+
+Generates up to 50 PDFs in a single request. Each submission can use a different template
+and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More
+efficient than individual requests when creating multiple PDFs.
+
+See also:
+- [Batch and Combine PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Generate and merge PDFs in one request
+
 
 ### Example
 
@@ -163,17 +175,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data = docspring.SubmissionBatchData() # SubmissionBatchData | 
     wait = True # bool | Wait for submission batch to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional) (default to True)
 
     try:
-        # Generates multiple PDFs
+        # Generate multiple PDFs
         api_response = api_instance.batch_generate_pdfs(data, wait=wait)
-        print("The response of PDFApi->batch_generate_pdfs:\n")
+        print("The response of Client->batch_generate_pdfs:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->batch_generate_pdfs: %s\n" % e)
+        print("Exception when calling Client->batch_generate_pdfs: %s\n" % e)
 ```
 
 
@@ -216,6 +228,11 @@ Name | Type | Description  | Notes
 
 Merge submission PDFs, template PDFs, or custom files
 
+Combines multiple PDFs from various sources into a single PDF file. Supports merging
+submission PDFs, template PDFs, custom files, other merged PDFs,
+and PDFs from URLs. Merges the PDFs in the order provided.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -247,16 +264,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data = docspring.CombinePdfsData() # CombinePdfsData | 
 
     try:
         # Merge submission PDFs, template PDFs, or custom files
         api_response = api_instance.combine_pdfs(data)
-        print("The response of PDFApi->combine_pdfs:\n")
+        print("The response of Client->combine_pdfs:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->combine_pdfs: %s\n" % e)
+        print("Exception when calling Client->combine_pdfs: %s\n" % e)
 ```
 
 
@@ -292,93 +309,15 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **combine_submissions**
-> CreateCombinedSubmissionResponse combine_submissions(data, wait=wait)
-
-Merge generated PDFs together
-
-### Example
-
-* Basic Authentication (api_token_basic):
-
-```python
-import docspring
-from docspring.models.combined_submission_data import CombinedSubmissionData
-from docspring.models.create_combined_submission_response import CreateCombinedSubmissionResponse
-from docspring.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
-# See configuration.py for a list of all supported configuration parameters.
-configuration = docspring.Configuration(
-    host = "https://sync.api.docspring.com/api/v1"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure HTTP basic authorization: api_token_basic
-configuration = docspring.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
-
-# Enter a context with an instance of the API client
-with docspring.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
-    data = docspring.CombinedSubmissionData() # CombinedSubmissionData | 
-    wait = True # bool | Wait for combined submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional) (default to True)
-
-    try:
-        # Merge generated PDFs together
-        api_response = api_instance.combine_submissions(data, wait=wait)
-        print("The response of PDFApi->combine_submissions:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling PDFApi->combine_submissions: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **data** | [**CombinedSubmissionData**](CombinedSubmissionData.md)|  | 
- **wait** | **bool**| Wait for combined submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to True]
-
-### Return type
-
-[**CreateCombinedSubmissionResponse**](CreateCombinedSubmissionResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**201** | combined submission created |  -  |
-**422** | invalid request |  -  |
-**400** | invalid JSON |  -  |
-**401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **copy_template**
 > TemplatePreview copy_template(template_id, options=options)
 
-Copy a Template
+Copy a template
+
+Creates a copy of an existing template with all its fields and configuration.
+Optionally specify a new name and target folder. The copied template starts as a new
+draft that can be modified independently of the original.
+
 
 ### Example
 
@@ -411,17 +350,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
     options = docspring.CopyTemplateOptions() # CopyTemplateOptions |  (optional)
 
     try:
-        # Copy a Template
+        # Copy a template
         api_response = api_instance.copy_template(template_id, options=options)
-        print("The response of PDFApi->copy_template:\n")
+        print("The response of Client->copy_template:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->copy_template: %s\n" % e)
+        print("Exception when calling Client->copy_template: %s\n" % e)
 ```
 
 
@@ -459,7 +398,12 @@ Name | Type | Description  | Notes
 # **create_custom_file_from_upload**
 > CreateCustomFileResponse create_custom_file_from_upload(data)
 
-Create a new custom file from a cached presign upload
+Create a new custom file from a cached S3 upload
+
+The Custom Files API endpoint allows you to upload PDFs to DocSpring and then
+merge them with other PDFs. First upload your file using the presigned URL endpoint,
+then use the returned cache_id to create the custom file.
+
 
 ### Example
 
@@ -492,16 +436,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data = docspring.CreateCustomFileData() # CreateCustomFileData | 
 
     try:
-        # Create a new custom file from a cached presign upload
+        # Create a new custom file from a cached S3 upload
         api_response = api_instance.create_custom_file_from_upload(data)
-        print("The response of PDFApi->create_custom_file_from_upload:\n")
+        print("The response of Client->create_custom_file_from_upload:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->create_custom_file_from_upload: %s\n" % e)
+        print("Exception when calling Client->create_custom_file_from_upload: %s\n" % e)
 ```
 
 
@@ -538,7 +482,15 @@ Name | Type | Description  | Notes
 # **create_data_request_event**
 > CreateSubmissionDataRequestEventResponse create_data_request_event(data_request_id, event)
 
-Creates a new event for emailing a signee a request for signature
+Create a new event for emailing a signee a request for signature
+
+Records user notification events for data requests. Use this to create an audit trail
+showing when and how users were notified about data request forms. Supports email, SMS,
+and other notification types. Records the notification time for compliance tracking.
+
+See also:
+- [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) - User notification workflow
+
 
 ### Example
 
@@ -571,17 +523,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data_request_id = 'drq_1234567890abcdef01' # str | 
     event = docspring.CreateSubmissionDataRequestEventRequest() # CreateSubmissionDataRequestEventRequest | 
 
     try:
-        # Creates a new event for emailing a signee a request for signature
+        # Create a new event for emailing a signee a request for signature
         api_response = api_instance.create_data_request_event(data_request_id, event)
-        print("The response of PDFApi->create_data_request_event:\n")
+        print("The response of Client->create_data_request_event:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->create_data_request_event: %s\n" % e)
+        print("Exception when calling Client->create_data_request_event: %s\n" % e)
 ```
 
 
@@ -620,7 +572,15 @@ Name | Type | Description  | Notes
 # **create_data_request_token**
 > CreateSubmissionDataRequestTokenResponse create_data_request_token(data_request_id, type=type)
 
-Creates a new data request token for form authentication
+Create a new data request token for form authentication
+
+Creates an authentication token for accessing a data request form. Tokens can be created
+for API access (1 hour expiration) or email links (30 day expiration). Returns a token
+and a pre-authenticated URL for the data request form.
+
+See also:
+- [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/)
+
 
 ### Example
 
@@ -652,17 +612,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data_request_id = 'drq_1234567890abcdef01' # str | 
     type = 'api' # str |  (optional)
 
     try:
-        # Creates a new data request token for form authentication
+        # Create a new data request token for form authentication
         api_response = api_instance.create_data_request_token(data_request_id, type=type)
-        print("The response of PDFApi->create_data_request_token:\n")
+        print("The response of Client->create_data_request_token:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->create_data_request_token: %s\n" % e)
+        print("Exception when calling Client->create_data_request_token: %s\n" % e)
 ```
 
 
@@ -703,6 +663,10 @@ Name | Type | Description  | Notes
 
 Create a folder
 
+Creates a new folder for organizing templates. Folders can be nested within other folders
+by providing a `parent_folder_id`. Folder names must be unique within the same parent.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -734,16 +698,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data = docspring.CreateFolderData() # CreateFolderData | 
 
     try:
         # Create a folder
         api_response = api_instance.create_folder(data)
-        print("The response of PDFApi->create_folder:\n")
+        print("The response of Client->create_folder:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->create_folder: %s\n" % e)
+        print("Exception when calling Client->create_folder: %s\n" % e)
 ```
 
 
@@ -784,6 +748,11 @@ Name | Type | Description  | Notes
 
 Create a new HTML template
 
+Creates a new HTML template using HTML, CSS/SCSS, and Liquid templating. Allows complete
+control over PDF layout and styling. Supports headers, footers, and dynamic content using
+Liquid syntax for field values, conditions, loops, and filters.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -815,16 +784,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data = docspring.CreateHtmlTemplate() # CreateHtmlTemplate | 
 
     try:
         # Create a new HTML template
         api_response = api_instance.create_html_template(data)
-        print("The response of PDFApi->create_html_template:\n")
+        print("The response of Client->create_html_template:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->create_html_template: %s\n" % e)
+        print("Exception when calling Client->create_html_template: %s\n" % e)
 ```
 
 
@@ -863,6 +832,11 @@ Name | Type | Description  | Notes
 
 Create a new PDF template with a form POST file upload
 
+Creates a new PDF template by uploading a PDF file. The uploaded PDF becomes the foundation
+for your template, and you can then add fillable fields using the template editor. Use the
+wait parameter to control whether the request waits for document processing to complete.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -893,7 +867,7 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_document = None # bytearray | 
     template_name = 'template_name_example' # str | 
     wait = True # bool | Wait for template document to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional) (default to True)
@@ -903,10 +877,10 @@ with docspring.ApiClient(configuration) as api_client:
     try:
         # Create a new PDF template with a form POST file upload
         api_response = api_instance.create_pdf_template(template_document, template_name, wait=wait, template_description=template_description, template_parent_folder_id=template_parent_folder_id)
-        print("The response of PDFApi->create_pdf_template:\n")
+        print("The response of Client->create_pdf_template:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->create_pdf_template: %s\n" % e)
+        print("Exception when calling Client->create_pdf_template: %s\n" % e)
 ```
 
 
@@ -947,7 +921,12 @@ Name | Type | Description  | Notes
 # **create_pdf_template_from_upload**
 > TemplatePreview create_pdf_template_from_upload(data)
 
-Create a new PDF template from a cached presign upload
+Create a new PDF template from a cached S3 file upload
+
+Creates a new PDF template from a file previously uploaded to S3 using a presigned URL.
+This two-step process allows for more reliable large file uploads by first uploading
+the file to S3, then creating the template using the cached upload ID.
+
 
 ### Example
 
@@ -980,16 +959,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data = docspring.CreatePdfTemplate() # CreatePdfTemplate | 
 
     try:
-        # Create a new PDF template from a cached presign upload
+        # Create a new PDF template from a cached S3 file upload
         api_response = api_instance.create_pdf_template_from_upload(data)
-        print("The response of PDFApi->create_pdf_template_from_upload:\n")
+        print("The response of Client->create_pdf_template_from_upload:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->create_pdf_template_from_upload: %s\n" % e)
+        print("Exception when calling Client->create_pdf_template_from_upload: %s\n" % e)
 ```
 
 
@@ -1028,6 +1007,10 @@ Name | Type | Description  | Notes
 
 Delete a folder
 
+Deletes an empty folder. The folder must not contain any templates or subfolders.
+Move or delete all contents before attempting to delete the folder.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -1058,16 +1041,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     folder_id = 'fld_1234567890abcdef01' # str | 
 
     try:
         # Delete a folder
         api_response = api_instance.delete_folder(folder_id)
-        print("The response of PDFApi->delete_folder:\n")
+        print("The response of Client->delete_folder:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->delete_folder: %s\n" % e)
+        print("Exception when calling Client->delete_folder: %s\n" % e)
 ```
 
 
@@ -1108,6 +1091,11 @@ Name | Type | Description  | Notes
 
 Delete a template
 
+Deletes a template or a specific template version. When no version is specified, deletes
+the entire template including all versions. When a version is specified, deletes only
+that version while preserving others. Returns remaining version information.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -1138,17 +1126,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
     version = '0.1.0' # str |  (optional)
 
     try:
         # Delete a template
         api_response = api_instance.delete_template(template_id, version=version)
-        print("The response of PDFApi->delete_template:\n")
+        print("The response of Client->delete_template:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->delete_template: %s\n" % e)
+        print("Exception when calling Client->delete_template: %s\n" % e)
 ```
 
 
@@ -1189,6 +1177,10 @@ Name | Type | Description  | Notes
 
 Expire a combined submission
 
+Expiring a combined submission deletes the PDF from our system.
+This is useful for invalidating sensitive documents.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -1219,16 +1211,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     combined_submission_id = 'com_1234567890abcdef01' # str | 
 
     try:
         # Expire a combined submission
         api_response = api_instance.expire_combined_submission(combined_submission_id)
-        print("The response of PDFApi->expire_combined_submission:\n")
+        print("The response of Client->expire_combined_submission:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->expire_combined_submission: %s\n" % e)
+        print("Exception when calling Client->expire_combined_submission: %s\n" % e)
 ```
 
 
@@ -1269,6 +1261,12 @@ Name | Type | Description  | Notes
 
 Expire a PDF submission
 
+Expiring a PDF submission deletes the PDF and removes the data from our database.
+This is useful for invalidating sensitive documents after they've been downloaded.
+You can also [configure a data retention policy for your submissions](https://docspring.com/docs/template-editor/settings/#expire-submissions)
+so that they automatically expire.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -1299,16 +1297,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     submission_id = 'sub_1234567890abcdef01' # str | 
 
     try:
         # Expire a PDF submission
         api_response = api_instance.expire_submission(submission_id)
-        print("The response of PDFApi->expire_submission:\n")
+        print("The response of Client->expire_submission:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->expire_submission: %s\n" % e)
+        print("Exception when calling Client->expire_submission: %s\n" % e)
 ```
 
 
@@ -1347,7 +1345,15 @@ Name | Type | Description  | Notes
 # **generate_pdf**
 > CreateSubmissionResponse generate_pdf(template_id, submission, wait=wait)
 
-Generates a new PDF
+Generate a PDF
+
+Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and
+asynchronous processing. Set `wait: false` to return immediately.
+
+See also:
+- [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata
+- [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn't fit in fields
+
 
 ### Example
 
@@ -1380,18 +1386,18 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
     submission = docspring.CreatePdfSubmissionData() # CreatePdfSubmissionData | 
     wait = True # bool | Wait for submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional) (default to True)
 
     try:
-        # Generates a new PDF
+        # Generate a PDF
         api_response = api_instance.generate_pdf(template_id, submission, wait=wait)
-        print("The response of PDFApi->generate_pdf:\n")
+        print("The response of Client->generate_pdf:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->generate_pdf: %s\n" % e)
+        print("Exception when calling Client->generate_pdf: %s\n" % e)
 ```
 
 
@@ -1428,92 +1434,15 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **generate_pdf_for_html_template**
-> CreateSubmissionResponse generate_pdf_for_html_template(template_id, submission, wait=wait)
-
-Generates a new PDF for an HTML template
-
-### Example
-
-* Basic Authentication (api_token_basic):
-
-```python
-import docspring
-from docspring.models.create_html_submission_data import CreateHtmlSubmissionData
-from docspring.models.create_submission_response import CreateSubmissionResponse
-from docspring.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
-# See configuration.py for a list of all supported configuration parameters.
-configuration = docspring.Configuration(
-    host = "https://sync.api.docspring.com/api/v1"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure HTTP basic authorization: api_token_basic
-configuration = docspring.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
-
-# Enter a context with an instance of the API client
-with docspring.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
-    template_id = 'tpl_HTML567890abcdef01' # str | 
-    submission = docspring.CreateHtmlSubmissionData() # CreateHtmlSubmissionData | 
-    wait = True # bool | Wait for submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional) (default to True)
-
-    try:
-        # Generates a new PDF for an HTML template
-        api_response = api_instance.generate_pdf_for_html_template(template_id, submission, wait=wait)
-        print("The response of PDFApi->generate_pdf_for_html_template:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling PDFApi->generate_pdf_for_html_template: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **template_id** | **str**|  | 
- **submission** | [**CreateHtmlSubmissionData**](CreateHtmlSubmissionData.md)|  | 
- **wait** | **bool**| Wait for submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to True]
-
-### Return type
-
-[**CreateSubmissionResponse**](CreateSubmissionResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**201** | submission created |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **generate_preview**
 > SuccessErrorResponse generate_preview(submission_id)
 
-Generated a preview PDF for partially completed data requests
+Generate a preview PDF for partially completed data requests
+
+Generates a preview PDF for a submission with partially completed data requests. Useful
+for showing users what the final document will look like before all signatures or data
+have been collected. The preview includes any data collected so far.
+
 
 ### Example
 
@@ -1545,16 +1474,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     submission_id = 'sub_1234567890abcdef01' # str | 
 
     try:
-        # Generated a preview PDF for partially completed data requests
+        # Generate a preview PDF for partially completed data requests
         api_response = api_instance.generate_preview(submission_id)
-        print("The response of PDFApi->generate_preview:\n")
+        print("The response of Client->generate_preview:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->generate_preview: %s\n" % e)
+        print("Exception when calling Client->generate_preview: %s\n" % e)
 ```
 
 
@@ -1594,6 +1523,11 @@ Name | Type | Description  | Notes
 
 Check the status of a combined submission (merged PDFs)
 
+Retrieves the details and status of a combined submission. Returns processing state,
+download URL (if processed), metadata, and information about any integrated actions
+(e.g., S3 uploads).
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -1624,16 +1558,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     combined_submission_id = 'com_1234567890abcdef01' # str | 
 
     try:
         # Check the status of a combined submission (merged PDFs)
         api_response = api_instance.get_combined_submission(combined_submission_id)
-        print("The response of PDFApi->get_combined_submission:\n")
+        print("The response of Client->get_combined_submission:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->get_combined_submission: %s\n" % e)
+        print("Exception when calling Client->get_combined_submission: %s\n" % e)
 ```
 
 
@@ -1673,6 +1607,14 @@ Name | Type | Description  | Notes
 
 Look up a submission data request
 
+Retrieves the details and status of a data request. Returns information about the request
+state (pending, viewed, completed), authentication details, and metadata.
+Includes audit information like IP address, browseruser agent, and timestamps.
+
+See also:
+- [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) - Complete guide to data request workflow
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -1703,16 +1645,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data_request_id = 'drq_1234567890abcdef01' # str | 
 
     try:
         # Look up a submission data request
         api_response = api_instance.get_data_request(data_request_id)
-        print("The response of PDFApi->get_data_request:\n")
+        print("The response of Client->get_data_request:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->get_data_request: %s\n" % e)
+        print("Exception when calling Client->get_data_request: %s\n" % e)
 ```
 
 
@@ -1752,6 +1694,11 @@ Name | Type | Description  | Notes
 
 Fetch the full attributes for a PDF template
 
+Retrieves complete template information including fields, defaults, settings, and HTML/SCSS content.
+Use this to get all template data needed for automated updates or analysis.
+Returns more detailed information than the basic `getTemplate` endpoint.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -1782,16 +1729,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
 
     try:
         # Fetch the full attributes for a PDF template
         api_response = api_instance.get_full_template(template_id)
-        print("The response of PDFApi->get_full_template:\n")
+        print("The response of Client->get_full_template:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->get_full_template: %s\n" % e)
+        print("Exception when calling Client->get_full_template: %s\n" % e)
 ```
 
 
@@ -1829,7 +1776,17 @@ Name | Type | Description  | Notes
 # **get_presign_url**
 > UploadPresignResponse get_presign_url()
 
-Get a presigned URL so that you can upload a file to our AWS S3 bucket
+Get a presigned S3 URL for direct file upload
+
+Returns a presigned S3 URL for uploading files directly to our S3 bucket. Use this
+endpoint to upload large files before creating templates or custom files. S3 will
+respond with a JSON object that you can include in your DocSpring API request.
+
+Uploaded files can be used to:
+- [Create templates](https://docspring.com/docs/api/#tag/templates/post/templates?endpoint_variant=create_template_from_cached_upload)
+- [Update templates](https://docspring.com/docs/api/#tag/templates/put/templates/{template_id}?endpoint_variant=update_template_pdf_with_cached_upload)
+- [Create custom files](https://docspring.com/docs/api/#tag/custom-files/post/custom_files) and then [merge them with other PDFs](https://docspring.com/docs/api/#tag/combine-pdfs/post/combined_submissions)
+
 
 ### Example
 
@@ -1861,15 +1818,15 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
 
     try:
-        # Get a presigned URL so that you can upload a file to our AWS S3 bucket
+        # Get a presigned S3 URL for direct file upload
         api_response = api_instance.get_presign_url()
-        print("The response of PDFApi->get_presign_url:\n")
+        print("The response of Client->get_presign_url:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->get_presign_url: %s\n" % e)
+        print("Exception when calling Client->get_presign_url: %s\n" % e)
 ```
 
 
@@ -1905,6 +1862,11 @@ This endpoint does not need any parameter.
 
 Check the status of a PDF
 
+Retrieves the details and status of a PDF submission. Returns processing state, download
+URL (if processed), metadata, submission data (optional), and information about any
+integrated actions. Use this to poll for completion when using asynchronous processing.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -1935,17 +1897,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     submission_id = 'sub_1234567890abcdef01' # str | 
     include_data = true # bool |  (optional)
 
     try:
         # Check the status of a PDF
         api_response = api_instance.get_submission(submission_id, include_data=include_data)
-        print("The response of PDFApi->get_submission:\n")
+        print("The response of Client->get_submission:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->get_submission: %s\n" % e)
+        print("Exception when calling Client->get_submission: %s\n" % e)
 ```
 
 
@@ -1975,7 +1937,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | processed submission found |  -  |
+**200** | processed submission found with data |  -  |
 **404** | submission not found |  -  |
 **401** | authentication failed |  -  |
 
@@ -1985,6 +1947,11 @@ Name | Type | Description  | Notes
 > SubmissionBatchWithSubmissions get_submission_batch(submission_batch_id, include_submissions=include_submissions)
 
 Check the status of a submission batch job
+
+Retrieves the status and results of a batch PDF generation job. Returns processing state,
+completion statistics, and optionally includes all individual submission details. Use this
+to poll for completion when using asynchronous batch processing.
+
 
 ### Example
 
@@ -2016,17 +1983,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     submission_batch_id = 'sbb_1234567890abcdef01' # str | 
     include_submissions = true # bool |  (optional)
 
     try:
         # Check the status of a submission batch job
         api_response = api_instance.get_submission_batch(submission_batch_id, include_submissions=include_submissions)
-        print("The response of PDFApi->get_submission_batch:\n")
+        print("The response of Client->get_submission_batch:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->get_submission_batch: %s\n" % e)
+        print("Exception when calling Client->get_submission_batch: %s\n" % e)
 ```
 
 
@@ -2067,6 +2034,10 @@ Name | Type | Description  | Notes
 
 Check the status of an uploaded template
 
+Retrieves information about a template including processing status and document URL.
+Use this to check if template is ready to view in the template editor or generate PDFs.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2097,16 +2068,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
 
     try:
         # Check the status of an uploaded template
         api_response = api_instance.get_template(template_id)
-        print("The response of PDFApi->get_template:\n")
+        print("The response of Client->get_template:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->get_template: %s\n" % e)
+        print("Exception when calling Client->get_template: %s\n" % e)
 ```
 
 
@@ -2146,6 +2117,14 @@ Name | Type | Description  | Notes
 
 Fetch the JSON schema for a template
 
+Retrieves the JSON Schema definition for a template's fields. Use this to validate
+data before submitting it for PDF generation, or to build dynamic forms that match
+the template's field structure and validation requirements.
+
+See also:
+- [Generate PDFs Guide](https://docspring.com/docs/api-guide/generate-pdfs/generate-pdfs-via-api/) - Use schema to validate submission data
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2176,16 +2155,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
 
     try:
         # Fetch the JSON schema for a template
         api_response = api_instance.get_template_schema(template_id)
-        print("The response of PDFApi->get_template_schema:\n")
+        print("The response of Client->get_template_schema:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->get_template_schema: %s\n" % e)
+        print("Exception when calling Client->get_template_schema: %s\n" % e)
 ```
 
 
@@ -2225,6 +2204,10 @@ Name | Type | Description  | Notes
 
 Get a list of all combined submissions
 
+Returns a paginated list of combined submissions (merged PDFs) for your account.
+Includes processing status, expiration details, and download URLs for processed PDFs.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2255,17 +2238,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
-    page = 2 # int | Default: 1 (optional)
+    api_instance = docspring.Client(api_client)
+    page = 3 # int | Default: 1 (optional)
     per_page = 1 # int | Default: 50 (optional)
 
     try:
         # Get a list of all combined submissions
         api_response = api_instance.list_combined_submissions(page=page, per_page=per_page)
-        print("The response of PDFApi->list_combined_submissions:\n")
+        print("The response of Client->list_combined_submissions:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->list_combined_submissions: %s\n" % e)
+        print("Exception when calling Client->list_combined_submissions: %s\n" % e)
 ```
 
 
@@ -2305,6 +2288,10 @@ Name | Type | Description  | Notes
 
 Get a list of all folders
 
+Returns a list of folders in your account. Can be filtered by parent folder ID to retrieve
+subfolders. Folders help organize templates and maintain a hierarchical structure.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2335,16 +2322,16 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     parent_folder_id = 'fld_1234567890abcdef02' # str | Filter By Folder Id (optional)
 
     try:
         # Get a list of all folders
         api_response = api_instance.list_folders(parent_folder_id=parent_folder_id)
-        print("The response of PDFApi->list_folders:\n")
+        print("The response of Client->list_folders:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->list_folders: %s\n" % e)
+        print("Exception when calling Client->list_folders: %s\n" % e)
 ```
 
 
@@ -2383,6 +2370,11 @@ Name | Type | Description  | Notes
 
 List all submissions
 
+Returns a paginated list of all PDF submissions across all templates in your account.
+Can be filtered by date range and submission type (test/live). Supports cursor-based
+pagination and optionally includes submission data for each result.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2413,9 +2405,9 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     cursor = 'sub_1234567890abcdef12' # str |  (optional)
-    limit = 3 # float |  (optional)
+    limit = 3 # int |  (optional)
     created_after = '2019-01-01T09:00:00-05:00' # str |  (optional)
     created_before = '2020-01-01T09:00:00.000+0200' # str |  (optional)
     type = 'test' # str |  (optional)
@@ -2424,10 +2416,10 @@ with docspring.ApiClient(configuration) as api_client:
     try:
         # List all submissions
         api_response = api_instance.list_submissions(cursor=cursor, limit=limit, created_after=created_after, created_before=created_before, type=type, include_data=include_data)
-        print("The response of PDFApi->list_submissions:\n")
+        print("The response of Client->list_submissions:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->list_submissions: %s\n" % e)
+        print("Exception when calling Client->list_submissions: %s\n" % e)
 ```
 
 
@@ -2438,7 +2430,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **cursor** | **str**|  | [optional] 
- **limit** | **float**|  | [optional] 
+ **limit** | **int**|  | [optional] 
  **created_after** | **str**|  | [optional] 
  **created_before** | **str**|  | [optional] 
  **type** | **str**|  | [optional] 
@@ -2472,6 +2464,11 @@ Name | Type | Description  | Notes
 
 List all submissions for a given template
 
+Returns a paginated list of all submissions for a specific template. Can be filtered by
+date range, submission type (test/live), and optionally include submission data. Supports
+cursor-based pagination for efficient retrieval of large result sets.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2502,10 +2499,10 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef02' # str | 
     cursor = 'cursor_example' # str |  (optional)
-    limit = 3.4 # float |  (optional)
+    limit = 56 # int |  (optional)
     created_after = 'created_after_example' # str |  (optional)
     created_before = 'created_before_example' # str |  (optional)
     type = 'type_example' # str |  (optional)
@@ -2514,10 +2511,10 @@ with docspring.ApiClient(configuration) as api_client:
     try:
         # List all submissions for a given template
         api_response = api_instance.list_template_submissions(template_id, cursor=cursor, limit=limit, created_after=created_after, created_before=created_before, type=type, include_data=include_data)
-        print("The response of PDFApi->list_template_submissions:\n")
+        print("The response of Client->list_template_submissions:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->list_template_submissions: %s\n" % e)
+        print("Exception when calling Client->list_template_submissions: %s\n" % e)
 ```
 
 
@@ -2529,7 +2526,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**|  | 
  **cursor** | **str**|  | [optional] 
- **limit** | **float**|  | [optional] 
+ **limit** | **int**|  | [optional] 
  **created_after** | **str**|  | [optional] 
  **created_before** | **str**|  | [optional] 
  **type** | **str**|  | [optional] 
@@ -2562,6 +2559,11 @@ Name | Type | Description  | Notes
 
 Get a list of all templates
 
+Retrieves a list of your templates with search, filtering, and pagination options. Returns
+basic template information including ID, name, type (PDF or HTML), and folder location.
+Supports text search by name and filtering by parent folder.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2592,7 +2594,7 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     query = '2' # str | Search By Name (optional)
     parent_folder_id = 'fld_1234567890abcdef01' # str | Filter By Folder Id (optional)
     page = 2 # int | Default: 1 (optional)
@@ -2601,10 +2603,10 @@ with docspring.ApiClient(configuration) as api_client:
     try:
         # Get a list of all templates
         api_response = api_instance.list_templates(query=query, parent_folder_id=parent_folder_id, page=page, per_page=per_page)
-        print("The response of PDFApi->list_templates:\n")
+        print("The response of Client->list_templates:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->list_templates: %s\n" % e)
+        print("Exception when calling Client->list_templates: %s\n" % e)
 ```
 
 
@@ -2647,6 +2649,10 @@ Name | Type | Description  | Notes
 
 Move a folder
 
+Moves a folder to a new parent folder or to the root level. All templates and subfolders
+within the folder are moved together. Cannot move a folder into one of its own subfolders.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2678,17 +2684,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     folder_id = 'fld_1234567890abcdef01' # str | 
     data = docspring.MoveFolderData() # MoveFolderData | 
 
     try:
         # Move a folder
         api_response = api_instance.move_folder_to_folder(folder_id, data)
-        print("The response of PDFApi->move_folder_to_folder:\n")
+        print("The response of Client->move_folder_to_folder:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->move_folder_to_folder: %s\n" % e)
+        print("Exception when calling Client->move_folder_to_folder: %s\n" % e)
 ```
 
 
@@ -2729,6 +2735,11 @@ Name | Type | Description  | Notes
 
 Move Template to folder
 
+Moves a template to a different folder or to the root level. Use this to organize
+templates within your folders. Provide a folder ID to move to a specific
+folder, or `null` to move to the root level.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2760,17 +2771,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
     data = docspring.MoveTemplateData() # MoveTemplateData | 
 
     try:
         # Move Template to folder
         api_response = api_instance.move_template_to_folder(template_id, data)
-        print("The response of PDFApi->move_template_to_folder:\n")
+        print("The response of Client->move_template_to_folder:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->move_template_to_folder: %s\n" % e)
+        print("Exception when calling Client->move_template_to_folder: %s\n" % e)
 ```
 
 
@@ -2810,6 +2821,10 @@ Name | Type | Description  | Notes
 
 Publish a template version
 
+Publishes the current draft version of a template and creates a new immutable version
+with semantic versioning (major.minor.patch).
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2841,17 +2856,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
     data = docspring.PublishVersionData() # PublishVersionData | 
 
     try:
         # Publish a template version
         api_response = api_instance.publish_template_version(template_id, data)
-        print("The response of PDFApi->publish_template_version:\n")
+        print("The response of Client->publish_template_version:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->publish_template_version: %s\n" % e)
+        print("Exception when calling Client->publish_template_version: %s\n" % e)
 ```
 
 
@@ -2893,6 +2908,10 @@ Name | Type | Description  | Notes
 
 Rename a folder
 
+Renames an existing folder. The new name must be unique within the same parent folder.
+This operation only changes the folder name, not its location or contents.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -2924,17 +2943,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     folder_id = 'fld_1234567890abcdef01' # str | 
     data = docspring.RenameFolderData() # RenameFolderData | 
 
     try:
         # Rename a folder
         api_response = api_instance.rename_folder(folder_id, data)
-        print("The response of PDFApi->rename_folder:\n")
+        print("The response of Client->rename_folder:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->rename_folder: %s\n" % e)
+        print("Exception when calling Client->rename_folder: %s\n" % e)
 ```
 
 
@@ -2976,6 +2995,11 @@ Name | Type | Description  | Notes
 
 Restore a template version
 
+Restores your template to a previously published version, copying that version's content
+and configuration to the current draft. Use this to revert changes or recover from
+an unwanted modification.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -3007,17 +3031,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | 
     data = docspring.RestoreVersionData() # RestoreVersionData | 
 
     try:
         # Restore a template version
         api_response = api_instance.restore_template_version(template_id, data)
-        print("The response of PDFApi->restore_template_version:\n")
+        print("The response of Client->restore_template_version:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->restore_template_version: %s\n" % e)
+        print("Exception when calling Client->restore_template_version: %s\n" % e)
 ```
 
 
@@ -3057,7 +3081,12 @@ Name | Type | Description  | Notes
 # **test_authentication**
 > SuccessErrorResponse test_authentication()
 
-Test Authentication
+Test authentication
+
+Checks whether your API token is valid by making an authenticated request.
+Returns a success response if authentication passes. This endpoint is useful for
+verifying credentials during setup or troubleshooting issues.
+
 
 ### Example
 
@@ -3089,15 +3118,15 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
 
     try:
-        # Test Authentication
+        # Test authentication
         api_response = api_instance.test_authentication()
-        print("The response of PDFApi->test_authentication:\n")
+        print("The response of Client->test_authentication:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->test_authentication: %s\n" % e)
+        print("Exception when calling Client->test_authentication: %s\n" % e)
 ```
 
 
@@ -3133,6 +3162,11 @@ This endpoint does not need any parameter.
 
 Update a submission data request
 
+Updates authentication details for a data request. Use this when a user logs in to record
+their authentication method, provider, session information, and hashed identifiers. Updates
+metadata and tracks authentication state changes for auditing and compliance.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -3164,17 +3198,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     data_request_id = 'drq_1234567890abcdef01' # str | 
     data = docspring.UpdateSubmissionDataRequestData() # UpdateSubmissionDataRequestData | 
 
     try:
         # Update a submission data request
         api_response = api_instance.update_data_request(data_request_id, data)
-        print("The response of PDFApi->update_data_request:\n")
+        print("The response of Client->update_data_request:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->update_data_request: %s\n" % e)
+        print("Exception when calling Client->update_data_request: %s\n" % e)
 ```
 
 
@@ -3216,6 +3250,11 @@ Name | Type | Description  | Notes
 
 Update a Template
 
+Updates template content and properties. For HTML templates, you can modify the HTML,
+SCSS, headers, footers, name, and description. Changes are applied to your draft
+template and do not affect published template versions.
+
+
 ### Example
 
 * Basic Authentication (api_token_basic):
@@ -3247,17 +3286,17 @@ configuration = docspring.Configuration(
 # Enter a context with an instance of the API client
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = docspring.PDFApi(api_client)
+    api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef03' # str | 
     data = docspring.UpdateHtmlTemplate() # UpdateHtmlTemplate | 
 
     try:
         # Update a Template
         api_response = api_instance.update_template(template_id, data)
-        print("The response of PDFApi->update_template:\n")
+        print("The response of Client->update_template:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling PDFApi->update_template: %s\n" % e)
+        print("Exception when calling Client->update_template: %s\n" % e)
 ```
 
 
@@ -3288,6 +3327,180 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | update template success |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_template_document**
+> SuccessMultipleErrorsResponse update_template_document(template_id, template_document, template_name=template_name)
+
+Update a template's document with a form POST file upload
+
+Upload a new PDF file to update a PDF template's document. This replaces the
+template's PDF while preserving all of the existing fields. If you upload a PDF with
+fewer pages than the current document, any fields on the removed pages will be deleted.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.success_multiple_errors_response import SuccessMultipleErrorsResponse
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | 
+    template_document = None # bytearray | 
+    template_name = 'template_name_example' # str |  (optional)
+
+    try:
+        # Update a template's document with a form POST file upload
+        api_response = api_instance.update_template_document(template_id, template_document, template_name=template_name)
+        print("The response of Client->update_template_document:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->update_template_document: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**|  | 
+ **template_document** | **bytearray**|  | 
+ **template_name** | **str**|  | [optional] 
+
+### Return type
+
+[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | returns a template with updated document |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_template_document_from_upload**
+> SuccessMultipleErrorsResponse update_template_document_from_upload(template_id, data)
+
+Update a template's document with a cached S3 file upload
+
+Updates a PDF template's document using a cached file upload. This is a three-step process:
+First, request a presigned URL to upload your PDF file to our S3 bucket. Then, use that URL to
+upload your PDF file. Finally, submit the ID of the uploaded file to replace the template's
+document.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.success_multiple_errors_response import SuccessMultipleErrorsResponse
+from docspring.models.update_pdf_template import UpdatePdfTemplate
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | 
+    data = docspring.UpdatePdfTemplate() # UpdatePdfTemplate | 
+
+    try:
+        # Update a template's document with a cached S3 file upload
+        api_response = api_instance.update_template_document_from_upload(template_id, data)
+        print("The response of Client->update_template_document_from_upload:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->update_template_document_from_upload: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**|  | 
+ **data** | [**UpdatePdfTemplate**](UpdatePdfTemplate.md)|  | 
+
+### Return type
+
+[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | returns a template with updated document |  -  |
+**401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -6,7 +6,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** |  | 
+**message_recipient** | **str** |  | [optional] 
 **message_type** | **str** |  | [optional] 
+**occurred_at** | **str** |  | [optional] 
 
 ## Example
 

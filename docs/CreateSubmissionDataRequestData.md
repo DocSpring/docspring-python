@@ -5,11 +5,20 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**auth_phone_number_hash** | **str** |  | [optional] 
+**auth_provider** | **str** |  | [optional] 
 **auth_second_factor_type** | **str** |  | [optional] 
+**auth_session_id_hash** | **str** |  | [optional] 
+**auth_session_started_at** | **str** |  | [optional] 
 **auth_type** | **str** |  | [optional] 
-**fields** | **List[str]** |  | [optional] 
+**auth_user_id_hash** | **str** |  | [optional] 
+**auth_username_hash** | **str** |  | [optional] 
+**email** | **str** |  | [optional] 
+**fields** | **List[Optional[str]]** |  | [optional] 
 **metadata** | **object** |  | [optional] 
+**name** | **str** |  | [optional] 
 **order** | **int** |  | [optional] 
+**skipped** | **bool** |  | [optional] 
 
 ## Example
 
