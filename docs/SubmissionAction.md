@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **action_type** | **str** |  | 
 **action_category** | **str** |  | 
 **result_data** | **object** |  | 
+**error_message** | **str** |  | 
 
 ## Example
 

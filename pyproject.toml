@@ -1,10 +1,11 @@
 [project]
 name = "docspring"
-version = "3.0.0"
+version = "3.1.0"
 description = "DocSpring API"
 authors = [
-  {name = "OpenAPI Generator Community",email = "team@openapitools.org"},
+  {name = "DocSpring",email = "support@docspring.com"},
 ]
+license = "MIT"
 readme = "README.md"
 keywords = ["OpenAPI", "OpenAPI-Generator", "DocSpring API"]
 requires-python = ">=3.9"
@@ -18,7 +19,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
+Repository = "https://github.com/DocSpring/docspring-python"
 
 [tool.poetry]
 requires-poetry = ">=2.0"

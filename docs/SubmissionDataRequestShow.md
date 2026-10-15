@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **state** | **str** |  | 
 **viewed_at** | **str** |  | 
 **completed_at** | **str** |  | 
+**declined_at** | **str** |  | 
 **data** | **object** |  | 
 **auth_type** | **str** |  | 
 **auth_second_factor_type** | **str** |  | 

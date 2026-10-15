@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **batch_id** | **str** |  | 
 **data_requests** | [**List[SubmissionDataRequest]**](SubmissionDataRequest.md) |  | 
 **editable** | **bool** |  | 
+**error_message** | **str** |  | 
 **expired** | **bool** |  | 
 **expires_at** | **str** |  | 
 **id** | **str** |  | 

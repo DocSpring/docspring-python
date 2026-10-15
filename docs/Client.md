@@ -15,8 +15,10 @@ Method | HTTP request | Description
 [**create_html_template**](Client.md#create_html_template) | **POST** /templates?endpoint_variant&#x3D;create_html_template | Create a new HTML template
 [**create_pdf_template**](Client.md#create_pdf_template) | **POST** /templates | Create a new PDF template with a form POST file upload
 [**create_pdf_template_from_upload**](Client.md#create_pdf_template_from_upload) | **POST** /templates?endpoint_variant&#x3D;create_template_from_cached_upload | Create a new PDF template from a cached S3 file upload
+[**create_webhook**](Client.md#create_webhook) | **POST** /webhooks | Create a webhook
 [**delete_folder**](Client.md#delete_folder) | **DELETE** /folders/{folder_id} | Delete a folder
 [**delete_template**](Client.md#delete_template) | **DELETE** /templates/{template_id} | Delete a template
+[**delete_webhook**](Client.md#delete_webhook) | **DELETE** /webhooks/{webhook_id} | Delete a webhook
 [**expire_combined_submission**](Client.md#expire_combined_submission) | **DELETE** /combined_submissions/{combined_submission_id} | Expire a combined submission
 [**expire_submission**](Client.md#expire_submission) | **DELETE** /submissions/{submission_id} | Expire a PDF submission
 [**generate_pdf**](Client.md#generate_pdf) | **POST** /templates/{template_id}/submissions | Generate a PDF
@@ -28,12 +30,15 @@ Method | HTTP request | Description
 [**get_submission**](Client.md#get_submission) | **GET** /submissions/{submission_id} | Check the status of a PDF
 [**get_submission_batch**](Client.md#get_submission_batch) | **GET** /submissions/batches/{submission_batch_id} | Check the status of a submission batch job
 [**get_template**](Client.md#get_template) | **GET** /templates/{template_id} | Check the status of an uploaded template
+[**get_template_model_code**](Client.md#get_template_model_code) | **GET** /templates/{template_id}/model_code | Generate typed model code for a template
 [**get_template_schema**](Client.md#get_template_schema) | **GET** /templates/{template_id}/schema | Fetch the JSON schema for a template
+[**get_webhook**](Client.md#get_webhook) | **GET** /webhooks/{webhook_id} | Get a webhook
 [**list_combined_submissions**](Client.md#list_combined_submissions) | **GET** /combined_submissions | Get a list of all combined submissions
 [**list_folders**](Client.md#list_folders) | **GET** /folders/ | Get a list of all folders
 [**list_submissions**](Client.md#list_submissions) | **GET** /submissions | List all submissions
 [**list_template_submissions**](Client.md#list_template_submissions) | **GET** /templates/{template_id}/submissions | List all submissions for a given template
 [**list_templates**](Client.md#list_templates) | **GET** /templates | Get a list of all templates
+[**list_webhooks**](Client.md#list_webhooks) | **GET** /webhooks | Get a list of all webhooks
 [**move_folder_to_folder**](Client.md#move_folder_to_folder) | **POST** /folders/{folder_id}/move | Move a folder
 [**move_template_to_folder**](Client.md#move_template_to_folder) | **POST** /templates/{template_id}/move | Move Template to folder
 [**publish_template_version**](Client.md#publish_template_version) | **POST** /templates/{template_id}/publish_version | Publish a template version
@@ -44,6 +49,7 @@ Method | HTTP request | Description
 [**update_template**](Client.md#update_template) | **PUT** /templates/{template_id} | Update a Template
 [**update_template_document**](Client.md#update_template_document) | **PUT** /templates/{template_id}?endpoint_variant&#x3D;update_template_pdf_with_form_post | Update a template&#39;s document with a form POST file upload
 [**update_template_document_from_upload**](Client.md#update_template_document_from_upload) | **PUT** /templates/{template_id}?endpoint_variant&#x3D;update_template_pdf_with_cached_upload | Update a template&#39;s document with a cached S3 file upload
+[**update_webhook**](Client.md#update_webhook) | **PUT** /webhooks/{webhook_id} | Update a webhook
 
 
 # **add_fields_to_template**
@@ -141,7 +147,7 @@ and data. Supports both synchronous (wait for all PDFs) and asynchronous process
 efficient than individual requests when creating multiple PDFs.
 
 See also:
-- [Batch and Combine PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Generate and merge PDFs in one request
+- [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits
 
 
 ### Example
@@ -304,6 +310,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | combined submission created |  -  |
 **422** | invalid request |  -  |
+**403** | test API token used to delete custom files |  -  |
 **400** | invalid JSON |  -  |
 **401** | authentication failed |  -  |
 
@@ -574,9 +581,9 @@ Name | Type | Description  | Notes
 
 Create a new data request token for form authentication
 
-Creates an authentication token for accessing a data request form. Tokens can be created
-for API access (1 hour expiration) or email links (30 day expiration). Returns a token
-and a pre-authenticated URL for the data request form.
+Creates an authentication token for accessing a data request form. Returns a token
+and a pre-authenticated URL for the data request form. The token remains valid until
+the data request is completed.
 
 See also:
 - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/)
@@ -1002,6 +1009,90 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **create_webhook**
+> Webhook create_webhook(data)
+
+Create a webhook
+
+Creates a webhook that delivers a POST request to your endpoint whenever a subscribed event
+occurs. Optionally scope the webhook to specific API tokens, templates, or folders.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.create_webhook_data import CreateWebhookData
+from docspring.models.webhook import Webhook
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    data = docspring.CreateWebhookData() # CreateWebhookData | 
+
+    try:
+        # Create a webhook
+        api_response = api_instance.create_webhook(data)
+        print("The response of Client->create_webhook:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->create_webhook: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **data** | [**CreateWebhookData**](CreateWebhookData.md)|  | 
+
+### Return type
+
+[**Webhook**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | webhook created |  -  |
+**422** | invalid parameters |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **delete_folder**
 > Folder delete_folder(folder_id)
 
@@ -1168,6 +1259,87 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | template version deleted successfully |  -  |
 **404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **delete_webhook**
+> Webhook delete_webhook(webhook_id)
+
+Delete a webhook
+
+Permanently deletes a webhook so it stops receiving events, and returns the deleted webhook.
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.webhook import Webhook
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    webhook_id = 'whk_1234567890abcdef01' # str | 
+
+    try:
+        # Delete a webhook
+        api_response = api_instance.delete_webhook(webhook_id)
+        print("The response of Client->delete_webhook:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->delete_webhook: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **webhook_id** | **str**|  | 
+
+### Return type
+
+[**Webhook**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | webhook deleted |  -  |
+**404** | webhook not found |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1348,7 +1520,7 @@ Name | Type | Description  | Notes
 Generate a PDF
 
 Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and
-asynchronous processing. Set `wait: false` to return immediately.
+asynchronous processing. Add the `wait=false` query parameter to return immediately.
 
 See also:
 - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata
@@ -2112,6 +2284,102 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_template_model_code**
+> TemplateModelCodeResponse get_template_model_code(template_id, lang)
+
+Generate typed model code for a template
+
+Generates typed model code for a template's submission data from its JSON schema, in
+TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go. Build your submission
+data with the generated types so your app catches mistakes before it calls the API.
+
+`root_type_name` is the type that describes the whole submission data object, qualified
+with its namespace or package where there is one. Java returns every class in `code`,
+each under a `// ClassName.java` comment: split them into one file per class.
+
+A template with no named fields returns 422, since there are no types to generate.
+
+See also:
+- [Generate Model Code](https://docspring.com/docs/template-editor/generate-model-code/) - Use the generated types
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.template_model_code_response import TemplateModelCodeResponse
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | 
+    lang = 'typescript' # str | The language to generate code for
+
+    try:
+        # Generate typed model code for a template
+        api_response = api_instance.get_template_model_code(template_id, lang)
+        print("The response of Client->get_template_model_code:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->get_template_model_code: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**|  | 
+ **lang** | **str**| The language to generate code for | 
+
+### Return type
+
+[**TemplateModelCodeResponse**](TemplateModelCodeResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | model code generated |  -  |
+**404** | template not found |  -  |
+**422** | unknown language |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_template_schema**
 > JsonSchema get_template_schema(template_id)
 
@@ -2195,6 +2463,87 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | template found |  -  |
 **404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_webhook**
+> Webhook get_webhook(webhook_id)
+
+Get a webhook
+
+Retrieves a single webhook by its ID.
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.webhook import Webhook
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    webhook_id = 'whk_1234567890abcdef01' # str | 
+
+    try:
+        # Get a webhook
+        api_response = api_instance.get_webhook(webhook_id)
+        print("The response of Client->get_webhook:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->get_webhook: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **webhook_id** | **str**|  | 
+
+### Return type
+
+[**Webhook**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | webhook found |  -  |
+**404** | webhook not found |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -2640,6 +2989,100 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | enumerate all templates |  -  |
 **404** | filter templates by invalid folder id |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **list_webhooks**
+> List[Webhook] list_webhooks(page=page, per_page=per_page, event_type=event_type, mode=mode, template_id=template_id, folder_id=folder_id, api_token_id=api_token_id)
+
+Get a list of all webhooks
+
+Returns a list of the webhooks configured for your account. Supports pagination and
+filtering by event type, mode, and the API token, template, or folder a webhook is scoped to.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.webhook import Webhook
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    page = 56 # int | Default: 1 (optional)
+    per_page = 56 # int | Default: 50 (optional)
+    event_type = 'submission.processed' # str | Filter by a subscribed event type (optional)
+    mode = 'live' # str | Filter by mode (test or live) (optional)
+    template_id = 'tpl_1234567890abcdef01' # str | Filter by a scoped template ID (optional)
+    folder_id = 'folder_id_example' # str | Filter by a scoped folder ID (optional)
+    api_token_id = 'api_token_id_example' # str | Filter by a scoped API token ID (optional)
+
+    try:
+        # Get a list of all webhooks
+        api_response = api_instance.list_webhooks(page=page, per_page=per_page, event_type=event_type, mode=mode, template_id=template_id, folder_id=folder_id, api_token_id=api_token_id)
+        print("The response of Client->list_webhooks:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->list_webhooks: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int**| Default: 1 | [optional] 
+ **per_page** | **int**| Default: 50 | [optional] 
+ **event_type** | **str**| Filter by a subscribed event type | [optional] 
+ **mode** | **str**| Filter by mode (test or live) | [optional] 
+ **template_id** | **str**| Filter by a scoped template ID | [optional] 
+ **folder_id** | **str**| Filter by a scoped folder ID | [optional] 
+ **api_token_id** | **str**| Filter by a scoped API token ID | [optional] 
+
+### Return type
+
+[**List[Webhook]**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | filter webhooks by scope and event type |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -3252,7 +3695,8 @@ Update a Template
 
 Updates template content and properties. For HTML templates, you can modify the HTML,
 SCSS, headers, footers, name, and description. Changes are applied to your draft
-template and do not affect published template versions.
+template and do not affect published template versions. The exception is
+`parent_folder_id`: moving the template to another folder moves its published versions too.
 
 
 ### Example
@@ -3327,6 +3771,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | update template success |  -  |
+**404** | folder not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3500,6 +3945,90 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | returns a template with updated document |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_webhook**
+> Webhook update_webhook(webhook_id, data)
+
+Update a webhook
+
+Updates the configuration of an existing webhook.
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.update_webhook_data import UpdateWebhookData
+from docspring.models.webhook import Webhook
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    webhook_id = 'whk_1234567890abcdef01' # str | 
+    data = docspring.UpdateWebhookData() # UpdateWebhookData | 
+
+    try:
+        # Update a webhook
+        api_response = api_instance.update_webhook(webhook_id, data)
+        print("The response of Client->update_webhook:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->update_webhook: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **webhook_id** | **str**|  | 
+ **data** | [**UpdateWebhookData**](UpdateWebhookData.md)|  | 
+
+### Return type
+
+[**Webhook**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | webhook updated |  -  |
+**404** | webhook not found |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

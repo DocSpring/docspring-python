@@ -16,6 +16,9 @@ Name | Type | Description | Notes
 **document_url** | **str** |  | 
 **editable_submissions** | **bool** |  | 
 **embed_domains** | **str** |  | 
+**embed_edit_allow_settings** | **bool** |  | 
+**embed_edit_allow_versioning** | **bool** |  | 
+**embed_edit_allow_document_replacement** | **bool** |  | 
 **encrypt_pdfs_password** | **str** |  | 
 **encrypt_pdfs** | **bool** |  | 
 **expiration_interval** | **str** |  | 
@@ -42,11 +45,15 @@ Name | Type | Description | Notes
 **version_published_at** | **str** |  | 
 **version** | **str** |  | 
 **webhook_url** | **str** |  | 
+**embed_edit_token** | **str** |  | [optional] 
 **demo** | **bool** |  | 
 **latest_version** | **str** |  | 
 **last_changed_at** | **str** |  | 
 **last_changed_by_type** | **str** |  | 
 **last_changed_by_id** | **str** |  | 
+**last_changed_by_external_name** | **str** |  | 
+**last_changed_by_external_email** | **str** |  | 
+**last_changed_by_external_id** | **str** |  | 
 
 ## Example
 

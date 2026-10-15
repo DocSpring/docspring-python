@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **parent_folder_id** | **str** |  | 
+**version** | **str** |  | [optional] 
 
 ## Example
 

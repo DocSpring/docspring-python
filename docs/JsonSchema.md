@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **var_schema** | **str** |  | [optional] 
 **id** | **str** |  | [optional] 
+**schema_id** | **str** |  | [optional] 
 **title** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **definitions** | **object** |  | [optional] 
@@ -14,6 +15,8 @@ Name | Type | Description | Notes
 **properties** | **object** |  | [optional] 
 **additional_properties** | **bool** |  | [optional] 
 **required** | **List[str]** |  | [optional] 
+**dependencies** | **object** |  | [optional] 
+**all_of** | **List[object]** |  | [optional] 
 
 ## Example
 

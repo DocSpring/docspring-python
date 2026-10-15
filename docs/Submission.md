@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **batch_id** | **str** |  | 
 **data_requests** | [**List[SubmissionDataRequest]**](SubmissionDataRequest.md) |  | 
 **editable** | **bool** |  | 
+**error_message** | **str** |  | 
 **expired** | **bool** |  | 
 **expires_at** | **str** |  | 
 **id** | **str** |  | 
@@ -28,9 +29,9 @@ Name | Type | Description | Notes
 **preview_generated_at** | **str** |  | 
 **audit_trail_download_url** | **str** |  | 
 **actions** | [**List[SubmissionAction]**](SubmissionAction.md) |  | 
-**source** | **str** |  | 
-**referrer** | **str** |  | 
-**data** | **object** |  | 
+**source** | **str** |  | [optional] 
+**referrer** | **str** |  | [optional] 
+**data** | **object** |  | [optional] 
 
 ## Example
 
