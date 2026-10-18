@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests are rate limited per account, and live PDFs use credits: a request over the limit returns 429 with a Retry-After header, and one your credits can't cover returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
 
     The version of the OpenAPI document: v1
     Contact: support@docspring.com
@@ -52,8 +52,8 @@ class CombinedSubmission(BaseModel):
         if info.context and info.context.get("skip_enum_validation"):
             return value
 
-        if value not in set(['pending', 'processed', 'error']):
-            raise ValueError("must be one of enum values ('pending', 'processed', 'error')")
+        if value not in set(['pending', 'processed', 'error', 'insufficient_credits']):
+            raise ValueError("must be one of enum values ('pending', 'processed', 'error', 'insufficient_credits')")
         return value
 
     model_config = ConfigDict(

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | 
 **event** | [**SubmissionDataRequestEvent**](SubmissionDataRequestEvent.md) |  | 
+**error** | **str** |  | [optional] 
 **errors** | **List[str]** |  | [optional] 
 
 ## Example

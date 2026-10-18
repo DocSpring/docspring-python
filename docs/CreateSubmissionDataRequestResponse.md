@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | 
 **data_request** | [**SubmissionDataRequestShow**](SubmissionDataRequestShow.md) |  | 
+**error** | **str** |  | [optional] 
 **errors** | **List[str]** |  | [optional] 
 
 ## Example

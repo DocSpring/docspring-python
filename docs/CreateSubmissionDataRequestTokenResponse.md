@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | 
 **token** | [**SubmissionDataRequestToken**](SubmissionDataRequestToken.md) |  | 
+**error** | **str** |  | [optional] 
 **errors** | **List[str]** |  | [optional] 
 
 ## Example

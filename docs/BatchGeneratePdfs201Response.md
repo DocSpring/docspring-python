@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **errors** | **List[str]** |  | [optional] 
 **submission_batch** | [**SubmissionBatch**](SubmissionBatch.md) |  | 
 **submissions** | **List[object]** |  | 
+**code** | **str** | &#x60;insufficient_credits&#x60; when the response is a 402. | [optional] 
 
 ## Example
 

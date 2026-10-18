@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests are rate limited per account, and live PDFs use credits: a request over the limit returns 429 with a Retry-After header, and one your credits can't cover returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
 
     The version of the OpenAPI document: v1
     Contact: support@docspring.com
@@ -92,7 +92,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'docspring-python-3.2.0'
+        self.user_agent = 'docspring-python-3.3.0'
         self.client_side_validation = configuration.client_side_validation
 
     def __enter__(self):

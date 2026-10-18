@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | 
 **custom_file** | [**CustomFile**](CustomFile.md) |  | 
+**error** | **str** |  | [optional] 
 **errors** | **List[str]** |  | [optional] 
 
 ## Example

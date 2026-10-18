@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **field_overrides** | **object** |  | [optional] 
 **metadata** | **object** |  | [optional] 
 **password** | **str** |  | [optional] 
-**test** | **bool** |  | [optional] 
+**test** | **bool** | Generate a watermarked test PDF. Test PDFs are free; live PDFs (the default) use credits. | [optional] 
 **version** | **str** |  | [optional] 
 
 ## Example

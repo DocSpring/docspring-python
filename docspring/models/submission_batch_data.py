@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests are rate limited per account, and live PDFs use credits: a request over the limit returns 429 with a Retry-After header, and one your credits can't cover returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
 
     The version of the OpenAPI document: v1
     Contact: support@docspring.com
@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,7 +31,7 @@ class SubmissionBatchData(BaseModel):
     submissions: List[Dict[str, Any]]
     template_id: Optional[StrictStr] = None
     template_version: Optional[StrictStr] = None
-    test: Optional[StrictBool] = None
+    test: Optional[StrictBool] = Field(default=None, description="Generate a watermarked test PDF. Test PDFs are free; live PDFs (the default) use credits.")
     __properties: ClassVar[List[str]] = ["metadata", "submissions", "template_id", "template_version", "test"]
 
     model_config = ConfigDict(

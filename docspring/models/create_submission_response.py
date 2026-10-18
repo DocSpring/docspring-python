@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests are rate limited per account, and live PDFs use credits: a request over the limit returns 429 with a Retry-After header, and one your credits can't cover returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
 
     The version of the OpenAPI document: v1
     Contact: support@docspring.com
@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr, ValidationInfo, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationInfo, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.submission_preview import SubmissionPreview
 from typing import Optional, Set
@@ -30,9 +30,11 @@ class CreateSubmissionResponse(BaseModel):
     """ # noqa: E501
     status: StrictStr
     submission: SubmissionPreview
+    error: Optional[StrictStr] = None
     errors: Optional[List[StrictStr]] = None
+    code: Optional[StrictStr] = Field(default=None, description="`insufficient_credits` when the response is a 402.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["status", "submission", "errors"]
+    __properties: ClassVar[List[str]] = ["status", "submission", "error", "errors", "code"]
 
     @field_validator('status')
     def status_validate_enum(cls, value, info: ValidationInfo):
@@ -108,7 +110,9 @@ class CreateSubmissionResponse(BaseModel):
         _obj = cls.model_validate({
             "status": obj.get("status"),
             "submission": SubmissionPreview.from_dict(obj["submission"]) if obj.get("submission") is not None else None,
-            "errors": obj.get("errors")
+            "error": obj.get("error"),
+            "errors": obj.get("errors"),
+            "code": obj.get("code")
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -7,7 +7,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | 
 **submission** | [**SubmissionPreview**](SubmissionPreview.md) |  | 
+**error** | **str** |  | [optional] 
 **errors** | **List[str]** |  | [optional] 
+**code** | **str** | &#x60;insufficient_credits&#x60; when the response is a 402. | [optional] 
 
 ## Example
 

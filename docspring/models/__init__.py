@@ -4,7 +4,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests are rate limited per account, and live PDFs use credits: a request over the limit returns 429 with a Retry-After header, and one your credits can't cover returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
 
     The version of the OpenAPI document: v1
     Contact: support@docspring.com
@@ -40,6 +40,7 @@ if __import__("typing").TYPE_CHECKING:
     from docspring.models.error_or_multiple_errors_response import ErrorOrMultipleErrorsResponse
     from docspring.models.error_response import ErrorResponse
     from docspring.models.folder import Folder
+    from docspring.models.forbidden_error_response import ForbiddenErrorResponse
     from docspring.models.json_schema import JsonSchema
     from docspring.models.list_submissions_response import ListSubmissionsResponse
     from docspring.models.move_folder_data import MoveFolderData
@@ -105,6 +106,7 @@ from docspring.models.custom_file import CustomFile
 from docspring.models.error_or_multiple_errors_response import ErrorOrMultipleErrorsResponse
 from docspring.models.error_response import ErrorResponse
 from docspring.models.folder import Folder
+from docspring.models.forbidden_error_response import ForbiddenErrorResponse
 from docspring.models.json_schema import JsonSchema
 from docspring.models.list_submissions_response import ListSubmissionsResponse
 from docspring.models.move_folder_data import MoveFolderData

@@ -28,6 +28,7 @@ docs/CustomFile.md
 docs/ErrorOrMultipleErrorsResponse.md
 docs/ErrorResponse.md
 docs/Folder.md
+docs/ForbiddenErrorResponse.md
 docs/JsonSchema.md
 docs/ListSubmissionsResponse.md
 docs/MoveFolderData.md
@@ -93,6 +94,7 @@ docspring/models/custom_file.py
 docspring/models/error_or_multiple_errors_response.py
 docspring/models/error_response.py
 docspring/models/folder.py
+docspring/models/forbidden_error_response.py
 docspring/models/json_schema.py
 docspring/models/list_submissions_response.py
 docspring/models/move_folder_data.py
@@ -160,6 +162,7 @@ test/test_custom_file.py
 test/test_error_or_multiple_errors_response.py
 test/test_error_response.py
 test/test_folder.py
+test/test_forbidden_error_response.py
 test/test_json_schema.py
 test/test_list_submissions_response.py
 test/test_move_folder_data.py

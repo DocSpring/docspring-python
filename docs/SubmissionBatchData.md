@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **submissions** | **List[object]** |  | 
 **template_id** | **str** |  | [optional] 
 **template_version** | **str** |  | [optional] 
-**test** | **bool** |  | [optional] 
+**test** | **bool** | Generate a watermarked test PDF. Test PDFs are free; live PDFs (the default) use credits. | [optional] 
 
 ## Example
 

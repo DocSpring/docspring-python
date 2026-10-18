@@ -6,7 +6,7 @@ templates with your data, generates PDFs from HTML templates, combines PDFs and 
 [Documentation](https://docspring.com/docs/) · [API reference](https://docspring.com/docs/api/) ·
 [PyPI](https://pypi.org/project/docspring/) · [Changelog](https://github.com/DocSpring/docspring-python/blob/main/CHANGELOG.md)
 
-Version 3.2.0. Requires Python >=3.9.
+Version 3.3.0. Requires Python >=3.9.
 
 ## Install and configure
 

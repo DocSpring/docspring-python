@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests are rate limited per account, and live PDFs use credits: a request over the limit returns 429 with a Retry-After header, and one your credits can't cover returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
 
     The version of the OpenAPI document: v1
     Contact: support@docspring.com
@@ -66,8 +66,8 @@ class Submission(BaseModel):
         if info.context and info.context.get("skip_enum_validation"):
             return value
 
-        if value not in set(['pending', 'processed', 'invalid_data', 'error', 'image_download_failed', 'image_processing_failed', 'waiting_for_data_requests', 'syntax_error', 'account_suspended', 'license_revoked', 'accidental', 'declined']):
-            raise ValueError("must be one of enum values ('pending', 'processed', 'invalid_data', 'error', 'image_download_failed', 'image_processing_failed', 'waiting_for_data_requests', 'syntax_error', 'account_suspended', 'license_revoked', 'accidental', 'declined')")
+        if value not in set(['pending', 'processed', 'invalid_data', 'error', 'image_download_failed', 'image_processing_failed', 'waiting_for_data_requests', 'syntax_error', 'insufficient_credits', 'account_suspended', 'license_revoked', 'accidental', 'declined']):
+            raise ValueError("must be one of enum values ('pending', 'processed', 'invalid_data', 'error', 'image_download_failed', 'image_processing_failed', 'waiting_for_data_requests', 'syntax_error', 'insufficient_credits', 'account_suspended', 'license_revoked', 'accidental', 'declined')")
         return value
 
     @field_validator('template_type')

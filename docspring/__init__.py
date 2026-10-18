@@ -5,7 +5,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests are rate limited per account, and live PDFs use credits: a request over the limit returns 429 with a Retry-After header, and one your credits can't cover returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
 
     The version of the OpenAPI document: v1
     Contact: support@docspring.com
@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.2.0"
+__version__ = "3.3.0"
 
 # Define package exports
 __all__ = [
@@ -53,6 +53,7 @@ __all__ = [
     "ErrorOrMultipleErrorsResponse",
     "ErrorResponse",
     "Folder",
+    "ForbiddenErrorResponse",
     "JsonSchema",
     "ListSubmissionsResponse",
     "MoveFolderData",
@@ -128,6 +129,7 @@ if __import__("typing").TYPE_CHECKING:
     from docspring.models.error_or_multiple_errors_response import ErrorOrMultipleErrorsResponse as ErrorOrMultipleErrorsResponse
     from docspring.models.error_response import ErrorResponse as ErrorResponse
     from docspring.models.folder import Folder as Folder
+    from docspring.models.forbidden_error_response import ForbiddenErrorResponse as ForbiddenErrorResponse
     from docspring.models.json_schema import JsonSchema as JsonSchema
     from docspring.models.list_submissions_response import ListSubmissionsResponse as ListSubmissionsResponse
     from docspring.models.move_folder_data import MoveFolderData as MoveFolderData
@@ -209,6 +211,7 @@ from docspring.models.custom_file import CustomFile as CustomFile
 from docspring.models.error_or_multiple_errors_response import ErrorOrMultipleErrorsResponse as ErrorOrMultipleErrorsResponse
 from docspring.models.error_response import ErrorResponse as ErrorResponse
 from docspring.models.folder import Folder as Folder
+from docspring.models.forbidden_error_response import ForbiddenErrorResponse as ForbiddenErrorResponse
 from docspring.models.json_schema import JsonSchema as JsonSchema
 from docspring.models.list_submissions_response import ListSubmissionsResponse as ListSubmissionsResponse
 from docspring.models.move_folder_data import MoveFolderData as MoveFolderData

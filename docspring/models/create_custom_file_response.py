@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests are rate limited per account, and live PDFs use credits: a request over the limit returns 429 with a Retry-After header, and one your credits can't cover returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
 
     The version of the OpenAPI document: v1
     Contact: support@docspring.com
@@ -30,9 +30,10 @@ class CreateCustomFileResponse(BaseModel):
     """ # noqa: E501
     status: StrictStr
     custom_file: CustomFile
+    error: Optional[StrictStr] = None
     errors: Optional[List[StrictStr]] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["status", "custom_file", "errors"]
+    __properties: ClassVar[List[str]] = ["status", "custom_file", "error", "errors"]
 
     @field_validator('status')
     def status_validate_enum(cls, value, info: ValidationInfo):
@@ -108,6 +109,7 @@ class CreateCustomFileResponse(BaseModel):
         _obj = cls.model_validate({
             "status": obj.get("status"),
             "custom_file": CustomFile.from_dict(obj["custom_file"]) if obj.get("custom_file") is not None else None,
+            "error": obj.get("error"),
             "errors": obj.get("errors")
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties
