@@ -41,7 +41,7 @@ class TestSubmissionAction(unittest.TestCase):
                 state = 'pending',
                 action_type = 'webhook',
                 action_category = 'notification',
-                result_data = docspring.models.result_data.result_data(),
+                result_data = None,
                 error_message = ''
             )
         else:
@@ -51,7 +51,7 @@ class TestSubmissionAction(unittest.TestCase):
                 state = 'pending',
                 action_type = 'webhook',
                 action_category = 'notification',
-                result_data = docspring.models.result_data.result_data(),
+                result_data = None,
                 error_message = '',
         )
         """

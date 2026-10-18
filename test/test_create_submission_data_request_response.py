@@ -37,32 +37,7 @@ class TestCreateSubmissionDataRequestResponse(unittest.TestCase):
         if include_optional:
             return CreateSubmissionDataRequestResponse(
                 status = 'success',
-                data_request = docspring.models.submission_data_request_show.submission_data_request_show(
-                    id = '', 
-                    email = '', 
-                    name = '', 
-                    order = 56, 
-                    sort_order = 56, 
-                    fields = [
-                        ''
-                        ], 
-                    metadata = docspring.models.metadata.metadata(), 
-                    state = 'pending', 
-                    viewed_at = '', 
-                    completed_at = '', 
-                    declined_at = '', 
-                    data = docspring.models.data.data(), 
-                    auth_type = 'none', 
-                    auth_second_factor_type = 'none', 
-                    auth_provider = '', 
-                    auth_session_started_at = '', 
-                    auth_session_id_hash = '', 
-                    auth_user_id_hash = '', 
-                    auth_username_hash = '', 
-                    auth_phone_number_hash = '', 
-                    ip_address = '', 
-                    user_agent = '', 
-                    submission_id = '', ),
+                data_request = { },
                 errors = [
                     ''
                     ]
@@ -70,32 +45,7 @@ class TestCreateSubmissionDataRequestResponse(unittest.TestCase):
         else:
             return CreateSubmissionDataRequestResponse(
                 status = 'success',
-                data_request = docspring.models.submission_data_request_show.submission_data_request_show(
-                    id = '', 
-                    email = '', 
-                    name = '', 
-                    order = 56, 
-                    sort_order = 56, 
-                    fields = [
-                        ''
-                        ], 
-                    metadata = docspring.models.metadata.metadata(), 
-                    state = 'pending', 
-                    viewed_at = '', 
-                    completed_at = '', 
-                    declined_at = '', 
-                    data = docspring.models.data.data(), 
-                    auth_type = 'none', 
-                    auth_second_factor_type = 'none', 
-                    auth_provider = '', 
-                    auth_session_started_at = '', 
-                    auth_session_id_hash = '', 
-                    auth_user_id_hash = '', 
-                    auth_username_hash = '', 
-                    auth_phone_number_hash = '', 
-                    ip_address = '', 
-                    user_agent = '', 
-                    submission_id = '', ),
+                data_request = { },
         )
         """
 

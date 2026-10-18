@@ -31,6 +31,7 @@ class ListSubmissionsResponse(BaseModel):
     submissions: List[Submission]
     limit: StrictInt
     next_cursor: Optional[StrictStr]
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["submissions", "limit", "next_cursor"]
 
     model_config = ConfigDict(
@@ -63,8 +64,10 @@ class ListSubmissionsResponse(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -79,6 +82,11 @@ class ListSubmissionsResponse(BaseModel):
                 if _item_submissions:
                     _items.append(_item_submissions.to_dict())
             _dict['submissions'] = _items
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if next_cursor (nullable) is None
         # and model_fields_set contains the field
         if self.next_cursor is None and "next_cursor" in self.model_fields_set:
@@ -100,6 +108,11 @@ class ListSubmissionsResponse(BaseModel):
             "limit": obj.get("limit"),
             "next_cursor": obj.get("next_cursor")
         }, context={"skip_enum_validation": True})
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 

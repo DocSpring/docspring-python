@@ -45,68 +45,7 @@ class TestSubmissionBatchWithSubmissions(unittest.TestCase):
                 error_count = 56,
                 completion_percentage = 1.337,
                 submissions = [
-                    docspring.models.submission_preview.submission_preview(
-                        batch_id = '', 
-                        data_requests = [
-                            docspring.models.submission_data_request.submission_data_request(
-                                id = '', 
-                                email = '', 
-                                name = '', 
-                                order = 56, 
-                                sort_order = 56, 
-                                fields = [
-                                    ''
-                                    ], 
-                                metadata = docspring.models.metadata.metadata(), 
-                                state = 'pending', 
-                                viewed_at = '', 
-                                completed_at = '', 
-                                declined_at = '', 
-                                data = docspring.models.data.data(), 
-                                auth_type = 'none', 
-                                auth_second_factor_type = 'none', 
-                                auth_provider = '', 
-                                auth_session_started_at = '', 
-                                auth_session_id_hash = '', 
-                                auth_user_id_hash = '', 
-                                auth_username_hash = '', 
-                                auth_phone_number_hash = '', 
-                                ip_address = '', 
-                                user_agent = '', )
-                            ], 
-                        editable = True, 
-                        error_message = '', 
-                        expired = True, 
-                        expires_at = '', 
-                        id = '', 
-                        json_schema_errors = [
-                            ''
-                            ], 
-                        metadata = docspring.models.metadata.metadata(), 
-                        password = '', 
-                        processed_at = '', 
-                        state = 'pending', 
-                        template_id = '', 
-                        template_type = 'pdf', 
-                        template_version = '', 
-                        test = True, 
-                        truncated_text = docspring.models.truncated_text.truncated_text(), 
-                        pdf_hash = '', 
-                        download_url = '', 
-                        permanent_download_url = '', 
-                        preview_download_url = '', 
-                        preview_generated_at = '', 
-                        audit_trail_download_url = '', 
-                        actions = [
-                            docspring.models.submission_action.submission_action(
-                                id = '', 
-                                integration_id = '', 
-                                state = 'pending', 
-                                action_type = 'webhook', 
-                                action_category = 'notification', 
-                                result_data = docspring.models.result_data.result_data(), 
-                                error_message = '', )
-                            ], )
+                    { }
                     ]
             )
         else:

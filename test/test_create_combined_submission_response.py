@@ -37,34 +37,7 @@ class TestCreateCombinedSubmissionResponse(unittest.TestCase):
         if include_optional:
             return CreateCombinedSubmissionResponse(
                 status = 'success',
-                combined_submission = docspring.models.combined_submission.combined_submission(
-                    id = '', 
-                    state = 'pending', 
-                    expired = True, 
-                    expires_in = 56, 
-                    expires_at = '', 
-                    processed_at = '', 
-                    error_message = '', 
-                    submission_ids = [
-                        ''
-                        ], 
-                    source_pdfs = [
-                        None
-                        ], 
-                    metadata = docspring.models.metadata.metadata(), 
-                    password = '', 
-                    pdf_hash = '', 
-                    download_url = '', 
-                    actions = [
-                        docspring.models.combined_submission_action.combined_submission_action(
-                            id = '', 
-                            integration_id = '', 
-                            state = 'pending', 
-                            action_type = 'webhook', 
-                            action_category = 'notification', 
-                            result_data = docspring.models.result_data.result_data(), 
-                            error_message = '', )
-                        ], ),
+                combined_submission = { },
                 errors = [
                     ''
                     ]
@@ -72,34 +45,7 @@ class TestCreateCombinedSubmissionResponse(unittest.TestCase):
         else:
             return CreateCombinedSubmissionResponse(
                 status = 'success',
-                combined_submission = docspring.models.combined_submission.combined_submission(
-                    id = '', 
-                    state = 'pending', 
-                    expired = True, 
-                    expires_in = 56, 
-                    expires_at = '', 
-                    processed_at = '', 
-                    error_message = '', 
-                    submission_ids = [
-                        ''
-                        ], 
-                    source_pdfs = [
-                        None
-                        ], 
-                    metadata = docspring.models.metadata.metadata(), 
-                    password = '', 
-                    pdf_hash = '', 
-                    download_url = '', 
-                    actions = [
-                        docspring.models.combined_submission_action.combined_submission_action(
-                            id = '', 
-                            integration_id = '', 
-                            state = 'pending', 
-                            action_type = 'webhook', 
-                            action_category = 'notification', 
-                            result_data = docspring.models.result_data.result_data(), 
-                            error_message = '', )
-                        ], ),
+                combined_submission = { },
         )
         """
 

@@ -33,6 +33,7 @@ class BatchGeneratePdfs201Response(BaseModel):
     errors: Optional[List[StrictStr]] = None
     submission_batch: SubmissionBatch
     submissions: List[Dict[str, Any]]
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["status", "error", "errors", "submission_batch", "submissions"]
 
     @field_validator('status')
@@ -76,8 +77,10 @@ class BatchGeneratePdfs201Response(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -88,6 +91,11 @@ class BatchGeneratePdfs201Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of submission_batch
         if self.submission_batch:
             _dict['submission_batch'] = self.submission_batch.to_dict()
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         return _dict
 
     @classmethod
@@ -106,6 +114,11 @@ class BatchGeneratePdfs201Response(BaseModel):
             "submission_batch": SubmissionBatch.from_dict(obj["submission_batch"]) if obj.get("submission_batch") is not None else None,
             "submissions": obj.get("submissions")
         }, context={"skip_enum_validation": True})
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 

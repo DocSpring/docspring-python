@@ -54,14 +54,7 @@ class TestCombinedSubmission(unittest.TestCase):
                 pdf_hash = '',
                 download_url = '',
                 actions = [
-                    docspring.models.combined_submission_action.combined_submission_action(
-                        id = '', 
-                        integration_id = '', 
-                        state = 'pending', 
-                        action_type = 'webhook', 
-                        action_category = 'notification', 
-                        result_data = docspring.models.result_data.result_data(), 
-                        error_message = '', )
+                    { }
                     ]
             )
         else:
@@ -84,14 +77,7 @@ class TestCombinedSubmission(unittest.TestCase):
                 pdf_hash = '',
                 download_url = '',
                 actions = [
-                    docspring.models.combined_submission_action.combined_submission_action(
-                        id = '', 
-                        integration_id = '', 
-                        state = 'pending', 
-                        action_type = 'webhook', 
-                        action_category = 'notification', 
-                        result_data = docspring.models.result_data.result_data(), 
-                        error_message = '', )
+                    { }
                     ],
         )
         """

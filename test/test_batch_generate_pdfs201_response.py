@@ -41,15 +41,7 @@ class TestBatchGeneratePdfs201Response(unittest.TestCase):
                 errors = [
                     ''
                     ],
-                submission_batch = docspring.models.submission_batch.submission_batch(
-                    id = '', 
-                    state = 'pending', 
-                    metadata = docspring.models.metadata.metadata(), 
-                    processed_at = '', 
-                    total_count = 56, 
-                    pending_count = 56, 
-                    error_count = 56, 
-                    completion_percentage = 1.337, ),
+                submission_batch = { },
                 submissions = [
                     None
                     ]
@@ -57,15 +49,7 @@ class TestBatchGeneratePdfs201Response(unittest.TestCase):
         else:
             return BatchGeneratePdfs201Response(
                 status = 'success',
-                submission_batch = docspring.models.submission_batch.submission_batch(
-                    id = '', 
-                    state = 'pending', 
-                    metadata = docspring.models.metadata.metadata(), 
-                    processed_at = '', 
-                    total_count = 56, 
-                    pending_count = 56, 
-                    error_count = 56, 
-                    completion_percentage = 1.337, ),
+                submission_batch = { },
                 submissions = [
                     None
                     ],

@@ -37,11 +37,7 @@ class TestCreateSubmissionDataRequestTokenResponse(unittest.TestCase):
         if include_optional:
             return CreateSubmissionDataRequestTokenResponse(
                 status = 'success',
-                token = docspring.models.submission_data_request_token.submission_data_request_token(
-                    id = '', 
-                    secret = '', 
-                    expires_at = '', 
-                    data_request_url = '', ),
+                token = { },
                 errors = [
                     ''
                     ]
@@ -49,11 +45,7 @@ class TestCreateSubmissionDataRequestTokenResponse(unittest.TestCase):
         else:
             return CreateSubmissionDataRequestTokenResponse(
                 status = 'success',
-                token = docspring.models.submission_data_request_token.submission_data_request_token(
-                    id = '', 
-                    secret = '', 
-                    expires_at = '', 
-                    data_request_url = '', ),
+                token = { },
         )
         """
 

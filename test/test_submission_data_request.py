@@ -44,12 +44,12 @@ class TestSubmissionDataRequest(unittest.TestCase):
                 fields = [
                     ''
                     ],
-                metadata = docspring.models.metadata.metadata(),
+                metadata = None,
                 state = 'pending',
                 viewed_at = '',
                 completed_at = '',
                 declined_at = '',
-                data = docspring.models.data.data(),
+                data = None,
                 auth_type = 'none',
                 auth_second_factor_type = 'none',
                 auth_provider = '',
@@ -71,12 +71,12 @@ class TestSubmissionDataRequest(unittest.TestCase):
                 fields = [
                     ''
                     ],
-                metadata = docspring.models.metadata.metadata(),
+                metadata = None,
                 state = 'pending',
                 viewed_at = '',
                 completed_at = '',
                 declined_at = '',
-                data = docspring.models.data.data(),
+                data = None,
                 auth_type = 'none',
                 auth_second_factor_type = 'none',
                 auth_provider = '',

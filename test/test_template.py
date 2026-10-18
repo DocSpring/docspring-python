@@ -69,6 +69,7 @@ class TestTemplate(unittest.TestCase):
                         ]
                     ],
                 parent_folder_id = '',
+                parse_dates_using_template_date_format = True,
                 path = '',
                 permanent_document_url = '',
                 public_submissions = True,
@@ -148,6 +149,7 @@ class TestTemplate(unittest.TestCase):
                         ]
                     ],
                 parent_folder_id = '',
+                parse_dates_using_template_date_format = True,
                 path = '',
                 permanent_document_url = '',
                 public_submissions = True,

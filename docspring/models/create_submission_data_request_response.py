@@ -31,6 +31,7 @@ class CreateSubmissionDataRequestResponse(BaseModel):
     status: StrictStr
     data_request: SubmissionDataRequestShow
     errors: Optional[List[StrictStr]] = None
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["status", "data_request", "errors"]
 
     @field_validator('status')
@@ -74,8 +75,10 @@ class CreateSubmissionDataRequestResponse(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -86,6 +89,11 @@ class CreateSubmissionDataRequestResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of data_request
         if self.data_request:
             _dict['data_request'] = self.data_request.to_dict()
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         return _dict
 
     @classmethod
@@ -102,6 +110,11 @@ class CreateSubmissionDataRequestResponse(BaseModel):
             "data_request": SubmissionDataRequestShow.from_dict(obj["data_request"]) if obj.get("data_request") is not None else None,
             "errors": obj.get("errors")
         }, context={"skip_enum_validation": True})
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 

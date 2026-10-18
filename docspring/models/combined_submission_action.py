@@ -34,6 +34,7 @@ class CombinedSubmissionAction(BaseModel):
     action_category: StrictStr
     result_data: Dict[str, Any]
     error_message: Optional[StrictStr]
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "integration_id", "state", "action_type", "action_category", "result_data", "error_message"]
 
     @field_validator('state')
@@ -102,8 +103,10 @@ class CombinedSubmissionAction(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -111,6 +114,11 @@ class CombinedSubmissionAction(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
@@ -151,6 +159,11 @@ class CombinedSubmissionAction(BaseModel):
             "result_data": obj.get("result_data"),
             "error_message": obj.get("error_message")
         }, context={"skip_enum_validation": True})
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 

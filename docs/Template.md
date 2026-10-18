@@ -34,6 +34,7 @@ Name | Type | Description | Notes
 **page_count** | **int** |  | 
 **page_dimensions** | **List[List[float]]** |  | 
 **parent_folder_id** | **str** |  | 
+**parse_dates_using_template_date_format** | **bool** |  | 
 **path** | **str** |  | 
 **permanent_document_url** | **str** |  | 
 **public_submissions** | **bool** |  | 

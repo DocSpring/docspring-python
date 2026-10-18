@@ -37,14 +37,7 @@ class TestCreateSubmissionDataRequestEventResponse(unittest.TestCase):
         if include_optional:
             return CreateSubmissionDataRequestEventResponse(
                 status = 'success',
-                event = docspring.models.submission_data_request_event.submission_data_request_event(
-                    id = '', 
-                    submission_id = '', 
-                    submission_data_request_id = '', 
-                    event_type = 'send_request', 
-                    message_type = 'email', 
-                    message_recipient = '', 
-                    occurred_at = '', ),
+                event = { },
                 errors = [
                     ''
                     ]
@@ -52,14 +45,7 @@ class TestCreateSubmissionDataRequestEventResponse(unittest.TestCase):
         else:
             return CreateSubmissionDataRequestEventResponse(
                 status = 'success',
-                event = docspring.models.submission_data_request_event.submission_data_request_event(
-                    id = '', 
-                    submission_id = '', 
-                    submission_data_request_id = '', 
-                    event_type = 'send_request', 
-                    message_type = 'email', 
-                    message_recipient = '', 
-                    occurred_at = '', ),
+                event = { },
         )
         """
 

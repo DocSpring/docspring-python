@@ -38,31 +38,7 @@ class TestSubmission(unittest.TestCase):
             return Submission(
                 batch_id = '',
                 data_requests = [
-                    docspring.models.submission_data_request.submission_data_request(
-                        id = '', 
-                        email = '', 
-                        name = '', 
-                        order = 56, 
-                        sort_order = 56, 
-                        fields = [
-                            ''
-                            ], 
-                        metadata = docspring.models.metadata.metadata(), 
-                        state = 'pending', 
-                        viewed_at = '', 
-                        completed_at = '', 
-                        declined_at = '', 
-                        data = docspring.models.data.data(), 
-                        auth_type = 'none', 
-                        auth_second_factor_type = 'none', 
-                        auth_provider = '', 
-                        auth_session_started_at = '', 
-                        auth_session_id_hash = '', 
-                        auth_user_id_hash = '', 
-                        auth_username_hash = '', 
-                        auth_phone_number_hash = '', 
-                        ip_address = '', 
-                        user_agent = '', )
+                    { }
                     ],
                 editable = True,
                 error_message = '',
@@ -88,14 +64,7 @@ class TestSubmission(unittest.TestCase):
                 preview_generated_at = '',
                 audit_trail_download_url = '',
                 actions = [
-                    docspring.models.submission_action.submission_action(
-                        id = '', 
-                        integration_id = '', 
-                        state = 'pending', 
-                        action_type = 'webhook', 
-                        action_category = 'notification', 
-                        result_data = docspring.models.result_data.result_data(), 
-                        error_message = '', )
+                    { }
                     ],
                 source = 'api',
                 referrer = '',
@@ -105,31 +74,7 @@ class TestSubmission(unittest.TestCase):
             return Submission(
                 batch_id = '',
                 data_requests = [
-                    docspring.models.submission_data_request.submission_data_request(
-                        id = '', 
-                        email = '', 
-                        name = '', 
-                        order = 56, 
-                        sort_order = 56, 
-                        fields = [
-                            ''
-                            ], 
-                        metadata = docspring.models.metadata.metadata(), 
-                        state = 'pending', 
-                        viewed_at = '', 
-                        completed_at = '', 
-                        declined_at = '', 
-                        data = docspring.models.data.data(), 
-                        auth_type = 'none', 
-                        auth_second_factor_type = 'none', 
-                        auth_provider = '', 
-                        auth_session_started_at = '', 
-                        auth_session_id_hash = '', 
-                        auth_user_id_hash = '', 
-                        auth_username_hash = '', 
-                        auth_phone_number_hash = '', 
-                        ip_address = '', 
-                        user_agent = '', )
+                    { }
                     ],
                 editable = True,
                 error_message = '',
@@ -155,14 +100,7 @@ class TestSubmission(unittest.TestCase):
                 preview_generated_at = '',
                 audit_trail_download_url = '',
                 actions = [
-                    docspring.models.submission_action.submission_action(
-                        id = '', 
-                        integration_id = '', 
-                        state = 'pending', 
-                        action_type = 'webhook', 
-                        action_category = 'notification', 
-                        result_data = docspring.models.result_data.result_data(), 
-                        error_message = '', )
+                    { }
                     ],
         )
         """

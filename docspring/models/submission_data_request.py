@@ -49,6 +49,7 @@ class SubmissionDataRequest(BaseModel):
     auth_phone_number_hash: Optional[StrictStr]
     ip_address: Optional[StrictStr]
     user_agent: Optional[StrictStr]
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "email", "name", "order", "sort_order", "fields", "metadata", "state", "viewed_at", "completed_at", "declined_at", "data", "auth_type", "auth_second_factor_type", "auth_provider", "auth_session_started_at", "auth_session_id_hash", "auth_user_id_hash", "auth_username_hash", "auth_phone_number_hash", "ip_address", "user_agent"]
 
     @field_validator('state')
@@ -114,8 +115,10 @@ class SubmissionDataRequest(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -123,6 +126,11 @@ class SubmissionDataRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
@@ -248,6 +256,11 @@ class SubmissionDataRequest(BaseModel):
             "ip_address": obj.get("ip_address"),
             "user_agent": obj.get("user_agent")
         }, context={"skip_enum_validation": True})
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 

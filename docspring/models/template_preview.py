@@ -57,6 +57,7 @@ class TemplatePreview(BaseModel):
     page_count: StrictInt
     page_dimensions: Optional[List[Annotated[List[Union[StrictFloat, StrictInt]], Field(min_length=2, max_length=2)]]]
     parent_folder_id: Optional[StrictStr]
+    parse_dates_using_template_date_format: StrictBool
     path: StrictStr
     permanent_document_url: Optional[StrictStr]
     public_submissions: StrictBool
@@ -77,7 +78,8 @@ class TemplatePreview(BaseModel):
     last_changed_by_external_name: Optional[StrictStr]
     last_changed_by_external_email: Optional[StrictStr]
     last_changed_by_external_id: Optional[StrictStr]
-    __properties: ClassVar[List[str]] = ["add_data_request_submission_id_footers", "allow_additional_properties", "description", "document_filename", "document_md5", "document_parse_error", "document_processed", "document_state", "document_url", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs_password", "encrypt_pdfs", "expiration_interval", "expire_after", "expire_submissions", "external_predefined_fields_template_id", "external_predefined_fields_template_name", "first_template", "id", "locked", "merge_audit_trail_pdf", "name", "page_count", "page_dimensions", "parent_folder_id", "path", "permanent_document_url", "public_submissions", "public_web_form", "redirect_url", "slack_webhook_url", "template_type", "updated_at", "version_published_at", "version", "webhook_url", "embed_edit_token", "demo", "latest_version", "last_changed_at", "last_changed_by_type", "last_changed_by_id", "last_changed_by_external_name", "last_changed_by_external_email", "last_changed_by_external_id"]
+    additional_properties: Dict[str, Any] = {}
+    __properties: ClassVar[List[str]] = ["add_data_request_submission_id_footers", "allow_additional_properties", "description", "document_filename", "document_md5", "document_parse_error", "document_processed", "document_state", "document_url", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs_password", "encrypt_pdfs", "expiration_interval", "expire_after", "expire_submissions", "external_predefined_fields_template_id", "external_predefined_fields_template_name", "first_template", "id", "locked", "merge_audit_trail_pdf", "name", "page_count", "page_dimensions", "parent_folder_id", "parse_dates_using_template_date_format", "path", "permanent_document_url", "public_submissions", "public_web_form", "redirect_url", "slack_webhook_url", "template_type", "updated_at", "version_published_at", "version", "webhook_url", "embed_edit_token", "demo", "latest_version", "last_changed_at", "last_changed_by_type", "last_changed_by_id", "last_changed_by_external_name", "last_changed_by_external_email", "last_changed_by_external_id"]
 
     @field_validator('document_state')
     def document_state_validate_enum(cls, value, info: ValidationInfo):
@@ -145,8 +147,10 @@ class TemplatePreview(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -154,6 +158,11 @@ class TemplatePreview(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if description (nullable) is None
         # and model_fields_set contains the field
         if self.description is None and "description" in self.model_fields_set:
@@ -330,6 +339,7 @@ class TemplatePreview(BaseModel):
             "page_count": obj.get("page_count"),
             "page_dimensions": obj.get("page_dimensions"),
             "parent_folder_id": obj.get("parent_folder_id"),
+            "parse_dates_using_template_date_format": obj.get("parse_dates_using_template_date_format"),
             "path": obj.get("path"),
             "permanent_document_url": obj.get("permanent_document_url"),
             "public_submissions": obj.get("public_submissions"),
@@ -351,6 +361,11 @@ class TemplatePreview(BaseModel):
             "last_changed_by_external_email": obj.get("last_changed_by_external_email"),
             "last_changed_by_external_id": obj.get("last_changed_by_external_id")
         }, context={"skip_enum_validation": True})
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 

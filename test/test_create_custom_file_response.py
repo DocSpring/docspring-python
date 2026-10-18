@@ -37,9 +37,7 @@ class TestCreateCustomFileResponse(unittest.TestCase):
         if include_optional:
             return CreateCustomFileResponse(
                 status = 'success',
-                custom_file = docspring.models.custom_file.custom_file(
-                    id = '', 
-                    url = '', ),
+                custom_file = { },
                 errors = [
                     ''
                     ]
@@ -47,9 +45,7 @@ class TestCreateCustomFileResponse(unittest.TestCase):
         else:
             return CreateCustomFileResponse(
                 status = 'success',
-                custom_file = docspring.models.custom_file.custom_file(
-                    id = '', 
-                    url = '', ),
+                custom_file = { },
         )
         """
 

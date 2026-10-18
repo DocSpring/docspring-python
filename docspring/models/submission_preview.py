@@ -53,6 +53,7 @@ class SubmissionPreview(BaseModel):
     preview_generated_at: Optional[StrictStr]
     audit_trail_download_url: Optional[StrictStr]
     actions: List[SubmissionAction]
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["batch_id", "data_requests", "editable", "error_message", "expired", "expires_at", "id", "json_schema_errors", "metadata", "password", "processed_at", "state", "template_id", "template_type", "template_version", "test", "truncated_text", "pdf_hash", "download_url", "permanent_download_url", "preview_download_url", "preview_generated_at", "audit_trail_download_url", "actions"]
 
     @field_validator('state')
@@ -107,8 +108,10 @@ class SubmissionPreview(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -130,6 +133,11 @@ class SubmissionPreview(BaseModel):
                 if _item_actions:
                     _items.append(_item_actions.to_dict())
             _dict['actions'] = _items
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if batch_id (nullable) is None
         # and model_fields_set contains the field
         if self.batch_id is None and "batch_id" in self.model_fields_set:
@@ -252,6 +260,11 @@ class SubmissionPreview(BaseModel):
             "audit_trail_download_url": obj.get("audit_trail_download_url"),
             "actions": [SubmissionAction.from_dict(_item) for _item in obj["actions"]] if obj.get("actions") is not None else None
         }, context={"skip_enum_validation": True})
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 
