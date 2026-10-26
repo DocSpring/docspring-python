@@ -1,12 +1,12 @@
 # ErrorResponse
 
+The body of every error response.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**status** | **str** |  | 
-**error** | **str** |  | 
+**error** | [**ErrorInfo**](ErrorInfo.md) |  | 
 
 ## Example
 

@@ -1,0 +1,34 @@
+# TemplateFieldDependencyInput
+
+A conditional logic rule: when other fields' values meet its conditions, it shows its target fields, makes them required, or both.
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**action** | [**TemplateFieldDependencyAction**](TemplateFieldDependencyAction.md) | What the rule does to its targets when its conditions are met. | 
+**match** | [**TemplateFieldDependencyMatch**](TemplateFieldDependencyMatch.md) | Whether all of the conditions (the default) or any of them must be met. | [optional] 
+**conditions** | [**List[TemplateFieldDependencyConditionInput]**](TemplateFieldDependencyConditionInput.md) | The conditions on other fields' values. | 
+**targets** | **List[str]** | The names of the fields the rule shows or makes required. | 
+**group** | **str** | Marks a rule made for a field group in the template editor. Its targets outside the group are removed when the template is saved, and the rule is removed once the group has no fields. | [optional] 
+
+## Example
+
+```python
+from docspring.models.template_field_dependency_input import TemplateFieldDependencyInput
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of TemplateFieldDependencyInput from a JSON string
+template_field_dependency_input_instance = TemplateFieldDependencyInput.from_json(json)
+# print the JSON string representation of the object
+print(TemplateFieldDependencyInput.to_json())
+
+# convert the object into a dict
+template_field_dependency_input_dict = template_field_dependency_input_instance.to_dict()
+# create an instance of TemplateFieldDependencyInput from a dict
+template_field_dependency_input_from_dict = TemplateFieldDependencyInput.from_dict(template_field_dependency_input_dict)
+```
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

@@ -1,14 +1,17 @@
 # Folder
 
+A folder of templates. Folders can contain other folders.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | 
-**name** | **str** |  | 
-**path** | **str** |  | 
-**parent_folder_id** | **str** |  | 
+**id** | **str** | The folder's ID. | 
+**name** | **str** | The folder's name. It can't contain `/`, and is unique within its parent folder. | 
+**path** | **str** | The path of the folder this folder is in, such as `/Contracts`. `/` for a folder at the root. | 
+**parent_folder_id** | **str** | The ID of the folder this folder is in. Null for a folder at the root. | 
+**created_at** | **datetime** | When the folder was created. | 
+**updated_at** | **datetime** | When the folder was last updated. | 
 
 ## Example
 

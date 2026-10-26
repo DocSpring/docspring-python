@@ -1,12 +1,17 @@
 # CustomFile
 
+A PDF you uploaded to merge with other PDFs (POST /combined_pdfs). Get an upload URL with GET /uploads/presign first.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | 
-**url** | **str** |  | 
+**id** | **str** | The custom file's ID. | 
+**download_url** | **str** | A temporary link to download the file. | 
+**size** | **int** | The file's size in bytes. | 
+**content_type** | **str** | The file's media type, such as `application/pdf`. | 
+**created_at** | **datetime** | When the custom file was created. | 
+**updated_at** | **datetime** | When the custom file was last updated. | 
 
 ## Example
 

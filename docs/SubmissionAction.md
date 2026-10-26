@@ -1,17 +1,17 @@
 # SubmissionAction
 
+An upload of a PDF to your storage, such as an S3 bucket.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | 
-**integration_id** | **str** |  | 
-**state** | **str** |  | 
-**action_type** | **str** |  | 
-**action_category** | **str** |  | 
-**result_data** | **object** |  | 
-**error_message** | **str** |  | 
+**id** | **str** | The upload's ID. | 
+**integration_id** | **str** | The ID of the account integration it used. | 
+**state** | [**SubmissionActionState**](SubmissionActionState.md) | `pending` until the upload has run, then `processed`. `failed`: your storage rejected it. `error`: it failed in DocSpring. | 
+**action_type** | [**SubmissionActionType**](SubmissionActionType.md) | The kind of storage, such as `aws_s3_upload` for an S3 bucket. | 
+**result_data** | **Dict[str, object]** | Where the PDF was uploaded, such as the S3 bucket and key. | 
+**error_message** | **str** | Why the upload failed, when `state` is `failed` or `error`. | 
 
 ## Example
 
