@@ -32,6 +32,8 @@ class TemplateDocumentState(str, Enum):
     PASSWORD_REQUIRED = 'password_required'
     MALFORMED_PDF = 'malformed_pdf'
     UNKNOWN_ERROR = 'unknown_error'
+    DOWNLOADING = 'downloading'
+    DOWNLOAD_FAILED = 'download_failed'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

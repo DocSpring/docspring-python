@@ -21,6 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.generated_file import GeneratedFile
+from docspring.models.page_images import PageImages
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -32,8 +33,9 @@ class SubmissionFiles(BaseModel):
     pdf: Optional[GeneratedFile] = Field(default=None, description="The submission's PDF.")
     audit_trail: Optional[GeneratedFile] = Field(default=None, description="The audit trail of a submission with signature requests: who signed, when and how. It's also added to the end of the PDF when the template's `merge_audit_trail_pdf` is on.")
     preview: Optional[GeneratedFile] = Field(default=None, description="The preview PDF from POST /submissions/{submission_id}/generate_preview, such as for a submission still waiting for its signature requests.")
+    png: Optional[PageImages] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["pdf", "audit_trail", "preview"]
+    __properties: ClassVar[List[str]] = ["pdf", "audit_trail", "preview", "png"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -85,6 +87,9 @@ class SubmissionFiles(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of preview
         if self.preview:
             _dict['preview'] = self.preview.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of png
+        if self.png:
+            _dict['png'] = self.png.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -104,7 +109,8 @@ class SubmissionFiles(BaseModel):
         _obj = cls.model_validate({
             "pdf": GeneratedFile.from_dict(obj["pdf"]) if obj.get("pdf") is not None else None,
             "audit_trail": GeneratedFile.from_dict(obj["audit_trail"]) if obj.get("audit_trail") is not None else None,
-            "preview": GeneratedFile.from_dict(obj["preview"]) if obj.get("preview") is not None else None
+            "preview": GeneratedFile.from_dict(obj["preview"]) if obj.get("preview") is not None else None,
+            "png": PageImages.from_dict(obj["png"]) if obj.get("png") is not None else None
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties
         for _key in obj.keys():

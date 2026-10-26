@@ -27,6 +27,13 @@ class TestClient(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_add_template_fields(self) -> None:
+        """Test case for add_template_fields
+
+        Add fields to a template
+        """
+        pass
+
     def test_copy_template(self) -> None:
         """Test case for copy_template
 
@@ -139,6 +146,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_generate_submission_files(self) -> None:
+        """Test case for generate_submission_files
+
+        Generate more files
+        """
+        pass
+
     def test_generate_submission_preview(self) -> None:
         """Test case for generate_submission_preview
 
@@ -202,10 +216,24 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_get_template_diff(self) -> None:
+        """Test case for get_template_diff
+
+        Compare a version of a template with the one before it
+        """
+        pass
+
     def test_get_template_model_code(self) -> None:
         """Test case for get_template_model_code
 
         Generate typed code for a template's submission data
+        """
+        pass
+
+    def test_get_template_page_images(self) -> None:
+        """Test case for get_template_page_images
+
+        Get images of a template's pages
         """
         pass
 
@@ -251,6 +279,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_list_template_fields(self) -> None:
+        """Test case for list_template_fields
+
+        List a template's fields
+        """
+        pass
+
     def test_list_template_submissions(self) -> None:
         """Test case for list_template_submissions
 
@@ -293,10 +328,24 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_remove_template_fields(self) -> None:
+        """Test case for remove_template_fields
+
+        Remove fields from a template
+        """
+        pass
+
     def test_rename_folder(self) -> None:
         """Test case for rename_folder
 
         Rename a folder
+        """
+        pass
+
+    def test_reorder_template_fields(self) -> None:
+        """Test case for reorder_template_fields
+
+        Reorder a template's fields
         """
         pass
 
@@ -335,6 +384,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_update_template_fields(self) -> None:
+        """Test case for update_template_fields
+
+        Update a template's fields
+        """
+        pass
+
     def test_update_webhook(self) -> None:
         """Test case for update_webhook
 
@@ -353,6 +409,13 @@ class TestClient(unittest.TestCase):
         """Test case for upload_template_document
 
         Replace a template's PDF with an uploaded PDF
+        """
+        pass
+
+    def test_validate_submission(self) -> None:
+        """Test case for validate_submission
+
+        Check a submission without creating it
         """
         pass
 

@@ -26,12 +26,14 @@ from pydantic_core import to_jsonable_python
 
 class UpdateTemplateDocumentRequest(BaseModel):
     """
-    The new PDF.
+    The new PDF, as one of `cache_id`, `document_url` and `document_base64`.
     """ # noqa: E501
-    cache_id: StrictStr = Field(description="The `fields.key` of the new PDF, uploaded with the presigned upload (GET /uploads/presign).")
-    filename: Optional[StrictStr] = Field(default=None, description="The PDF's file name, for a `cache_id` (presigned uploads don't send one).")
+    cache_id: Optional[StrictStr] = Field(default=None, description="The `fields.key` of the new PDF, uploaded with the presigned upload (GET /uploads/presign).")
+    document_url: Optional[StrictStr] = Field(default=None, description="An https:// link to the template's PDF (up to 100 MB), instead of `cache_id`. DocSpring downloads it after responding, following redirects to other https:// links: the template's `document.state` is `downloading` until then (sync.api hosts wait for it). If it can't be downloaded, the state is `download_failed` and `document.error_message` says why.")
+    document_base64: Optional[StrictStr] = Field(default=None, description="The template's PDF, encoded as base64 (a `data:` URI works too), instead of `cache_id`. Up to 7 MB before it's encoded: send a larger file with `cache_id` or `document_url`.")
+    filename: Optional[StrictStr] = Field(default=None, description="The PDF's file name, for a `cache_id` (presigned uploads don't send one) or `document_base64`. A `document_url`'s is the last part of its path unless you set it.")
     reimport_fields: Optional[StrictBool] = Field(default=None, description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.")
-    __properties: ClassVar[List[str]] = ["cache_id", "filename", "reimport_fields"]
+    __properties: ClassVar[List[str]] = ["cache_id", "document_url", "document_base64", "filename", "reimport_fields"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -86,6 +88,8 @@ class UpdateTemplateDocumentRequest(BaseModel):
 
         _obj = cls.model_validate({
             "cache_id": obj.get("cache_id"),
+            "document_url": obj.get("document_url"),
+            "document_base64": obj.get("document_base64"),
             "filename": obj.get("filename"),
             "reimport_fields": obj.get("reimport_fields")
         }, context={"skip_enum_validation": True})

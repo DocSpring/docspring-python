@@ -37,12 +37,13 @@ class TestUpdateTemplateDocumentRequest(unittest.TestCase):
         if include_optional:
             return UpdateTemplateDocumentRequest(
                 cache_id = '',
+                document_url = '',
+                document_base64 = '',
                 filename = '',
                 reimport_fields = True
             )
         else:
             return UpdateTemplateDocumentRequest(
-                cache_id = '',
         )
         """
 

@@ -22,6 +22,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.error_detail import ErrorDetail
+from docspring.models.output_format import OutputFormat
 from docspring.models.signature_request import SignatureRequest
 from docspring.models.submission_action import SubmissionAction
 from docspring.models.submission_files import SubmissionFiles
@@ -53,7 +54,8 @@ class Submission(BaseModel):
     signature_requests: List[SignatureRequest] = Field(description="The people asked to sign the submission (and fill in their fields), in order.")
     actions: List[SubmissionAction] = Field(description="The uploads of the submission's PDF to your storage (account integrations).")
     truncated_text: Optional[Dict[str, List[StrictStr]]] = Field(description="The text of each field that didn't fit in it, by field name. Left out (null) with `data`, and empty once the submission has expired.")
-    files: SubmissionFiles = Field(description="The generated files: `pdf` once the submission has been processed, `audit_trail` once its signature requests are completed, and `preview` once a preview PDF has been generated. Empty once the submission has expired.")
+    output_formats: List[OutputFormat] = Field(description="What the submission makes: `pdf`, and `png` (an image of each page of the PDF, up to 100 pages) when you ask for it. Default `[\"pdf\"]`. POST /submissions/{submission_id}/generate_files adds `png` to a processed submission.")
+    files: SubmissionFiles = Field(description="The generated files: `pdf` once the submission has been processed, `png` (the images of the PDF's pages, when `output_formats` has it: `files.png.pages[0]` is page 1), `audit_trail` once its signature requests are completed, and `preview` once a preview PDF has been generated. Empty once the submission has expired.")
     preview_generated_at: Optional[datetime] = Field(description="When the preview PDF was generated. Null if there is no preview.")
     expired: StrictBool = Field(description="An expired submission's data, metadata, password and PDF have been deleted.")
     expires_at: Optional[datetime] = Field(description="When the submission expires. Null if it's kept until you delete it.")
@@ -61,7 +63,7 @@ class Submission(BaseModel):
     created_at: datetime = Field(description="When the submission was created.")
     updated_at: datetime = Field(description="When the submission was last updated.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "template_id", "template_type", "template_version", "batch_id", "source", "state", "test", "editable", "data", "data_errors", "error_message", "metadata", "has_password", "signature_requests", "actions", "truncated_text", "files", "preview_generated_at", "expired", "expires_at", "processed_at", "created_at", "updated_at"]
+    __properties: ClassVar[List[str]] = ["id", "template_id", "template_type", "template_version", "batch_id", "source", "state", "test", "editable", "data", "data_errors", "error_message", "metadata", "has_password", "signature_requests", "actions", "truncated_text", "output_formats", "files", "preview_generated_at", "expired", "expires_at", "processed_at", "created_at", "updated_at"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -204,6 +206,7 @@ class Submission(BaseModel):
             "signature_requests": [SignatureRequest.from_dict(_item) for _item in obj["signature_requests"]] if obj.get("signature_requests") is not None else None,
             "actions": [SubmissionAction.from_dict(_item) for _item in obj["actions"]] if obj.get("actions") is not None else None,
             "truncated_text": obj.get("truncated_text"),
+            "output_formats": obj.get("output_formats"),
             "files": SubmissionFiles.from_dict(obj["files"]) if obj.get("files") is not None else None,
             "preview_generated_at": obj.get("preview_generated_at"),
             "expired": obj.get("expired"),

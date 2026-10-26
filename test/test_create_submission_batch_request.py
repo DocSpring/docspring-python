@@ -40,6 +40,9 @@ class TestCreateSubmissionBatchRequest(unittest.TestCase):
                 template_id = '',
                 template_version = '',
                 test = True,
+                output_formats = [
+                    'pdf'
+                    ],
                 submissions = [
                     docspring.models.submission_input.SubmissionInput(
                         test = True, 
@@ -47,6 +50,9 @@ class TestCreateSubmissionBatchRequest(unittest.TestCase):
                         data = { }, 
                         metadata = { }, 
                         password = '', 
+                        output_formats = [
+                            'pdf'
+                            ], 
                         expires_in = 56, 
                         field_overrides = {
                             'key' : docspring.models.field_override.FieldOverride(
@@ -129,6 +135,9 @@ class TestCreateSubmissionBatchRequest(unittest.TestCase):
                         data = { }, 
                         metadata = { }, 
                         password = '', 
+                        output_formats = [
+                            'pdf'
+                            ], 
                         expires_in = 56, 
                         field_overrides = {
                             'key' : docspring.models.field_override.FieldOverride(

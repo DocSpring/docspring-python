@@ -97,6 +97,17 @@ class TestCreateTemplateRequest(unittest.TestCase):
                             ], 
                         group = '', )
                     ],
+                predefined_fields = [
+                    docspring.models.predefined_field_input.PredefinedFieldInput(
+                        name = '', 
+                        display_name = '', 
+                        title = '', 
+                        type = null, 
+                        option_list = '', 
+                        required_in_template = True, 
+                        field_required = True, )
+                    ],
+                predefined_fields_sample_data = { },
                 html = '',
                 scss = '',
                 header_html = '',
@@ -113,6 +124,8 @@ class TestCreateTemplateRequest(unittest.TestCase):
                     margin_left = '', 
                     margin_right = '', ),
                 cache_id = '',
+                document_url = '',
+                document_base64 = '',
                 filename = '',
                 detect_fields = True,
                 field_source = 'auto',

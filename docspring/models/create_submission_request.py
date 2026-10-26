@@ -21,6 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.field_override import FieldOverride
+from docspring.models.output_format import OutputFormat
 from docspring.models.signature_request_input import SignatureRequestInput
 from typing import Optional, Set
 from typing_extensions import Self
@@ -35,13 +36,14 @@ class CreateSubmissionRequest(BaseModel):
     data: Optional[Dict[str, Any]] = Field(default=None, description="The values of the template's fields, by field name. Required for a PDF template, unless `signature_requests` collects the values.")
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Your own data about the submission, such as an ID from your app. It isn't printed on the PDF.")
     password: Optional[StrictStr] = Field(default=None, description="A password that the PDF needs to be opened with. It's never returned; `has_password` says if it's set.")
+    output_formats: Optional[List[OutputFormat]] = Field(default=None, description="What the submission makes: `pdf`, and `png` (an image of each page of the PDF, up to 100 pages) when you ask for it. Default `[\"pdf\"]`. POST /submissions/{submission_id}/generate_files adds `png` to a processed submission.")
     expires_in: Optional[StrictInt] = Field(default=None, description="Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template's expiration setting. A submission that isn't processed, such as one with invalid data, is kept for at least 48 hours.")
     field_overrides: Optional[Dict[str, FieldOverride]] = Field(default=None, description="Changes to field settings for this submission only, by field name, such as `{\"name\": {\"required\": false, \"font_size\": 9}}`. A setting that identifies the field (`id`, `name`, `type`), that only the template sets (such as `description`), or that doesn't apply to the field's type and display type (such as `check_character` on a field displayed as text) is a 422. With `signature_requests`, `editable: true` is a 422, and a `default` for a signature or initials field makes the submission `invalid_data`.")
     html: Optional[StrictStr] = Field(default=None, description="For an HTML template, HTML to use instead of the template's.")
     css: Optional[StrictStr] = Field(default=None, description="For an HTML template, CSS to use instead of the template's.")
     signature_requests: Optional[List[SignatureRequestInput]] = Field(default=None, description="The people who sign the PDF, and fill in their fields first. The PDF is generated once every signature request is completed. PDF templates only. Without `role`s, the first signature request is `Signer 1`, the second `Signer 2`, and so on. To leave a signer out, give every signature request its `role` and leave that one's out. Only the signers sign: a value for a signature or initials field in `data` makes the submission `invalid_data`.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["test", "editable", "data", "metadata", "password", "expires_in", "field_overrides", "html", "css", "signature_requests"]
+    __properties: ClassVar[List[str]] = ["test", "editable", "data", "metadata", "password", "output_formats", "expires_in", "field_overrides", "html", "css", "signature_requests"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -119,6 +121,7 @@ class CreateSubmissionRequest(BaseModel):
             "data": obj.get("data"),
             "metadata": obj.get("metadata"),
             "password": obj.get("password"),
+            "output_formats": obj.get("output_formats"),
             "expires_in": obj.get("expires_in"),
             "field_overrides": dict(
                 (_k, FieldOverride.from_dict(_v))

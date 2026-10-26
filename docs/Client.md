@@ -4,6 +4,7 @@ All URIs are relative to *https://sync.api.docspring.com/api/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**add_template_fields**](Client.md#add_template_fields) | **POST** /templates/{template_id}/fields | Add fields to a template
 [**copy_template**](Client.md#copy_template) | **POST** /templates/{template_id}/copy | Copy a template
 [**create_combined_pdf**](Client.md#create_combined_pdf) | **POST** /combined_pdfs | Combine PDFs
 [**create_custom_file_from_upload**](Client.md#create_custom_file_from_upload) | **POST** /custom_files | Create a custom file from an upload
@@ -20,6 +21,7 @@ Method | HTTP request | Description
 [**delete_webhook**](Client.md#delete_webhook) | **DELETE** /webhooks/{webhook_id} | Delete a webhook
 [**expire_combined_pdf**](Client.md#expire_combined_pdf) | **DELETE** /combined_pdfs/{combined_pdf_id} | Expire a combined PDF
 [**expire_submission**](Client.md#expire_submission) | **DELETE** /submissions/{submission_id} | Expire a submission
+[**generate_submission_files**](Client.md#generate_submission_files) | **POST** /submissions/{submission_id}/generate_files | Generate more files
 [**generate_submission_preview**](Client.md#generate_submission_preview) | **POST** /submissions/{submission_id}/generate_preview | Generate a preview PDF
 [**get_combined_pdf**](Client.md#get_combined_pdf) | **GET** /combined_pdfs/{combined_pdf_id} | Get a combined PDF
 [**get_custom_file**](Client.md#get_custom_file) | **GET** /custom_files/{custom_file_id} | Get a custom file
@@ -29,29 +31,124 @@ Method | HTTP request | Description
 [**get_submission**](Client.md#get_submission) | **GET** /submissions/{submission_id} | Get a submission
 [**get_submission_batch**](Client.md#get_submission_batch) | **GET** /submissions/batches/{submission_batch_id} | Get a batch
 [**get_template**](Client.md#get_template) | **GET** /templates/{template_id} | Get a template
+[**get_template_diff**](Client.md#get_template_diff) | **GET** /templates/{template_id}/diff | Compare a version of a template with the one before it
 [**get_template_model_code**](Client.md#get_template_model_code) | **GET** /templates/{template_id}/model_code | Generate typed code for a template's submission data
+[**get_template_page_images**](Client.md#get_template_page_images) | **GET** /templates/{template_id}/page_images | Get images of a template's pages
 [**get_template_schema**](Client.md#get_template_schema) | **GET** /templates/{template_id}/schema | Get the JSON Schema of a template's submission data
 [**get_webhook**](Client.md#get_webhook) | **GET** /webhooks/{webhook_id} | Get a webhook
 [**list_combined_pdfs**](Client.md#list_combined_pdfs) | **GET** /combined_pdfs | List combined PDFs
 [**list_custom_files**](Client.md#list_custom_files) | **GET** /custom_files | List custom files
 [**list_folders**](Client.md#list_folders) | **GET** /folders | List folders
 [**list_submissions**](Client.md#list_submissions) | **GET** /submissions | List submissions
+[**list_template_fields**](Client.md#list_template_fields) | **GET** /templates/{template_id}/fields | List a template's fields
 [**list_template_submissions**](Client.md#list_template_submissions) | **GET** /templates/{template_id}/submissions | List a template's submissions
 [**list_templates**](Client.md#list_templates) | **GET** /templates | List templates
 [**list_webhooks**](Client.md#list_webhooks) | **GET** /webhooks | List webhooks
 [**move_folder**](Client.md#move_folder) | **POST** /folders/{folder_id}/move | Move a folder
 [**move_template**](Client.md#move_template) | **POST** /templates/{template_id}/move | Move a template to a folder
 [**publish_template_version**](Client.md#publish_template_version) | **POST** /templates/{template_id}/publish_version | Publish a template version
+[**remove_template_fields**](Client.md#remove_template_fields) | **POST** /templates/{template_id}/fields/remove | Remove fields from a template
 [**rename_folder**](Client.md#rename_folder) | **POST** /folders/{folder_id}/rename | Rename a folder
+[**reorder_template_fields**](Client.md#reorder_template_fields) | **POST** /templates/{template_id}/fields/reorder | Reorder a template's fields
 [**restore_template_version**](Client.md#restore_template_version) | **POST** /templates/{template_id}/restore_version | Restore a template version
 [**test_authentication**](Client.md#test_authentication) | **GET** /authentication | Test authentication
 [**update_signature_request**](Client.md#update_signature_request) | **PUT** /signature_requests/{signature_request_id} | Update a signature request
 [**update_template**](Client.md#update_template) | **PUT** /templates/{template_id} | Update a template
 [**update_template_document**](Client.md#update_template_document) | **PUT** /templates/{template_id}/document | Replace a template's PDF
+[**update_template_fields**](Client.md#update_template_fields) | **PUT** /templates/{template_id}/fields | Update a template's fields
 [**update_webhook**](Client.md#update_webhook) | **PUT** /webhooks/{webhook_id} | Update a webhook
 [**upload_template**](Client.md#upload_template) | **POST** /templates/upload | Create a PDF template from an uploaded PDF
 [**upload_template_document**](Client.md#upload_template_document) | **PUT** /templates/{template_id}/document/upload | Replace a template's PDF with an uploaded PDF
+[**validate_submission**](Client.md#validate_submission) | **POST** /templates/{template_id}/submissions/validate | Check a submission without creating it
 
+
+# **add_template_fields**
+> TemplateFields add_template_fields(template_id, body)
+
+Add fields to a template
+
+Adds fields to a template's draft and returns all of its fields. Publish a version for submissions of
+published versions to have them.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.add_template_fields_request import AddTemplateFieldsRequest
+from docspring.models.template_fields import TemplateFields
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
+    body = {"fields":[{"name":"email","page":1,"x":100,"y":300,"width":600,"height":80,"type":"email","required":true},{"name":"signature","page":1,"x":100,"y":400,"width":600,"height":150,"type":"signature","display_type":"image"}]} # AddTemplateFieldsRequest | The fields to add to the template's draft.
+
+    try:
+        # Add fields to a template
+        api_response = api_instance.add_template_fields(template_id, body)
+        print("The response of Client->add_template_fields:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->add_template_fields: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **body** | [**AddTemplateFieldsRequest**](AddTemplateFieldsRequest.md)| The fields to add to the template's draft. | 
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | fields added |  -  |
+**409** | the template's PDF hasn't been processed |  -  |
+**422** | invalid fields |  -  |
+**404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **copy_template**
 > Template copy_template(template_id, body=body)
@@ -626,7 +723,7 @@ with docspring.ApiClient(configuration) as api_client:
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"data":{"first_name":"John","last_name":"Smith","phone_number":"+11234567890"},"metadata":{"user_id":42},"test":true} # CreateSubmissionRequest | The submission's data and settings.
     version = 'version_example' # str | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). (optional)
-    wait = True # bool | Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)
+    wait = True # bool | Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)
 
     try:
         # Generate a PDF
@@ -647,7 +744,7 @@ Name | Type | Description  | Notes
  **template_id** | **str**| The template's ID. | 
  **body** | [**CreateSubmissionRequest**](CreateSubmissionRequest.md)| The submission's data and settings. | 
  **version** | **str**| The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional] 
- **wait** | **bool**| Wait until the PDF has been generated before responding. Default true on sync.api hosts. | [optional] 
+ **wait** | **bool**| Wait until the files have been generated before responding. Default true on sync.api hosts. | [optional] 
 
 ### Return type
 
@@ -814,7 +911,7 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     body = {"template_type":"html","name":"Receipt","html":"<h1>Receipt for {{ name }}</h1>","scss":"h1 { font-size: 24px; }","html_engine_options":{"format":"A4","landscape":true},"parent_folder_id":"fld_1234567890abcdef01"} # CreateTemplateRequest | The template to create.
-    wait = True # bool | Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)
+    wait = True # bool | Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. (optional)
 
     try:
         # Create a template
@@ -833,7 +930,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**CreateTemplateRequest**](CreateTemplateRequest.md)| The template to create. | 
- **wait** | **bool**| Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional] 
+ **wait** | **bool**| Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. | [optional] 
 
 ### Return type
 
@@ -1436,6 +1533,101 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | submission expired |  -  |
 **403** | test API token |  -  |
+**404** | submission not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **generate_submission_files**
+> Submission generate_submission_files(submission_id, body, wait=wait)
+
+Generate more files
+
+Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the
+PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.
+
+Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you
+pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`.
+A file that couldn't be made has the state `error` and an `error_message`, and the submission stays
+processed. Asking for a format the submission already has (or is making) changes nothing.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.generate_submission_files_request import GenerateSubmissionFilesRequest
+from docspring.models.submission import Submission
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    submission_id = 'sub_1234567890abcdef01' # str | The submission's ID.
+    body = {"formats":["png"]} # GenerateSubmissionFilesRequest | The formats to make.
+    wait = True # bool | Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)
+
+    try:
+        # Generate more files
+        api_response = api_instance.generate_submission_files(submission_id, body, wait=wait)
+        print("The response of Client->generate_submission_files:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->generate_submission_files: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **submission_id** | **str**| The submission's ID. | 
+ **body** | [**GenerateSubmissionFilesRequest**](GenerateSubmissionFilesRequest.md)| The formats to make. | 
+ **wait** | **bool**| Wait until the files have been generated before responding. Default true on sync.api hosts. | [optional] 
+
+### Return type
+
+[**Submission**](Submission.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | images of the pages requested |  -  |
+**409** | files not possible |  -  |
+**422** | invalid request |  -  |
 **404** | submission not found |  -  |
 **401** | authentication failed |  -  |
 
@@ -2178,6 +2370,93 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_template_diff**
+> TemplateDiff get_template_diff(template_id, version=version)
+
+Compare a version of a template with the one before it
+
+Returns what changed in the template's draft since its latest published version (or in a published version
+since the one before it): fields added, removed, changed and moved, the settings that changed, and whether
+the document was replaced. Check it before you publish a version.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.template_diff import TemplateDiff
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
+    version = '0.1.0' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. (optional)
+
+    try:
+        # Compare a version of a template with the one before it
+        api_response = api_instance.get_template_diff(template_id, version=version)
+        print("The response of Client->get_template_diff:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->get_template_diff: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional] 
+
+### Return type
+
+[**TemplateDiff**](TemplateDiff.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | the draft's changes since the latest published version |  -  |
+**409** | the template's PDF hasn't been processed |  -  |
+**404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_template_model_code**
 > TemplateModelCode get_template_model_code(template_id, lang, version=version)
 
@@ -2264,6 +2543,92 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | model code |  -  |
 **422** | unknown language |  -  |
+**404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_template_page_images**
+> TemplatePageImages get_template_page_images(template_id, version=version)
+
+Get images of a template's pages
+
+Returns a JPEG image of each page of a PDF template's PDF, with temporary links to download them: the draft's
+PDF, or a published version's. Use them to see the pages that fields are placed on.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.template_page_images import TemplatePageImages
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
+    version = 'latest' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. (optional)
+
+    try:
+        # Get images of a template's pages
+        api_response = api_instance.get_template_page_images(template_id, version=version)
+        print("The response of Client->get_template_page_images:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->get_template_page_images: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional] 
+
+### Return type
+
+[**TemplatePageImages**](TemplatePageImages.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | page images |  -  |
+**409** | no page images |  -  |
 **404** | template not found |  -  |
 **401** | authentication failed |  -  |
 
@@ -2782,6 +3147,93 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **list_template_fields**
+> TemplateFields list_template_fields(template_id, version=version)
+
+List a template's fields
+
+Returns a template's fields with all of their settings, page by page: the draft's fields, or a published
+version's. A PDF template's fields are placed on its pages: GET /templates/{template_id}/page_images has images
+of the pages.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.template_fields import TemplateFields
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
+    version = 'latest' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. (optional)
+
+    try:
+        # List a template's fields
+        api_response = api_instance.list_template_fields(template_id, version=version)
+        print("The response of Client->list_template_fields:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->list_template_fields: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional] 
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | fields |  -  |
+**409** | the template's PDF hasn't been processed |  -  |
+**404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **list_template_submissions**
 > SubmissionList list_template_submissions(template_id, test=test, created_after=created_after, created_before=created_before, include_data=include_data, limit=limit, cursor=cursor)
 
@@ -3240,7 +3692,8 @@ Name | Type | Description  | Notes
 Publish a template version
 
 Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the
-latest version number goes up.
+latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is
+setting up its fields, it returns a 409 that says so.
 
 
 ### Example
@@ -3318,6 +3771,93 @@ Name | Type | Description  | Notes
 **422** | invalid version type |  -  |
 **404** | template not found |  -  |
 **409** | published at the same time |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **remove_template_fields**
+> TemplateFields remove_template_fields(template_id, body)
+
+Remove fields from a template
+
+Removes fields from a template's draft and returns the fields that are left. Conditional logic that used only
+the removed fields is removed too.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.remove_template_fields_request import RemoveTemplateFieldsRequest
+from docspring.models.template_fields import TemplateFields
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
+    body = {"field_ids":[3]} # RemoveTemplateFieldsRequest | The fields to remove from the template's draft.
+
+    try:
+        # Remove fields from a template
+        api_response = api_instance.remove_template_fields(template_id, body)
+        print("The response of Client->remove_template_fields:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->remove_template_fields: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **body** | [**RemoveTemplateFieldsRequest**](RemoveTemplateFieldsRequest.md)| The fields to remove from the template's draft. | 
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | fields removed |  -  |
+**422** | a field the template does not have |  -  |
+**404** | template not found |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -3404,6 +3944,94 @@ Name | Type | Description  | Notes
 **200** | folder renamed |  -  |
 **422** | name already exists |  -  |
 **404** | folder not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reorder_template_fields**
+> TemplateFields reorder_template_fields(template_id, body)
+
+Reorder a template's fields
+
+Changes the order of the fields in a template's draft and returns them in their new order. Send every field's
+ID: each field stays on its page, and a page's fields are printed in this order, so a later field prints over
+an earlier one where they overlap. Their values are in this order in the template's data schema and forms.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.reorder_template_fields_request import ReorderTemplateFieldsRequest
+from docspring.models.template_fields import TemplateFields
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
+    body = {"field_ids":[3,1,2]} # ReorderTemplateFieldsRequest | The new order of the fields in the template's draft.
+
+    try:
+        # Reorder a template's fields
+        api_response = api_instance.reorder_template_fields(template_id, body)
+        print("The response of Client->reorder_template_fields:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->reorder_template_fields: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **body** | [**ReorderTemplateFieldsRequest**](ReorderTemplateFieldsRequest.md)| The new order of the fields in the template's draft. | 
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | fields reordered |  -  |
+**422** | a field missing from the order |  -  |
+**404** | template not found |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -3667,7 +4295,8 @@ Name | Type | Description  | Notes
 Update a template
 
 Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options`
-replace the whole object. Setting `parent_folder_id` moves the template and all of its published versions.
+replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id`
+moves the template and all of its published versions.
 
 
 ### Example
@@ -3743,8 +4372,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | template updated |  -  |
 **409** | template is locked |  -  |
+**422** | invalid field group changes |  -  |
 **404** | template not found |  -  |
-**422** | invalid update |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -3754,9 +4383,10 @@ Name | Type | Description  | Notes
 
 Replace a template's PDF
 
-Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign). The
+Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign)
+(`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The
 fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send
-the PDF with the request instead, use PUT /templates/{template_id}/document/upload.
+the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload.
 
 
 ### Example
@@ -3792,8 +4422,8 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
-    body = {"cache_id":"cache/original-0000000000","filename":"fw8ben.pdf","reimport_fields":true} # UpdateTemplateDocumentRequest | The new PDF.
-    wait = True # bool | Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)
+    body = {"cache_id":"cache/original-0000000000","filename":"fw8ben.pdf","reimport_fields":true} # UpdateTemplateDocumentRequest | The new PDF, as one of `cache_id`, `document_url` and `document_base64`.
+    wait = True # bool | Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. (optional)
 
     try:
         # Replace a template's PDF
@@ -3812,8 +4442,8 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
- **body** | [**UpdateTemplateDocumentRequest**](UpdateTemplateDocumentRequest.md)| The new PDF. | 
- **wait** | **bool**| Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional] 
+ **body** | [**UpdateTemplateDocumentRequest**](UpdateTemplateDocumentRequest.md)| The new PDF, as one of `cache_id`, `document_url` and `document_base64`. | 
+ **wait** | **bool**| Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. | [optional] 
 
 ### Return type
 
@@ -3834,7 +4464,94 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | PDF replaced |  -  |
 **409** | template is locked, so its fields can't be re-imported |  -  |
-**422** | not a PDF template |  -  |
+**422** | no document, or more than one |  -  |
+**404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_template_fields**
+> TemplateFields update_template_fields(template_id, body)
+
+Update a template's fields
+
+Changes fields of a template's draft and returns all of its fields. Settings left out keep their values. A
+shared setting (`type`, `required`, `default`, ...) changes for every field with the same name.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.template_fields import TemplateFields
+from docspring.models.update_template_fields_request import UpdateTemplateFieldsRequest
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
+    body = {"fields":[{"id":0,"x":5}]} # UpdateTemplateFieldsRequest | The fields to change in the template's draft.
+
+    try:
+        # Update a template's fields
+        api_response = api_instance.update_template_fields(template_id, body)
+        print("The response of Client->update_template_fields:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->update_template_fields: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **body** | [**UpdateTemplateFieldsRequest**](UpdateTemplateFieldsRequest.md)| The fields to change in the template's draft. | 
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | fields updated |  -  |
+**422** | invalid changes |  -  |
 **404** | template not found |  -  |
 **401** | authentication failed |  -  |
 
@@ -3966,7 +4683,7 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     document = None # bytes | The PDF.
-    wait = True # bool | Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)
+    wait = True # bool | Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. (optional)
     name = 'name_example' # str | The template's name. (optional)
     description = 'description_example' # str | The template's description. (optional)
     parent_folder_id = 'parent_folder_id_example' # str | The folder to put the template in. Left out, it's created at the root. (optional)
@@ -3993,7 +4710,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **document** | **bytes**| The PDF. | 
- **wait** | **bool**| Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional] 
+ **wait** | **bool**| Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. | [optional] 
  **name** | **str**| The template's name. | [optional] 
  **description** | **str**| The template's description. | [optional] 
  **parent_folder_id** | **str**| The folder to put the template in. Left out, it's created at the root. | [optional] 
@@ -4069,7 +4786,7 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     document = None # bytes | The new PDF.
-    wait = True # bool | Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)
+    wait = True # bool | Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. (optional)
     reimport_fields = True # bool | Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. (optional)
 
     try:
@@ -4090,7 +4807,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **document** | **bytes**| The new PDF. | 
- **wait** | **bool**| Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional] 
+ **wait** | **bool**| Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. | [optional] 
  **reimport_fields** | **bool**| Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. | [optional] 
 
 ### Return type
@@ -4113,6 +4830,96 @@ Name | Type | Description  | Notes
 **200** | PDF replaced |  -  |
 **422** | not a PDF template |  -  |
 **404** | template not found |  -  |
+**401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **validate_submission**
+> SubmissionValidation validate_submission(template_id, body, version=version)
+
+Check a submission without creating it
+
+Checks a submission as creating it would (its data against the template's fields, its settings and signature
+requests) without saving it, generating anything or using credits. It doesn't check your account's credits.
+The response says whether the submission is valid, and if not, has the error that creating it would return.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.submission_validation import SubmissionValidation
+from docspring.models.validate_submission_request import ValidateSubmissionRequest
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
+    body = {"data":{"first_name":"John","last_name":"Smith","phone_number":"+11234567890"}} # ValidateSubmissionRequest | The submission's data and settings.
+    version = 'latest' # str | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). (optional)
+
+    try:
+        # Check a submission without creating it
+        api_response = api_instance.validate_submission(template_id, body, version=version)
+        print("The response of Client->validate_submission:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->validate_submission: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **body** | [**ValidateSubmissionRequest**](ValidateSubmissionRequest.md)| The submission's data and settings. | 
+ **version** | **str**| The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional] 
+
+### Return type
+
+[**SubmissionValidation**](SubmissionValidation.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | valid submission |  -  |
+**404** | template not found |  -  |
+**422** | invalid request |  -  |
 **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

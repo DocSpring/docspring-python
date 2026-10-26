@@ -20,6 +20,7 @@ from datetime import datetime
 from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
 from typing import Any, Dict, Optional, Tuple, Union
 from typing_extensions import Annotated
+from docspring.models.add_template_fields_request import AddTemplateFieldsRequest
 from docspring.models.authentication_check import AuthenticationCheck
 from docspring.models.combined_pdf import CombinedPdf
 from docspring.models.combined_pdf_list import CombinedPdfList
@@ -37,11 +38,14 @@ from docspring.models.custom_file import CustomFile
 from docspring.models.custom_file_list import CustomFileList
 from docspring.models.folder import Folder
 from docspring.models.folder_list import FolderList
+from docspring.models.generate_submission_files_request import GenerateSubmissionFilesRequest
 from docspring.models.model_code_language import ModelCodeLanguage
 from docspring.models.move_folder_request import MoveFolderRequest
 from docspring.models.move_template_request import MoveTemplateRequest
 from docspring.models.publish_template_version_request import PublishTemplateVersionRequest
+from docspring.models.remove_template_fields_request import RemoveTemplateFieldsRequest
 from docspring.models.rename_folder_request import RenameFolderRequest
+from docspring.models.reorder_template_fields_request import ReorderTemplateFieldsRequest
 from docspring.models.restore_template_version_request import RestoreTemplateVersionRequest
 from docspring.models.signature_request import SignatureRequest
 from docspring.models.signature_request_event import SignatureRequestEvent
@@ -49,15 +53,21 @@ from docspring.models.signature_request_token import SignatureRequestToken
 from docspring.models.submission import Submission
 from docspring.models.submission_batch import SubmissionBatch
 from docspring.models.submission_list import SubmissionList
+from docspring.models.submission_validation import SubmissionValidation
 from docspring.models.template import Template
+from docspring.models.template_diff import TemplateDiff
+from docspring.models.template_fields import TemplateFields
 from docspring.models.template_model_code import TemplateModelCode
+from docspring.models.template_page_images import TemplatePageImages
 from docspring.models.template_summary_list import TemplateSummaryList
 from docspring.models.template_version import TemplateVersion
 from docspring.models.update_signature_request_request import UpdateSignatureRequestRequest
 from docspring.models.update_template_document_request import UpdateTemplateDocumentRequest
+from docspring.models.update_template_fields_request import UpdateTemplateFieldsRequest
 from docspring.models.update_template_request import UpdateTemplateRequest
 from docspring.models.update_webhook_request import UpdateWebhookRequest
 from docspring.models.upload_presign import UploadPresign
+from docspring.models.validate_submission_request import ValidateSubmissionRequest
 from docspring.models.webhook import Webhook
 from docspring.models.webhook_event_type import WebhookEventType
 from docspring.models.webhook_list import WebhookList
@@ -122,6 +132,310 @@ class Client:
             api_client = ApiClient(configuration)
 
         self.api_client = api_client
+
+
+
+    @checks_request("addTemplateFields")
+    @validate_call
+    def add_template_fields(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[AddTemplateFieldsRequest, Field(description="The fields to add to the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplateFields:
+        """Add fields to a template
+
+        Adds fields to a template's draft and returns all of its fields. Publish a version for submissions of published versions to have them. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to add to the template's draft. (required)
+        :type body: AddTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "TemplateFields",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("addTemplateFields")
+    @validate_call
+    def add_template_fields_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[AddTemplateFieldsRequest, Field(description="The fields to add to the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplateFields]:
+        """Add fields to a template
+
+        Adds fields to a template's draft and returns all of its fields. Publish a version for submissions of published versions to have them. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to add to the template's draft. (required)
+        :type body: AddTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "TemplateFields",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("addTemplateFields")
+    @validate_call
+    def add_template_fields_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[AddTemplateFieldsRequest, Field(description="The fields to add to the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Add fields to a template
+
+        Adds fields to a template's draft and returns all of its fields. Publish a version for submissions of published versions to have them. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to add to the template's draft. (required)
+        :type body: AddTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._add_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "TemplateFields",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _add_template_fields_serialize(
+        self,
+        template_id,
+        body,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if body is not None:
+            _body_params = body
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/templates/{template_id}/fields',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
 
 
 
@@ -1916,7 +2230,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         body: Annotated[CreateSubmissionRequest, Field(description="The submission's data and settings.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been generated before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1940,7 +2254,7 @@ class Client:
         :type body: CreateSubmissionRequest
         :param version: The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).
         :type version: str
-        :param wait: Wait until the PDF has been generated before responding. Default true on sync.api hosts.
+        :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2001,7 +2315,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         body: Annotated[CreateSubmissionRequest, Field(description="The submission's data and settings.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been generated before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2025,7 +2339,7 @@ class Client:
         :type body: CreateSubmissionRequest
         :param version: The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).
         :type version: str
-        :param wait: Wait until the PDF has been generated before responding. Default true on sync.api hosts.
+        :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2086,7 +2400,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         body: Annotated[CreateSubmissionRequest, Field(description="The submission's data and settings.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been generated before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2110,7 +2424,7 @@ class Client:
         :type body: CreateSubmissionRequest
         :param version: The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).
         :type version: str
-        :param wait: Wait until the PDF has been generated before responding. Default true on sync.api hosts.
+        :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2561,7 +2875,7 @@ class Client:
     def create_template(
         self,
         body: Annotated[CreateTemplateRequest, Field(description="The template to create.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2581,7 +2895,7 @@ class Client:
 
         :param body: The template to create. (required)
         :type body: CreateTemplateRequest
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2636,7 +2950,7 @@ class Client:
     def create_template_with_http_info(
         self,
         body: Annotated[CreateTemplateRequest, Field(description="The template to create.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2656,7 +2970,7 @@ class Client:
 
         :param body: The template to create. (required)
         :type body: CreateTemplateRequest
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2711,7 +3025,7 @@ class Client:
     def create_template_without_preload_content(
         self,
         body: Annotated[CreateTemplateRequest, Field(description="The template to create.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2731,7 +3045,7 @@ class Client:
 
         :param body: The template to create. (required)
         :type body: CreateTemplateRequest
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4782,6 +5096,327 @@ class Client:
         return self.api_client.param_serialize(
             method='DELETE',
             resource_path='/submissions/{submission_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @checks_request("generateSubmissionFiles")
+    @validate_call
+    def generate_submission_files(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="The submission's ID.")],
+        body: Annotated[GenerateSubmissionFilesRequest, Field(description="The formats to make.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Submission:
+        """Generate more files
+
+        Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+
+        :param submission_id: The submission's ID. (required)
+        :type submission_id: str
+        :param body: The formats to make. (required)
+        :type body: GenerateSubmissionFilesRequest
+        :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
+        :type wait: bool
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._generate_submission_files_serialize(
+            submission_id=submission_id,
+            body=body,
+            wait=wait,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Submission",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("generateSubmissionFiles")
+    @validate_call
+    def generate_submission_files_with_http_info(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="The submission's ID.")],
+        body: Annotated[GenerateSubmissionFilesRequest, Field(description="The formats to make.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Submission]:
+        """Generate more files
+
+        Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+
+        :param submission_id: The submission's ID. (required)
+        :type submission_id: str
+        :param body: The formats to make. (required)
+        :type body: GenerateSubmissionFilesRequest
+        :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
+        :type wait: bool
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._generate_submission_files_serialize(
+            submission_id=submission_id,
+            body=body,
+            wait=wait,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Submission",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("generateSubmissionFiles")
+    @validate_call
+    def generate_submission_files_without_preload_content(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="The submission's ID.")],
+        body: Annotated[GenerateSubmissionFilesRequest, Field(description="The formats to make.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Generate more files
+
+        Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+
+        :param submission_id: The submission's ID. (required)
+        :type submission_id: str
+        :param body: The formats to make. (required)
+        :type body: GenerateSubmissionFilesRequest
+        :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
+        :type wait: bool
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._generate_submission_files_serialize(
+            submission_id=submission_id,
+            body=body,
+            wait=wait,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Submission",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _generate_submission_files_serialize(
+        self,
+        submission_id,
+        body,
+        wait,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if submission_id is not None:
+            _path_params['submission_id'] = submission_id
+        # process the query parameters
+        if wait is not None:
+            
+            _query_params.append(('wait', wait))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if body is not None:
+            _body_params = body
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/submissions/{submission_id}/generate_files',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -7249,6 +7884,296 @@ class Client:
 
 
 
+    @checks_request("getTemplateDiff")
+    @validate_call
+    def get_template_diff(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplateDiff:
+        """Compare a version of a template with the one before it
+
+        Returns what changed in the template's draft since its latest published version (or in a published version since the one before it): fields added, removed, changed and moved, the settings that changed, and whether the document was replaced. Check it before you publish a version. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_diff_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateDiff",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("getTemplateDiff")
+    @validate_call
+    def get_template_diff_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplateDiff]:
+        """Compare a version of a template with the one before it
+
+        Returns what changed in the template's draft since its latest published version (or in a published version since the one before it): fields added, removed, changed and moved, the settings that changed, and whether the document was replaced. Check it before you publish a version. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_diff_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateDiff",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("getTemplateDiff")
+    @validate_call
+    def get_template_diff_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Compare a version of a template with the one before it
+
+        Returns what changed in the template's draft since its latest published version (or in a published version since the one before it): fields added, removed, changed and moved, the settings that changed, and whether the document was replaced. Check it before you publish a version. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_diff_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateDiff",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_template_diff_serialize(
+        self,
+        template_id,
+        version,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        if version is not None:
+            
+            _query_params.append(('version', version))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/templates/{template_id}/diff',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
     @checks_request("getTemplateModelCode")
     @validate_call
     def get_template_model_code(
@@ -7541,6 +8466,296 @@ class Client:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/templates/{template_id}/model_code',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @checks_request("getTemplatePageImages")
+    @validate_call
+    def get_template_page_images(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplatePageImages:
+        """Get images of a template's pages
+
+        Returns a JPEG image of each page of a PDF template's PDF, with temporary links to download them: the draft's PDF, or a published version's. Use them to see the pages that fields are placed on. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_page_images_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePageImages",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("getTemplatePageImages")
+    @validate_call
+    def get_template_page_images_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplatePageImages]:
+        """Get images of a template's pages
+
+        Returns a JPEG image of each page of a PDF template's PDF, with temporary links to download them: the draft's PDF, or a published version's. Use them to see the pages that fields are placed on. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_page_images_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePageImages",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("getTemplatePageImages")
+    @validate_call
+    def get_template_page_images_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get images of a template's pages
+
+        Returns a JPEG image of each page of a PDF template's PDF, with temporary links to download them: the draft's PDF, or a published version's. Use them to see the pages that fields are placed on. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_page_images_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePageImages",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_template_page_images_serialize(
+        self,
+        template_id,
+        version,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        if version is not None:
+            
+            _query_params.append(('version', version))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/templates/{template_id}/page_images',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -9385,6 +10600,296 @@ class Client:
 
 
 
+    @checks_request("listTemplateFields")
+    @validate_call
+    def list_template_fields(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplateFields:
+        """List a template's fields
+
+        Returns a template's fields with all of their settings, page by page: the draft's fields, or a published version's. A PDF template's fields are placed on its pages: GET /templates/{template_id}/page_images has images of the pages. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_template_fields_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("listTemplateFields")
+    @validate_call
+    def list_template_fields_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplateFields]:
+        """List a template's fields
+
+        Returns a template's fields with all of their settings, page by page: the draft's fields, or a published version's. A PDF template's fields are placed on its pages: GET /templates/{template_id}/page_images has images of the pages. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_template_fields_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("listTemplateFields")
+    @validate_call
+    def list_template_fields_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List a template's fields
+
+        Returns a template's fields with all of their settings, page by page: the draft's fields, or a published version's. A PDF template's fields are placed on its pages: GET /templates/{template_id}/page_images has images of the pages. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_template_fields_serialize(
+            template_id=template_id,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '409': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_template_fields_serialize(
+        self,
+        template_id,
+        version,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        if version is not None:
+            
+            _query_params.append(('version', version))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/templates/{template_id}/fields',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
     @checks_request("listTemplateSubmissions")
     @validate_call
     def list_template_submissions(
@@ -11094,7 +12599,7 @@ class Client:
     ) -> TemplateVersion:
         """Publish a template version
 
-        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. 
+        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -11170,7 +12675,7 @@ class Client:
     ) -> ApiResponse[TemplateVersion]:
         """Publish a template version
 
-        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. 
+        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -11246,7 +12751,7 @@ class Client:
     ) -> RESTResponseType:
         """Publish a template version
 
-        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. 
+        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -11362,6 +12867,307 @@ class Client:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/templates/{template_id}/publish_version',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @checks_request("removeTemplateFields")
+    @validate_call
+    def remove_template_fields(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[RemoveTemplateFieldsRequest, Field(description="The fields to remove from the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplateFields:
+        """Remove fields from a template
+
+        Removes fields from a template's draft and returns the fields that are left. Conditional logic that used only the removed fields is removed too. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to remove from the template's draft. (required)
+        :type body: RemoveTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("removeTemplateFields")
+    @validate_call
+    def remove_template_fields_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[RemoveTemplateFieldsRequest, Field(description="The fields to remove from the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplateFields]:
+        """Remove fields from a template
+
+        Removes fields from a template's draft and returns the fields that are left. Conditional logic that used only the removed fields is removed too. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to remove from the template's draft. (required)
+        :type body: RemoveTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("removeTemplateFields")
+    @validate_call
+    def remove_template_fields_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[RemoveTemplateFieldsRequest, Field(description="The fields to remove from the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Remove fields from a template
+
+        Removes fields from a template's draft and returns the fields that are left. Conditional logic that used only the removed fields is removed too. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to remove from the template's draft. (required)
+        :type body: RemoveTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._remove_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _remove_template_fields_serialize(
+        self,
+        template_id,
+        body,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if body is not None:
+            _body_params = body
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/templates/{template_id}/fields/remove',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -11663,6 +13469,307 @@ class Client:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/folders/{folder_id}/rename',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @checks_request("reorderTemplateFields")
+    @validate_call
+    def reorder_template_fields(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[ReorderTemplateFieldsRequest, Field(description="The new order of the fields in the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplateFields:
+        """Reorder a template's fields
+
+        Changes the order of the fields in a template's draft and returns them in their new order. Send every field's ID: each field stays on its page, and a page's fields are printed in this order, so a later field prints over an earlier one where they overlap. Their values are in this order in the template's data schema and forms. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The new order of the fields in the template's draft. (required)
+        :type body: ReorderTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._reorder_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("reorderTemplateFields")
+    @validate_call
+    def reorder_template_fields_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[ReorderTemplateFieldsRequest, Field(description="The new order of the fields in the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplateFields]:
+        """Reorder a template's fields
+
+        Changes the order of the fields in a template's draft and returns them in their new order. Send every field's ID: each field stays on its page, and a page's fields are printed in this order, so a later field prints over an earlier one where they overlap. Their values are in this order in the template's data schema and forms. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The new order of the fields in the template's draft. (required)
+        :type body: ReorderTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._reorder_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("reorderTemplateFields")
+    @validate_call
+    def reorder_template_fields_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[ReorderTemplateFieldsRequest, Field(description="The new order of the fields in the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Reorder a template's fields
+
+        Changes the order of the fields in a template's draft and returns them in their new order. Send every field's ID: each field stays on its page, and a page's fields are printed in this order, so a later field prints over an earlier one where they overlap. Their values are in this order in the template's data schema and forms. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The new order of the fields in the template's draft. (required)
+        :type body: ReorderTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._reorder_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _reorder_template_fields_serialize(
+        self,
+        template_id,
+        body,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if body is not None:
+            _body_params = body
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/templates/{template_id}/fields/reorder',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -12559,7 +14666,7 @@ class Client:
     ) -> Template:
         """Update a template
 
-        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object. Setting `parent_folder_id` moves the template and all of its published versions. 
+        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id` moves the template and all of its published versions. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -12599,8 +14706,8 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Template",
             '409': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
@@ -12635,7 +14742,7 @@ class Client:
     ) -> ApiResponse[Template]:
         """Update a template
 
-        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object. Setting `parent_folder_id` moves the template and all of its published versions. 
+        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id` moves the template and all of its published versions. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -12675,8 +14782,8 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Template",
             '409': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
@@ -12711,7 +14818,7 @@ class Client:
     ) -> RESTResponseType:
         """Update a template
 
-        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object. Setting `parent_folder_id` moves the template and all of its published versions. 
+        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id` moves the template and all of its published versions. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -12751,8 +14858,8 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Template",
             '409': "ErrorResponse",
-            '404': "ErrorResponse",
             '422': "ErrorResponse",
+            '404': "ErrorResponse",
             '401': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
@@ -12847,8 +14954,8 @@ class Client:
     def update_template_document(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, as one of `cache_id`, `document_url` and `document_base64`.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12864,13 +14971,13 @@ class Client:
     ) -> Template:
         """Replace a template's PDF
 
-        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
+        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param body: The new PDF. (required)
+        :param body: The new PDF, as one of `cache_id`, `document_url` and `document_base64`. (required)
         :type body: UpdateTemplateDocumentRequest
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -12927,8 +15034,8 @@ class Client:
     def update_template_document_with_http_info(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, as one of `cache_id`, `document_url` and `document_base64`.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12944,13 +15051,13 @@ class Client:
     ) -> ApiResponse[Template]:
         """Replace a template's PDF
 
-        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
+        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param body: The new PDF. (required)
+        :param body: The new PDF, as one of `cache_id`, `document_url` and `document_base64`. (required)
         :type body: UpdateTemplateDocumentRequest
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -13007,8 +15114,8 @@ class Client:
     def update_template_document_without_preload_content(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, as one of `cache_id`, `document_url` and `document_base64`.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13024,13 +15131,13 @@ class Client:
     ) -> RESTResponseType:
         """Replace a template's PDF
 
-        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
+        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param body: The new PDF. (required)
+        :param body: The new PDF, as one of `cache_id`, `document_url` and `document_base64`. (required)
         :type body: UpdateTemplateDocumentRequest
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -13148,6 +15255,307 @@ class Client:
         return self.api_client.param_serialize(
             method='PUT',
             resource_path='/templates/{template_id}/document',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @checks_request("updateTemplateFields")
+    @validate_call
+    def update_template_fields(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[UpdateTemplateFieldsRequest, Field(description="The fields to change in the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplateFields:
+        """Update a template's fields
+
+        Changes fields of a template's draft and returns all of its fields. Settings left out keep their values. A shared setting (`type`, `required`, `default`, ...) changes for every field with the same name. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to change in the template's draft. (required)
+        :type body: UpdateTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("updateTemplateFields")
+    @validate_call
+    def update_template_fields_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[UpdateTemplateFieldsRequest, Field(description="The fields to change in the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplateFields]:
+        """Update a template's fields
+
+        Changes fields of a template's draft and returns all of its fields. Settings left out keep their values. A shared setting (`type`, `required`, `default`, ...) changes for every field with the same name. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to change in the template's draft. (required)
+        :type body: UpdateTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("updateTemplateFields")
+    @validate_call
+    def update_template_fields_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[UpdateTemplateFieldsRequest, Field(description="The fields to change in the template's draft.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update a template's fields
+
+        Changes fields of a template's draft and returns all of its fields. Settings left out keep their values. A shared setting (`type`, `required`, `default`, ...) changes for every field with the same name. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The fields to change in the template's draft. (required)
+        :type body: UpdateTemplateFieldsRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_template_fields_serialize(
+            template_id=template_id,
+            body=body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplateFields",
+            '422': "ErrorResponse",
+            '404': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _update_template_fields_serialize(
+        self,
+        template_id,
+        body,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if body is not None:
+            _body_params = body
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/templates/{template_id}/fields',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -13469,7 +15877,7 @@ class Client:
     def upload_template(
         self,
         document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         name: Annotated[Optional[StrictStr], Field(description="The template's name.")] = None,
         description: Annotated[Optional[StrictStr], Field(description="The template's description.")] = None,
         parent_folder_id: Annotated[Optional[StrictStr], Field(description="The folder to put the template in. Left out, it's created at the root.")] = None,
@@ -13497,7 +15905,7 @@ class Client:
 
         :param document: The PDF. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param name: The template's name.
         :type name: str
@@ -13576,7 +15984,7 @@ class Client:
     def upload_template_with_http_info(
         self,
         document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         name: Annotated[Optional[StrictStr], Field(description="The template's name.")] = None,
         description: Annotated[Optional[StrictStr], Field(description="The template's description.")] = None,
         parent_folder_id: Annotated[Optional[StrictStr], Field(description="The folder to put the template in. Left out, it's created at the root.")] = None,
@@ -13604,7 +16012,7 @@ class Client:
 
         :param document: The PDF. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param name: The template's name.
         :type name: str
@@ -13683,7 +16091,7 @@ class Client:
     def upload_template_without_preload_content(
         self,
         document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         name: Annotated[Optional[StrictStr], Field(description="The template's name.")] = None,
         description: Annotated[Optional[StrictStr], Field(description="The template's description.")] = None,
         parent_folder_id: Annotated[Optional[StrictStr], Field(description="The folder to put the template in. Left out, it's created at the root.")] = None,
@@ -13711,7 +16119,7 @@ class Client:
 
         :param document: The PDF. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param name: The template's name.
         :type name: str
@@ -13893,7 +16301,7 @@ class Client:
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.")] = None,
         _request_timeout: Union[
             None,
@@ -13916,7 +16324,7 @@ class Client:
         :type template_id: str
         :param document: The new PDF. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.
         :type reimport_fields: bool
@@ -13976,7 +16384,7 @@ class Client:
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.")] = None,
         _request_timeout: Union[
             None,
@@ -13999,7 +16407,7 @@ class Client:
         :type template_id: str
         :param document: The new PDF. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.
         :type reimport_fields: bool
@@ -14059,7 +16467,7 @@ class Client:
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
         reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.")] = None,
         _request_timeout: Union[
             None,
@@ -14082,7 +16490,7 @@ class Client:
         :type template_id: str
         :param document: The new PDF. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.
         :type reimport_fields: bool
@@ -14205,6 +16613,324 @@ class Client:
         return self.api_client.param_serialize(
             method='PUT',
             resource_path='/templates/{template_id}/document/upload',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @checks_request("validateSubmission")
+    @validate_call
+    def validate_submission(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[ValidateSubmissionRequest, Field(description="The submission's data and settings.")],
+        version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SubmissionValidation:
+        """Check a submission without creating it
+
+        Checks a submission as creating it would (its data against the template's fields, its settings and signature requests) without saving it, generating anything or using credits. It doesn't check your account's credits. The response says whether the submission is valid, and if not, has the error that creating it would return. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The submission's data and settings. (required)
+        :type body: ValidateSubmissionRequest
+        :param version: The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._validate_submission_serialize(
+            template_id=template_id,
+            body=body,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SubmissionValidation",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("validateSubmission")
+    @validate_call
+    def validate_submission_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[ValidateSubmissionRequest, Field(description="The submission's data and settings.")],
+        version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SubmissionValidation]:
+        """Check a submission without creating it
+
+        Checks a submission as creating it would (its data against the template's fields, its settings and signature requests) without saving it, generating anything or using credits. It doesn't check your account's credits. The response says whether the submission is valid, and if not, has the error that creating it would return. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The submission's data and settings. (required)
+        :type body: ValidateSubmissionRequest
+        :param version: The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._validate_submission_serialize(
+            template_id=template_id,
+            body=body,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SubmissionValidation",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("validateSubmission")
+    @validate_call
+    def validate_submission_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[ValidateSubmissionRequest, Field(description="The submission's data and settings.")],
+        version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Check a submission without creating it
+
+        Checks a submission as creating it would (its data against the template's fields, its settings and signature requests) without saving it, generating anything or using credits. It doesn't check your account's credits. The response says whether the submission is valid, and if not, has the error that creating it would return. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The submission's data and settings. (required)
+        :type body: ValidateSubmissionRequest
+        :param version: The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._validate_submission_serialize(
+            template_id=template_id,
+            body=body,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SubmissionValidation",
+            '404': "ErrorResponse",
+            '422': "ErrorResponse",
+            '401': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _validate_submission_serialize(
+        self,
+        template_id,
+        body,
+        version,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        if version is not None:
+            
+            _query_params.append(('version', version))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if body is not None:
+            _body_params = body
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/templates/{template_id}/submissions/validate',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

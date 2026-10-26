@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from docspring.models.output_format import OutputFormat
 from docspring.models.submission_input import SubmissionInput
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,9 +34,10 @@ class CreateSubmissionBatchRequest(BaseModel):
     template_id: Optional[StrictStr] = Field(default=None, description="The template for each submission that doesn't name its own `template_id`.")
     template_version: Optional[StrictStr] = Field(default=None, description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")
     test: Optional[StrictBool] = Field(default=None, description="The default `test` for each submission that doesn't set its own.")
+    output_formats: Optional[List[OutputFormat]] = Field(default=None, description="The default `output_formats` for each submission that doesn't set its own.")
     submissions: List[SubmissionInput] = Field(description="Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except `signature_requests`, plus `template_id` and `template_version` when it uses a different template from the batch.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["metadata", "template_id", "template_version", "test", "submissions"]
+    __properties: ClassVar[List[str]] = ["metadata", "template_id", "template_version", "test", "output_formats", "submissions"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -106,6 +108,7 @@ class CreateSubmissionBatchRequest(BaseModel):
             "template_id": obj.get("template_id"),
             "template_version": obj.get("template_version"),
             "test": obj.get("test"),
+            "output_formats": obj.get("output_formats"),
             "submissions": [SubmissionInput.from_dict(_item) for _item in obj["submissions"]] if obj.get("submissions") is not None else None
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties

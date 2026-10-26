@@ -41,6 +41,9 @@ class TestCreateSubmissionRequest(unittest.TestCase):
                 data = { },
                 metadata = { },
                 password = '',
+                output_formats = [
+                    'pdf'
+                    ],
                 expires_in = 56,
                 field_overrides = {
                     'key' : docspring.models.field_override.FieldOverride(

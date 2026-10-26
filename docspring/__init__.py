@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.0.0"
+__version__ = "4.1.0"
 
 # Define package exports
 __all__ = [
@@ -29,6 +29,7 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "AddTemplateFieldsRequest",
     "AiFieldNamingLanguage",
     "AuthenticationCheck",
     "BarcodeSymbology",
@@ -62,10 +63,16 @@ __all__ = [
     "ExpirationInterval",
     "FieldComparisonCondition",
     "FieldComparisonOperator",
+    "FieldDependency",
+    "FieldDependencyInput",
     "FieldDisplayType",
     "FieldEqualsCondition",
     "FieldEqualsOperator",
+    "FieldGroup",
+    "FieldGroupInput",
+    "FieldGroupType",
     "FieldInCondition",
+    "FieldInput",
     "FieldOverride",
     "FieldPresenceCondition",
     "FieldPresenceOperator",
@@ -74,8 +81,11 @@ __all__ = [
     "FieldSetupLogic",
     "FieldSetupNaming",
     "FieldSetupSource",
+    "FieldType",
     "Folder",
     "FolderList",
+    "GenerateFilesFormat",
+    "GenerateSubmissionFilesRequest",
     "GeneratedFile",
     "GeneratedFileState",
     "HtmlEngineOptions",
@@ -83,12 +93,20 @@ __all__ = [
     "ImageGravity",
     "ImageScaleType",
     "ModelCodeLanguage",
+    "ModelField",
     "MoveFolderRequest",
     "MoveTemplateRequest",
     "NumberConditionType",
+    "OutputFormat",
     "PageFormat",
+    "PageImage",
+    "PageImages",
+    "PredefinedField",
+    "PredefinedFieldInput",
     "PublishTemplateVersionRequest",
+    "RemoveTemplateFieldsRequest",
     "RenameFolderRequest",
+    "ReorderTemplateFieldsRequest",
     "RestoreTemplateVersionRequest",
     "ShapeType",
     "SignatureRequest",
@@ -114,13 +132,18 @@ __all__ = [
     "SubmissionSource",
     "SubmissionSourcePdf",
     "SubmissionState",
+    "SubmissionValidation",
     "Template",
     "TemplateActor",
     "TemplateActorType",
     "TemplateDefaults",
     "TemplateDefaultsInput",
+    "TemplateDiff",
+    "TemplateDiffSummary",
     "TemplateDocument",
     "TemplateDocumentState",
+    "TemplateFieldChange",
+    "TemplateFieldChanges",
     "TemplateFieldDependency",
     "TemplateFieldDependencyAction",
     "TemplateFieldDependencyCondition",
@@ -129,12 +152,15 @@ __all__ = [
     "TemplateFieldDependencyMatch",
     "TemplateFieldDependencyOperator",
     "TemplateFieldLogicStatus",
+    "TemplateFieldMove",
+    "TemplateFields",
     "TemplateFormMode",
     "TemplateModelCode",
     "TemplatePageAiError",
     "TemplatePageAiNamingStatus",
     "TemplatePageFieldsStatus",
     "TemplatePageImageStatus",
+    "TemplatePageImages",
     "TemplatePageProcessingStatus",
     "TemplateSourcePdf",
     "TemplateSummary",
@@ -148,11 +174,13 @@ __all__ = [
     "Typeface",
     "UpdateSignatureRequestRequest",
     "UpdateTemplateDocumentRequest",
+    "UpdateTemplateFieldsRequest",
     "UpdateTemplateRequest",
     "UpdateWebhookRequest",
     "UploadMethod",
     "UploadPresign",
     "UrlSourcePdf",
+    "ValidateSubmissionRequest",
     "Webhook",
     "WebhookEventType",
     "WebhookList",
@@ -175,6 +203,7 @@ from docspring.exceptions import ApiException as ApiException
 from docspring.exceptions import RequestValidationError as RequestValidationError
 
 # import models into sdk package
+from docspring.models.add_template_fields_request import AddTemplateFieldsRequest as AddTemplateFieldsRequest
 from docspring.models.ai_field_naming_language import AiFieldNamingLanguage as AiFieldNamingLanguage
 from docspring.models.authentication_check import AuthenticationCheck as AuthenticationCheck
 from docspring.models.barcode_symbology import BarcodeSymbology as BarcodeSymbology
@@ -208,10 +237,16 @@ from docspring.models.error_response import ErrorResponse as ErrorResponse
 from docspring.models.expiration_interval import ExpirationInterval as ExpirationInterval
 from docspring.models.field_comparison_condition import FieldComparisonCondition as FieldComparisonCondition
 from docspring.models.field_comparison_operator import FieldComparisonOperator as FieldComparisonOperator
+from docspring.models.field_dependency import FieldDependency as FieldDependency
+from docspring.models.field_dependency_input import FieldDependencyInput as FieldDependencyInput
 from docspring.models.field_display_type import FieldDisplayType as FieldDisplayType
 from docspring.models.field_equals_condition import FieldEqualsCondition as FieldEqualsCondition
 from docspring.models.field_equals_operator import FieldEqualsOperator as FieldEqualsOperator
+from docspring.models.field_group import FieldGroup as FieldGroup
+from docspring.models.field_group_input import FieldGroupInput as FieldGroupInput
+from docspring.models.field_group_type import FieldGroupType as FieldGroupType
 from docspring.models.field_in_condition import FieldInCondition as FieldInCondition
+from docspring.models.field_input import FieldInput as FieldInput
 from docspring.models.field_override import FieldOverride as FieldOverride
 from docspring.models.field_presence_condition import FieldPresenceCondition as FieldPresenceCondition
 from docspring.models.field_presence_operator import FieldPresenceOperator as FieldPresenceOperator
@@ -220,8 +255,11 @@ from docspring.models.field_reimport_state import FieldReimportState as FieldRei
 from docspring.models.field_setup_logic import FieldSetupLogic as FieldSetupLogic
 from docspring.models.field_setup_naming import FieldSetupNaming as FieldSetupNaming
 from docspring.models.field_setup_source import FieldSetupSource as FieldSetupSource
+from docspring.models.field_type import FieldType as FieldType
 from docspring.models.folder import Folder as Folder
 from docspring.models.folder_list import FolderList as FolderList
+from docspring.models.generate_files_format import GenerateFilesFormat as GenerateFilesFormat
+from docspring.models.generate_submission_files_request import GenerateSubmissionFilesRequest as GenerateSubmissionFilesRequest
 from docspring.models.generated_file import GeneratedFile as GeneratedFile
 from docspring.models.generated_file_state import GeneratedFileState as GeneratedFileState
 from docspring.models.html_engine_options import HtmlEngineOptions as HtmlEngineOptions
@@ -229,12 +267,20 @@ from docspring.models.html_engine_options_input import HtmlEngineOptionsInput as
 from docspring.models.image_gravity import ImageGravity as ImageGravity
 from docspring.models.image_scale_type import ImageScaleType as ImageScaleType
 from docspring.models.model_code_language import ModelCodeLanguage as ModelCodeLanguage
+from docspring.models.model_field import ModelField as ModelField
 from docspring.models.move_folder_request import MoveFolderRequest as MoveFolderRequest
 from docspring.models.move_template_request import MoveTemplateRequest as MoveTemplateRequest
 from docspring.models.number_condition_type import NumberConditionType as NumberConditionType
+from docspring.models.output_format import OutputFormat as OutputFormat
 from docspring.models.page_format import PageFormat as PageFormat
+from docspring.models.page_image import PageImage as PageImage
+from docspring.models.page_images import PageImages as PageImages
+from docspring.models.predefined_field import PredefinedField as PredefinedField
+from docspring.models.predefined_field_input import PredefinedFieldInput as PredefinedFieldInput
 from docspring.models.publish_template_version_request import PublishTemplateVersionRequest as PublishTemplateVersionRequest
+from docspring.models.remove_template_fields_request import RemoveTemplateFieldsRequest as RemoveTemplateFieldsRequest
 from docspring.models.rename_folder_request import RenameFolderRequest as RenameFolderRequest
+from docspring.models.reorder_template_fields_request import ReorderTemplateFieldsRequest as ReorderTemplateFieldsRequest
 from docspring.models.restore_template_version_request import RestoreTemplateVersionRequest as RestoreTemplateVersionRequest
 from docspring.models.shape_type import ShapeType as ShapeType
 from docspring.models.signature_request import SignatureRequest as SignatureRequest
@@ -260,13 +306,18 @@ from docspring.models.submission_list import SubmissionList as SubmissionList
 from docspring.models.submission_source import SubmissionSource as SubmissionSource
 from docspring.models.submission_source_pdf import SubmissionSourcePdf as SubmissionSourcePdf
 from docspring.models.submission_state import SubmissionState as SubmissionState
+from docspring.models.submission_validation import SubmissionValidation as SubmissionValidation
 from docspring.models.template import Template as Template
 from docspring.models.template_actor import TemplateActor as TemplateActor
 from docspring.models.template_actor_type import TemplateActorType as TemplateActorType
 from docspring.models.template_defaults import TemplateDefaults as TemplateDefaults
 from docspring.models.template_defaults_input import TemplateDefaultsInput as TemplateDefaultsInput
+from docspring.models.template_diff import TemplateDiff as TemplateDiff
+from docspring.models.template_diff_summary import TemplateDiffSummary as TemplateDiffSummary
 from docspring.models.template_document import TemplateDocument as TemplateDocument
 from docspring.models.template_document_state import TemplateDocumentState as TemplateDocumentState
+from docspring.models.template_field_change import TemplateFieldChange as TemplateFieldChange
+from docspring.models.template_field_changes import TemplateFieldChanges as TemplateFieldChanges
 from docspring.models.template_field_dependency import TemplateFieldDependency as TemplateFieldDependency
 from docspring.models.template_field_dependency_action import TemplateFieldDependencyAction as TemplateFieldDependencyAction
 from docspring.models.template_field_dependency_condition import TemplateFieldDependencyCondition as TemplateFieldDependencyCondition
@@ -275,12 +326,15 @@ from docspring.models.template_field_dependency_input import TemplateFieldDepend
 from docspring.models.template_field_dependency_match import TemplateFieldDependencyMatch as TemplateFieldDependencyMatch
 from docspring.models.template_field_dependency_operator import TemplateFieldDependencyOperator as TemplateFieldDependencyOperator
 from docspring.models.template_field_logic_status import TemplateFieldLogicStatus as TemplateFieldLogicStatus
+from docspring.models.template_field_move import TemplateFieldMove as TemplateFieldMove
+from docspring.models.template_fields import TemplateFields as TemplateFields
 from docspring.models.template_form_mode import TemplateFormMode as TemplateFormMode
 from docspring.models.template_model_code import TemplateModelCode as TemplateModelCode
 from docspring.models.template_page_ai_error import TemplatePageAiError as TemplatePageAiError
 from docspring.models.template_page_ai_naming_status import TemplatePageAiNamingStatus as TemplatePageAiNamingStatus
 from docspring.models.template_page_fields_status import TemplatePageFieldsStatus as TemplatePageFieldsStatus
 from docspring.models.template_page_image_status import TemplatePageImageStatus as TemplatePageImageStatus
+from docspring.models.template_page_images import TemplatePageImages as TemplatePageImages
 from docspring.models.template_page_processing_status import TemplatePageProcessingStatus as TemplatePageProcessingStatus
 from docspring.models.template_source_pdf import TemplateSourcePdf as TemplateSourcePdf
 from docspring.models.template_summary import TemplateSummary as TemplateSummary
@@ -294,11 +348,13 @@ from docspring.models.text_vertical_alignment import TextVerticalAlignment as Te
 from docspring.models.typeface import Typeface as Typeface
 from docspring.models.update_signature_request_request import UpdateSignatureRequestRequest as UpdateSignatureRequestRequest
 from docspring.models.update_template_document_request import UpdateTemplateDocumentRequest as UpdateTemplateDocumentRequest
+from docspring.models.update_template_fields_request import UpdateTemplateFieldsRequest as UpdateTemplateFieldsRequest
 from docspring.models.update_template_request import UpdateTemplateRequest as UpdateTemplateRequest
 from docspring.models.update_webhook_request import UpdateWebhookRequest as UpdateWebhookRequest
 from docspring.models.upload_method import UploadMethod as UploadMethod
 from docspring.models.upload_presign import UploadPresign as UploadPresign
 from docspring.models.url_source_pdf import UrlSourcePdf as UrlSourcePdf
+from docspring.models.validate_submission_request import ValidateSubmissionRequest as ValidateSubmissionRequest
 from docspring.models.webhook import Webhook as Webhook
 from docspring.models.webhook_event_type import WebhookEventType as WebhookEventType
 from docspring.models.webhook_list import WebhookList as WebhookList

@@ -111,6 +111,20 @@ class TestTemplate(unittest.TestCase):
                 field_dependencies = [
                     { }
                     ],
+                field_groups = [
+                    { }
+                    ],
+                predefined_fields = [
+                    docspring.models.predefined_field.PredefinedField(
+                        name = '', 
+                        display_name = '', 
+                        title = '', 
+                        type = null, 
+                        option_list = '', 
+                        required_in_template = True, 
+                        field_required = True, )
+                    ],
+                predefined_fields_sample_data = { },
                 html = '',
                 scss = '',
                 header_html = '',
@@ -208,6 +222,20 @@ class TestTemplate(unittest.TestCase):
                 field_dependencies = [
                     { }
                     ],
+                field_groups = [
+                    { }
+                    ],
+                predefined_fields = [
+                    docspring.models.predefined_field.PredefinedField(
+                        name = '', 
+                        display_name = '', 
+                        title = '', 
+                        type = null, 
+                        option_list = '', 
+                        required_in_template = True, 
+                        field_required = True, )
+                    ],
+                predefined_fields_sample_data = { },
                 html = '',
                 scss = '',
                 header_html = '',

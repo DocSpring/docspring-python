@@ -45,6 +45,9 @@ Name | Type | Description | Notes
 **updated_at** | **datetime** | When the template was last updated. | 
 **defaults** | [**TemplateDefaults**](TemplateDefaults.md) |  | 
 **field_dependencies** | [**List[TemplateFieldDependency]**](TemplateFieldDependency.md) | Conditional logic: each rule shows or hides its target fields, or makes them required, depending on the values of other fields. | 
+**field_groups** | [**List[FieldGroup]**](FieldGroup.md) | The groups of the template's fields, with their settings. A field's name puts it in groups: `address/city` is in the group `address`, and `items/0/price` is in the list `items` and its items' group `items/~`. | 
+**predefined_fields** | [**List[PredefinedField]**](PredefinedField.md) | The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it's given that name. Setting it replaces the whole list; an empty list turns them off. | 
+**predefined_fields_sample_data** | **Dict[str, object]** | Sample submission data that sets `predefined_fields`: each value becomes a predefined field, with a type that fits it (`string`, `number`, `boolean`, `date`, `email` or `url`) and `required_in_template` true. Nested objects and arrays become names with `/`, such as `customer/email`. Without `predefined_fields` in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for. | 
 **html** | **str** | The HTML of an HTML template, as a Liquid template. Null for PDF templates. | 
 **scss** | **str** | The SCSS of an HTML template. | 
 **header_html** | **str** | The HTML printed at the top of each page of an HTML template. | 

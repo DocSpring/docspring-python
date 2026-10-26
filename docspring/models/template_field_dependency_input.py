@@ -31,7 +31,7 @@ class TemplateFieldDependencyInput(BaseModel):
     """
     A conditional logic rule: when other fields' values meet its conditions, it shows its target fields, makes them required, or both.
     """ # noqa: E501
-    action: TemplateFieldDependencyAction = Field(description="What the rule does to its targets when its conditions are met.")
+    action: TemplateFieldDependencyAction = Field(description="What the rule does to the fields it applies to when its conditions are met.")
     match: Optional[TemplateFieldDependencyMatch] = Field(default=None, description="Whether all of the conditions (the default) or any of them must be met.")
     conditions: List[TemplateFieldDependencyConditionInput] = Field(description="The conditions on other fields' values.")
     targets: List[StrictStr] = Field(description="The names of the fields the rule shows or makes required.")

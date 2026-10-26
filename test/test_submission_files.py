@@ -38,7 +38,8 @@ class TestSubmissionFiles(unittest.TestCase):
             return SubmissionFiles(
                 pdf = { },
                 audit_trail = { },
-                preview = { }
+                preview = { },
+                png = { }
             )
         else:
             return SubmissionFiles(

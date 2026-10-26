@@ -22,7 +22,9 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.ai_field_naming_language import AiFieldNamingLanguage
 from docspring.models.expiration_interval import ExpirationInterval
+from docspring.models.field_group_input import FieldGroupInput
 from docspring.models.html_engine_options_input import HtmlEngineOptionsInput
+from docspring.models.predefined_field_input import PredefinedFieldInput
 from docspring.models.template_defaults_input import TemplateDefaultsInput
 from docspring.models.template_field_dependency_input import TemplateFieldDependencyInput
 from docspring.models.template_form_mode import TemplateFormMode
@@ -61,12 +63,16 @@ class UpdateTemplateRequest(BaseModel):
     slack_webhook_url: Optional[StrictStr] = Field(default=None, description="A Slack incoming webhook URL that is notified about the template's submissions. It's never returned; `has_slack_webhook_url` says if it's set.")
     defaults: Optional[TemplateDefaultsInput] = Field(default=None, description="The default style of the template's fields. Setting it replaces the whole object.")
     field_dependencies: Optional[List[TemplateFieldDependencyInput]] = Field(default=None, description="The template's conditional logic rules. Setting them replaces all of the rules.")
+    field_groups: Optional[List[FieldGroupInput]] = Field(default=None, description="Changes to the settings of the template's field groups, each with the `name` of the group it changes. Settings left out keep their values, and groups left out are unchanged.")
+    predefined_fields: Optional[List[PredefinedFieldInput]] = Field(default=None, description="The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it's given that name. Setting it replaces the whole list; an empty list turns them off.")
+    predefined_fields_sample_data: Optional[Dict[str, Any]] = Field(default=None, description="Sample submission data that sets `predefined_fields`: each value becomes a predefined field, with a type that fits it (`string`, `number`, `boolean`, `date`, `email` or `url`) and `required_in_template` true. Nested objects and arrays become names with `/`, such as `customer/email`. Without `predefined_fields` in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.")
     html: Optional[StrictStr] = Field(default=None, description="The HTML of an HTML template, as a Liquid template. Null for PDF templates.")
     scss: Optional[StrictStr] = Field(default=None, description="The SCSS of an HTML template.")
     header_html: Optional[StrictStr] = Field(default=None, description="The HTML printed at the top of each page of an HTML template.")
     footer_html: Optional[StrictStr] = Field(default=None, description="The HTML printed at the bottom of each page of an HTML template.")
     html_engine_options: Optional[HtmlEngineOptionsInput] = Field(default=None, description="Null resets the options to their defaults.")
-    __properties: ClassVar[List[str]] = ["name", "description", "parent_folder_id", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "slack_webhook_url", "defaults", "field_dependencies", "html", "scss", "header_html", "footer_html", "html_engine_options"]
+    additional_properties: Dict[str, Any] = {}
+    __properties: ClassVar[List[str]] = ["name", "description", "parent_folder_id", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "slack_webhook_url", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -99,8 +105,10 @@ class UpdateTemplateRequest(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -117,9 +125,26 @@ class UpdateTemplateRequest(BaseModel):
             for _item_field_dependencies in self.field_dependencies:
                 _items.append(_item_field_dependencies.to_dict() if _item_field_dependencies is not None else None)
             _dict['field_dependencies'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in field_groups (list)
+        _items = []
+        if self.field_groups:
+            for _item_field_groups in self.field_groups:
+                _items.append(_item_field_groups.to_dict() if _item_field_groups is not None else None)
+            _dict['field_groups'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in predefined_fields (list)
+        _items = []
+        if self.predefined_fields:
+            for _item_predefined_fields in self.predefined_fields:
+                _items.append(_item_predefined_fields.to_dict() if _item_predefined_fields is not None else None)
+            _dict['predefined_fields'] = _items
         # override the default output from pydantic by calling `to_dict()` of html_engine_options
         if self.html_engine_options:
             _dict['html_engine_options'] = self.html_engine_options.to_dict()
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if description (nullable) is None
         # and model_fields_set contains the field
         if self.description is None and "description" in self.model_fields_set:
@@ -144,6 +169,11 @@ class UpdateTemplateRequest(BaseModel):
         # and model_fields_set contains the field
         if self.slack_webhook_url is None and "slack_webhook_url" in self.model_fields_set:
             _dict['slack_webhook_url'] = None
+
+        # set to None if predefined_fields_sample_data (nullable) is None
+        # and model_fields_set contains the field
+        if self.predefined_fields_sample_data is None and "predefined_fields_sample_data" in self.model_fields_set:
+            _dict['predefined_fields_sample_data'] = None
 
         # set to None if html (nullable) is None
         # and model_fields_set contains the field
@@ -209,12 +239,20 @@ class UpdateTemplateRequest(BaseModel):
             "slack_webhook_url": obj.get("slack_webhook_url"),
             "defaults": TemplateDefaultsInput.from_dict(obj["defaults"]) if obj.get("defaults") is not None else None,
             "field_dependencies": [TemplateFieldDependencyInput.from_dict(_item) for _item in obj["field_dependencies"]] if obj.get("field_dependencies") is not None else None,
+            "field_groups": [FieldGroupInput.from_dict(_item) for _item in obj["field_groups"]] if obj.get("field_groups") is not None else None,
+            "predefined_fields": [PredefinedFieldInput.from_dict(_item) for _item in obj["predefined_fields"]] if obj.get("predefined_fields") is not None else None,
+            "predefined_fields_sample_data": obj.get("predefined_fields_sample_data"),
             "html": obj.get("html"),
             "scss": obj.get("scss"),
             "header_html": obj.get("header_html"),
             "footer_html": obj.get("footer_html"),
             "html_engine_options": HtmlEngineOptionsInput.from_dict(obj["html_engine_options"]) if obj.get("html_engine_options") is not None else None
         }, context={"skip_enum_validation": True})
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 

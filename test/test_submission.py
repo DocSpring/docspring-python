@@ -67,6 +67,9 @@ class TestSubmission(unittest.TestCase):
                         ''
                         ]
                     },
+                output_formats = [
+                    'pdf'
+                    ],
                 files = { },
                 preview_generated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 expired = True,
@@ -108,6 +111,9 @@ class TestSubmission(unittest.TestCase):
                         ''
                         ]
                     },
+                output_formats = [
+                    'pdf'
+                    ],
                 files = { },
                 preview_generated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 expired = True,

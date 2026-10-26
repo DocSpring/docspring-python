@@ -23,7 +23,9 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.ai_field_naming_language import AiFieldNamingLanguage
 from docspring.models.expiration_interval import ExpirationInterval
+from docspring.models.field_group import FieldGroup
 from docspring.models.html_engine_options import HtmlEngineOptions
+from docspring.models.predefined_field import PredefinedField
 from docspring.models.template_actor import TemplateActor
 from docspring.models.template_defaults import TemplateDefaults
 from docspring.models.template_document import TemplateDocument
@@ -78,6 +80,9 @@ class Template(BaseModel):
     updated_at: datetime = Field(description="When the template was last updated.")
     defaults: TemplateDefaults
     field_dependencies: List[TemplateFieldDependency] = Field(description="Conditional logic: each rule shows or hides its target fields, or makes them required, depending on the values of other fields.")
+    field_groups: List[FieldGroup] = Field(description="The groups of the template's fields, with their settings. A field's name puts it in groups: `address/city` is in the group `address`, and `items/0/price` is in the list `items` and its items' group `items/~`.")
+    predefined_fields: List[PredefinedField] = Field(description="The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it's given that name. Setting it replaces the whole list; an empty list turns them off.")
+    predefined_fields_sample_data: Optional[Dict[str, Any]] = Field(description="Sample submission data that sets `predefined_fields`: each value becomes a predefined field, with a type that fits it (`string`, `number`, `boolean`, `date`, `email` or `url`) and `required_in_template` true. Nested objects and arrays become names with `/`, such as `customer/email`. Without `predefined_fields` in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.")
     html: Optional[StrictStr] = Field(description="The HTML of an HTML template, as a Liquid template. Null for PDF templates.")
     scss: Optional[StrictStr] = Field(description="The SCSS of an HTML template.")
     header_html: Optional[StrictStr] = Field(description="The HTML printed at the top of each page of an HTML template.")
@@ -86,7 +91,7 @@ class Template(BaseModel):
     embed_edit_token: Optional[StrictStr] = Field(description="The token that opens the template in the embedded template editor.")
     versions: List[TemplateVersion] = Field(description="The template's published versions, newest first (up to 100).")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "template_type", "ready", "document", "parent_folder_id", "path", "version", "latest_version", "version_published_at", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "has_encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "has_slack_webhook_url", "last_changed_at", "last_changed_by", "created_at", "updated_at", "defaults", "field_dependencies", "html", "scss", "header_html", "footer_html", "html_engine_options", "embed_edit_token", "versions"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "template_type", "ready", "document", "parent_folder_id", "path", "version", "latest_version", "version_published_at", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "has_encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "has_slack_webhook_url", "last_changed_at", "last_changed_by", "created_at", "updated_at", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "embed_edit_token", "versions"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -144,6 +149,18 @@ class Template(BaseModel):
             for _item_field_dependencies in self.field_dependencies:
                 _items.append(_item_field_dependencies.to_dict() if _item_field_dependencies is not None else None)
             _dict['field_dependencies'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in field_groups (list)
+        _items = []
+        if self.field_groups:
+            for _item_field_groups in self.field_groups:
+                _items.append(_item_field_groups.to_dict() if _item_field_groups is not None else None)
+            _dict['field_groups'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in predefined_fields (list)
+        _items = []
+        if self.predefined_fields:
+            for _item_predefined_fields in self.predefined_fields:
+                _items.append(_item_predefined_fields.to_dict() if _item_predefined_fields is not None else None)
+            _dict['predefined_fields'] = _items
         # override the default output from pydantic by calling `to_dict()` of html_engine_options
         if self.html_engine_options:
             _dict['html_engine_options'] = self.html_engine_options.to_dict()
@@ -212,6 +229,11 @@ class Template(BaseModel):
         # and model_fields_set contains the field
         if self.last_changed_by is None and "last_changed_by" in self.model_fields_set:
             _dict['last_changed_by'] = None
+
+        # set to None if predefined_fields_sample_data (nullable) is None
+        # and model_fields_set contains the field
+        if self.predefined_fields_sample_data is None and "predefined_fields_sample_data" in self.model_fields_set:
+            _dict['predefined_fields_sample_data'] = None
 
         # set to None if html (nullable) is None
         # and model_fields_set contains the field
@@ -294,6 +316,9 @@ class Template(BaseModel):
             "updated_at": obj.get("updated_at"),
             "defaults": TemplateDefaults.from_dict(obj["defaults"]) if obj.get("defaults") is not None else None,
             "field_dependencies": [TemplateFieldDependency.from_dict(_item) for _item in obj["field_dependencies"]] if obj.get("field_dependencies") is not None else None,
+            "field_groups": [FieldGroup.from_dict(_item) for _item in obj["field_groups"]] if obj.get("field_groups") is not None else None,
+            "predefined_fields": [PredefinedField.from_dict(_item) for _item in obj["predefined_fields"]] if obj.get("predefined_fields") is not None else None,
+            "predefined_fields_sample_data": obj.get("predefined_fields_sample_data"),
             "html": obj.get("html"),
             "scss": obj.get("scss"),
             "header_html": obj.get("header_html"),

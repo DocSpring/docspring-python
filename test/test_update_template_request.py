@@ -96,6 +96,27 @@ class TestUpdateTemplateRequest(unittest.TestCase):
                             ], 
                         group = '', )
                     ],
+                field_groups = [
+                    docspring.models.field_group_input.FieldGroupInput(
+                        name = '', 
+                        title = '', 
+                        description = '', 
+                        metadata = '', 
+                        min_items = 56, 
+                        max_items = 56, 
+                        allow_additional_items = True, )
+                    ],
+                predefined_fields = [
+                    docspring.models.predefined_field_input.PredefinedFieldInput(
+                        name = '', 
+                        display_name = '', 
+                        title = '', 
+                        type = null, 
+                        option_list = '', 
+                        required_in_template = True, 
+                        field_required = True, )
+                    ],
+                predefined_fields_sample_data = { },
                 html = '',
                 scss = '',
                 header_html = '',
