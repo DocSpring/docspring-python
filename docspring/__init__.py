@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.1.0"
+__version__ = "4.2.0"
 
 # Define package exports
 __all__ = [
@@ -29,6 +29,7 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "verify_webhook_signature",
     "AddTemplateFieldsRequest",
     "AiFieldNamingLanguage",
     "AuthenticationCheck",
@@ -51,6 +52,7 @@ __all__ = [
     "CreateSignatureRequestTokenRequest",
     "CreateSubmissionBatchRequest",
     "CreateSubmissionRequest",
+    "CreateTemplatePreviewRequest",
     "CreateTemplateRequest",
     "CreateWebhookRequest",
     "CustomFile",
@@ -132,6 +134,7 @@ __all__ = [
     "SubmissionSource",
     "SubmissionSourcePdf",
     "SubmissionState",
+    "SubmissionSummary",
     "SubmissionValidation",
     "Template",
     "TemplateActor",
@@ -142,6 +145,7 @@ __all__ = [
     "TemplateDiffSummary",
     "TemplateDocument",
     "TemplateDocumentState",
+    "TemplateDocumentSummary",
     "TemplateFieldChange",
     "TemplateFieldChanges",
     "TemplateFieldDependency",
@@ -162,6 +166,8 @@ __all__ = [
     "TemplatePageImageStatus",
     "TemplatePageImages",
     "TemplatePageProcessingStatus",
+    "TemplatePreview",
+    "TemplatePreviewState",
     "TemplateSourcePdf",
     "TemplateSummary",
     "TemplateSummaryList",
@@ -201,6 +207,7 @@ from docspring.exceptions import ApiKeyError as ApiKeyError
 from docspring.exceptions import ApiAttributeError as ApiAttributeError
 from docspring.exceptions import ApiException as ApiException
 from docspring.exceptions import RequestValidationError as RequestValidationError
+from docspring.webhook_signature import verify_webhook_signature as verify_webhook_signature
 
 # import models into sdk package
 from docspring.models.add_template_fields_request import AddTemplateFieldsRequest as AddTemplateFieldsRequest
@@ -225,6 +232,7 @@ from docspring.models.create_signature_request_event_request import CreateSignat
 from docspring.models.create_signature_request_token_request import CreateSignatureRequestTokenRequest as CreateSignatureRequestTokenRequest
 from docspring.models.create_submission_batch_request import CreateSubmissionBatchRequest as CreateSubmissionBatchRequest
 from docspring.models.create_submission_request import CreateSubmissionRequest as CreateSubmissionRequest
+from docspring.models.create_template_preview_request import CreateTemplatePreviewRequest as CreateTemplatePreviewRequest
 from docspring.models.create_template_request import CreateTemplateRequest as CreateTemplateRequest
 from docspring.models.create_webhook_request import CreateWebhookRequest as CreateWebhookRequest
 from docspring.models.custom_file import CustomFile as CustomFile
@@ -306,6 +314,7 @@ from docspring.models.submission_list import SubmissionList as SubmissionList
 from docspring.models.submission_source import SubmissionSource as SubmissionSource
 from docspring.models.submission_source_pdf import SubmissionSourcePdf as SubmissionSourcePdf
 from docspring.models.submission_state import SubmissionState as SubmissionState
+from docspring.models.submission_summary import SubmissionSummary as SubmissionSummary
 from docspring.models.submission_validation import SubmissionValidation as SubmissionValidation
 from docspring.models.template import Template as Template
 from docspring.models.template_actor import TemplateActor as TemplateActor
@@ -316,6 +325,7 @@ from docspring.models.template_diff import TemplateDiff as TemplateDiff
 from docspring.models.template_diff_summary import TemplateDiffSummary as TemplateDiffSummary
 from docspring.models.template_document import TemplateDocument as TemplateDocument
 from docspring.models.template_document_state import TemplateDocumentState as TemplateDocumentState
+from docspring.models.template_document_summary import TemplateDocumentSummary as TemplateDocumentSummary
 from docspring.models.template_field_change import TemplateFieldChange as TemplateFieldChange
 from docspring.models.template_field_changes import TemplateFieldChanges as TemplateFieldChanges
 from docspring.models.template_field_dependency import TemplateFieldDependency as TemplateFieldDependency
@@ -336,6 +346,8 @@ from docspring.models.template_page_fields_status import TemplatePageFieldsStatu
 from docspring.models.template_page_image_status import TemplatePageImageStatus as TemplatePageImageStatus
 from docspring.models.template_page_images import TemplatePageImages as TemplatePageImages
 from docspring.models.template_page_processing_status import TemplatePageProcessingStatus as TemplatePageProcessingStatus
+from docspring.models.template_preview import TemplatePreview as TemplatePreview
+from docspring.models.template_preview_state import TemplatePreviewState as TemplatePreviewState
 from docspring.models.template_source_pdf import TemplateSourcePdf as TemplateSourcePdf
 from docspring.models.template_summary import TemplateSummary as TemplateSummary
 from docspring.models.template_summary_list import TemplateSummaryList as TemplateSummaryList

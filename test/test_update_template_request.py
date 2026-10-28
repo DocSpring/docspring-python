@@ -131,7 +131,8 @@ class TestUpdateTemplateRequest(unittest.TestCase):
                     margin_top = '', 
                     margin_bottom = '', 
                     margin_left = '', 
-                    margin_right = '', )
+                    margin_right = '', ),
+                html_escape_data = True
             )
         else:
             return UpdateTemplateRequest(

@@ -97,6 +97,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_create_template_preview(self) -> None:
+        """Test case for create_template_preview
+
+        Preview a template with data
+        """
+        pass
+
     def test_create_webhook(self) -> None:
         """Test case for create_webhook
 
@@ -234,6 +241,13 @@ class TestClient(unittest.TestCase):
         """Test case for get_template_page_images
 
         Get images of a template's pages
+        """
+        pass
+
+    def test_get_template_preview(self) -> None:
+        """Test case for get_template_preview
+
+        Get a template preview
         """
         pass
 

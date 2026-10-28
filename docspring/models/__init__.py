@@ -36,6 +36,7 @@ from docspring.models.create_signature_request_event_request import CreateSignat
 from docspring.models.create_signature_request_token_request import CreateSignatureRequestTokenRequest
 from docspring.models.create_submission_batch_request import CreateSubmissionBatchRequest
 from docspring.models.create_submission_request import CreateSubmissionRequest
+from docspring.models.create_template_preview_request import CreateTemplatePreviewRequest
 from docspring.models.create_template_request import CreateTemplateRequest
 from docspring.models.create_webhook_request import CreateWebhookRequest
 from docspring.models.custom_file import CustomFile
@@ -117,6 +118,7 @@ from docspring.models.submission_list import SubmissionList
 from docspring.models.submission_source import SubmissionSource
 from docspring.models.submission_source_pdf import SubmissionSourcePdf
 from docspring.models.submission_state import SubmissionState
+from docspring.models.submission_summary import SubmissionSummary
 from docspring.models.submission_validation import SubmissionValidation
 from docspring.models.template import Template
 from docspring.models.template_actor import TemplateActor
@@ -127,6 +129,7 @@ from docspring.models.template_diff import TemplateDiff
 from docspring.models.template_diff_summary import TemplateDiffSummary
 from docspring.models.template_document import TemplateDocument
 from docspring.models.template_document_state import TemplateDocumentState
+from docspring.models.template_document_summary import TemplateDocumentSummary
 from docspring.models.template_field_change import TemplateFieldChange
 from docspring.models.template_field_changes import TemplateFieldChanges
 from docspring.models.template_field_dependency import TemplateFieldDependency
@@ -147,6 +150,8 @@ from docspring.models.template_page_fields_status import TemplatePageFieldsStatu
 from docspring.models.template_page_image_status import TemplatePageImageStatus
 from docspring.models.template_page_images import TemplatePageImages
 from docspring.models.template_page_processing_status import TemplatePageProcessingStatus
+from docspring.models.template_preview import TemplatePreview
+from docspring.models.template_preview_state import TemplatePreviewState
 from docspring.models.template_source_pdf import TemplateSourcePdf
 from docspring.models.template_summary import TemplateSummary
 from docspring.models.template_summary_list import TemplateSummaryList

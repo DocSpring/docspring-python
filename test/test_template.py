@@ -43,11 +43,11 @@ class TestTemplate(unittest.TestCase):
                 ready = True,
                 document = docspring.models.template_document.TemplateDocument(
                     filename = '', 
-                    md5 = '', 
                     state = null, 
                     error_message = '', 
-                    field_reimport_state = null, 
                     page_count = 56, 
+                    md5 = '', 
+                    field_reimport_state = null, 
                     page_dimensions = [
                         [
                             1.337
@@ -71,10 +71,13 @@ class TestTemplate(unittest.TestCase):
                     permanent_url = '', ),
                 parent_folder_id = '',
                 path = '',
-                version = '',
                 latest_version = '',
                 version_published_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 locked = True,
+                last_changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                version = '',
                 add_signature_request_submission_id_footers = True,
                 ai_field_naming_language = 'auto',
                 allow_additional_properties = True,
@@ -98,15 +101,12 @@ class TestTemplate(unittest.TestCase):
                 public_web_form = True,
                 redirect_url = '',
                 has_slack_webhook_url = True,
-                last_changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 last_changed_by = docspring.models.template_actor.TemplateActor(
                     type = null, 
                     user_id = '', 
                     external_id = '', 
                     name = '', 
                     email = '', ),
-                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 defaults = { },
                 field_dependencies = [
                     { }
@@ -140,6 +140,7 @@ class TestTemplate(unittest.TestCase):
                     margin_bottom = '', 
                     margin_left = '', 
                     margin_right = '', ),
+                html_escape_data = True,
                 embed_edit_token = '',
                 versions = [
                     { }
@@ -154,11 +155,11 @@ class TestTemplate(unittest.TestCase):
                 ready = True,
                 document = docspring.models.template_document.TemplateDocument(
                     filename = '', 
-                    md5 = '', 
                     state = null, 
                     error_message = '', 
-                    field_reimport_state = null, 
                     page_count = 56, 
+                    md5 = '', 
+                    field_reimport_state = null, 
                     page_dimensions = [
                         [
                             1.337
@@ -182,10 +183,13 @@ class TestTemplate(unittest.TestCase):
                     permanent_url = '', ),
                 parent_folder_id = '',
                 path = '',
-                version = '',
                 latest_version = '',
                 version_published_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 locked = True,
+                last_changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                version = '',
                 add_signature_request_submission_id_footers = True,
                 ai_field_naming_language = 'auto',
                 allow_additional_properties = True,
@@ -209,15 +213,12 @@ class TestTemplate(unittest.TestCase):
                 public_web_form = True,
                 redirect_url = '',
                 has_slack_webhook_url = True,
-                last_changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 last_changed_by = docspring.models.template_actor.TemplateActor(
                     type = null, 
                     user_id = '', 
                     external_id = '', 
                     name = '', 
                     email = '', ),
-                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 defaults = { },
                 field_dependencies = [
                     { }
@@ -251,6 +252,7 @@ class TestTemplate(unittest.TestCase):
                     margin_bottom = '', 
                     margin_left = '', 
                     margin_right = '', ),
+                html_escape_data = True,
                 embed_edit_token = '',
                 versions = [
                     { }

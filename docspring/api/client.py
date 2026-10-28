@@ -32,6 +32,7 @@ from docspring.models.create_signature_request_event_request import CreateSignat
 from docspring.models.create_signature_request_token_request import CreateSignatureRequestTokenRequest
 from docspring.models.create_submission_batch_request import CreateSubmissionBatchRequest
 from docspring.models.create_submission_request import CreateSubmissionRequest
+from docspring.models.create_template_preview_request import CreateTemplatePreviewRequest
 from docspring.models.create_template_request import CreateTemplateRequest
 from docspring.models.create_webhook_request import CreateWebhookRequest
 from docspring.models.custom_file import CustomFile
@@ -53,12 +54,14 @@ from docspring.models.signature_request_token import SignatureRequestToken
 from docspring.models.submission import Submission
 from docspring.models.submission_batch import SubmissionBatch
 from docspring.models.submission_list import SubmissionList
+from docspring.models.submission_state import SubmissionState
 from docspring.models.submission_validation import SubmissionValidation
 from docspring.models.template import Template
 from docspring.models.template_diff import TemplateDiff
 from docspring.models.template_fields import TemplateFields
 from docspring.models.template_model_code import TemplateModelCode
 from docspring.models.template_page_images import TemplatePageImages
+from docspring.models.template_preview import TemplatePreview
 from docspring.models.template_summary_list import TemplateSummaryList
 from docspring.models.template_version import TemplateVersion
 from docspring.models.update_signature_request_request import UpdateSignatureRequestRequest
@@ -199,6 +202,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -275,6 +279,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -351,6 +356,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -503,6 +509,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -579,6 +586,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -655,6 +663,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -749,6 +758,7 @@ class Client:
         self,
         body: Annotated[CreateCombinedPdfRequest, Field(description="The PDFs to merge, and the combined PDF's settings.")],
         wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -770,6 +780,8 @@ class Client:
         :type body: CreateCombinedPdfRequest
         :param wait: Wait until the PDF has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -795,6 +807,7 @@ class Client:
         _param = self._create_combined_pdf_serialize(
             body=body,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -806,7 +819,10 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '402': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -825,6 +841,7 @@ class Client:
         self,
         body: Annotated[CreateCombinedPdfRequest, Field(description="The PDFs to merge, and the combined PDF's settings.")],
         wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -846,6 +863,8 @@ class Client:
         :type body: CreateCombinedPdfRequest
         :param wait: Wait until the PDF has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -871,6 +890,7 @@ class Client:
         _param = self._create_combined_pdf_serialize(
             body=body,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -882,7 +902,10 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '402': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -901,6 +924,7 @@ class Client:
         self,
         body: Annotated[CreateCombinedPdfRequest, Field(description="The PDFs to merge, and the combined PDF's settings.")],
         wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -922,6 +946,8 @@ class Client:
         :type body: CreateCombinedPdfRequest
         :param wait: Wait until the PDF has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -947,6 +973,7 @@ class Client:
         _param = self._create_combined_pdf_serialize(
             body=body,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -958,7 +985,10 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '402': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -971,6 +1001,7 @@ class Client:
         self,
         body,
         wait,
+        idempotency_key,
         _request_auth,
         _content_type,
         _headers,
@@ -998,6 +1029,8 @@ class Client:
             _query_params.append(('wait', wait))
             
         # process the header parameters
+        if idempotency_key is not None:
+            _header_params['Idempotency-Key'] = idempotency_key
         # process the form parameters
         # process the body parameter
         if body is not None:
@@ -1107,6 +1140,7 @@ class Client:
             '201': "CustomFile",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1177,6 +1211,7 @@ class Client:
             '201': "CustomFile",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1247,6 +1282,7 @@ class Client:
             '201': "CustomFile",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1390,6 +1426,7 @@ class Client:
             '201': "Folder",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1460,6 +1497,7 @@ class Client:
             '201': "Folder",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1530,6 +1568,7 @@ class Client:
             '201': "Folder",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1636,7 +1675,7 @@ class Client:
     ) -> SignatureRequestEvent:
         """Record a signature request event
 
-        Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. 
+        Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. A finished (completed, declined or expired) signature request's audit trail takes no more events, and a test API token can't record one for a live signature request. 
 
         :param signature_request_id: The signature request's ID. (required)
         :type signature_request_id: str
@@ -1675,9 +1714,12 @@ class Client:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "SignatureRequestEvent",
+            '403': "ErrorResponse",
+            '409': "ErrorResponse",
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1711,7 +1753,7 @@ class Client:
     ) -> ApiResponse[SignatureRequestEvent]:
         """Record a signature request event
 
-        Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. 
+        Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. A finished (completed, declined or expired) signature request's audit trail takes no more events, and a test API token can't record one for a live signature request. 
 
         :param signature_request_id: The signature request's ID. (required)
         :type signature_request_id: str
@@ -1750,9 +1792,12 @@ class Client:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "SignatureRequestEvent",
+            '403': "ErrorResponse",
+            '409': "ErrorResponse",
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1786,7 +1831,7 @@ class Client:
     ) -> RESTResponseType:
         """Record a signature request event
 
-        Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. 
+        Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. A finished (completed, declined or expired) signature request's audit trail takes no more events, and a test API token can't record one for a live signature request. 
 
         :param signature_request_id: The signature request's ID. (required)
         :type signature_request_id: str
@@ -1825,9 +1870,12 @@ class Client:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "SignatureRequestEvent",
+            '403': "ErrorResponse",
+            '409': "ErrorResponse",
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1981,6 +2029,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2058,6 +2107,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2135,6 +2185,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2231,6 +2282,7 @@ class Client:
         body: Annotated[CreateSubmissionRequest, Field(description="The submission's data and settings.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
         wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2256,6 +2308,8 @@ class Client:
         :type version: str
         :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2283,6 +2337,7 @@ class Client:
             body=body,
             version=version,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2295,7 +2350,10 @@ class Client:
             '402': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2316,6 +2374,7 @@ class Client:
         body: Annotated[CreateSubmissionRequest, Field(description="The submission's data and settings.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
         wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2341,6 +2400,8 @@ class Client:
         :type version: str
         :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2368,6 +2429,7 @@ class Client:
             body=body,
             version=version,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2380,7 +2442,10 @@ class Client:
             '402': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2401,6 +2466,7 @@ class Client:
         body: Annotated[CreateSubmissionRequest, Field(description="The submission's data and settings.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")] = None,
         wait: Annotated[Optional[StrictBool], Field(description="Wait until the files have been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2426,6 +2492,8 @@ class Client:
         :type version: str
         :param wait: Wait until the files have been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2453,6 +2521,7 @@ class Client:
             body=body,
             version=version,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2465,7 +2534,10 @@ class Client:
             '402': "ErrorResponse",
             '403': "ErrorResponse",
             '404': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2480,6 +2552,7 @@ class Client:
         body,
         version,
         wait,
+        idempotency_key,
         _request_auth,
         _content_type,
         _headers,
@@ -2513,6 +2586,8 @@ class Client:
             _query_params.append(('wait', wait))
             
         # process the header parameters
+        if idempotency_key is not None:
+            _header_params['Idempotency-Key'] = idempotency_key
         # process the form parameters
         # process the body parameter
         if body is not None:
@@ -2570,6 +2645,7 @@ class Client:
         self,
         body: Annotated[CreateSubmissionBatchRequest, Field(description="The submissions to create, and the settings they share.")],
         wait: Annotated[Optional[StrictBool], Field(description="Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2591,6 +2667,8 @@ class Client:
         :type body: CreateSubmissionBatchRequest
         :param wait: Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2616,6 +2694,7 @@ class Client:
         _param = self._create_submission_batch_serialize(
             body=body,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2627,7 +2706,10 @@ class Client:
             '422': "ErrorResponse",
             '402': "ErrorResponse",
             '403': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2646,6 +2728,7 @@ class Client:
         self,
         body: Annotated[CreateSubmissionBatchRequest, Field(description="The submissions to create, and the settings they share.")],
         wait: Annotated[Optional[StrictBool], Field(description="Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2667,6 +2750,8 @@ class Client:
         :type body: CreateSubmissionBatchRequest
         :param wait: Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2692,6 +2777,7 @@ class Client:
         _param = self._create_submission_batch_serialize(
             body=body,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2703,7 +2789,10 @@ class Client:
             '422': "ErrorResponse",
             '402': "ErrorResponse",
             '403': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2722,6 +2811,7 @@ class Client:
         self,
         body: Annotated[CreateSubmissionBatchRequest, Field(description="The submissions to create, and the settings they share.")],
         wait: Annotated[Optional[StrictBool], Field(description="Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
+        idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2743,6 +2833,8 @@ class Client:
         :type body: CreateSubmissionBatchRequest
         :param wait: Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
+        :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
+        :type idempotency_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2768,6 +2860,7 @@ class Client:
         _param = self._create_submission_batch_serialize(
             body=body,
             wait=wait,
+            idempotency_key=idempotency_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2779,7 +2872,10 @@ class Client:
             '422': "ErrorResponse",
             '402': "ErrorResponse",
             '403': "ErrorResponse",
+            '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2792,6 +2888,7 @@ class Client:
         self,
         body,
         wait,
+        idempotency_key,
         _request_auth,
         _content_type,
         _headers,
@@ -2819,6 +2916,8 @@ class Client:
             _query_params.append(('wait', wait))
             
         # process the header parameters
+        if idempotency_key is not None:
+            _header_params['Idempotency-Key'] = idempotency_key
         # process the form parameters
         # process the body parameter
         if body is not None:
@@ -2933,6 +3032,8 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3008,6 +3109,8 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3083,6 +3186,8 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3173,6 +3278,324 @@ class Client:
 
 
 
+    @checks_request("createTemplatePreview")
+    @validate_call
+    def create_template_preview(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[CreateTemplatePreviewRequest, Field(description="The data to render the template with.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplatePreview:
+        """Preview a template with data
+
+        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The data to render the template with. (required)
+        :type body: CreateTemplatePreviewRequest
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_template_preview_serialize(
+            template_id=template_id,
+            body=body,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "TemplatePreview",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '429': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("createTemplatePreview")
+    @validate_call
+    def create_template_preview_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[CreateTemplatePreviewRequest, Field(description="The data to render the template with.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplatePreview]:
+        """Preview a template with data
+
+        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The data to render the template with. (required)
+        :type body: CreateTemplatePreviewRequest
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_template_preview_serialize(
+            template_id=template_id,
+            body=body,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "TemplatePreview",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '429': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("createTemplatePreview")
+    @validate_call
+    def create_template_preview_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        body: Annotated[CreateTemplatePreviewRequest, Field(description="The data to render the template with.")],
+        version: Annotated[Optional[StrictStr], Field(description="A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Preview a template with data
+
+        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param body: The data to render the template with. (required)
+        :type body: CreateTemplatePreviewRequest
+        :param version: A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`.
+        :type version: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_template_preview_serialize(
+            template_id=template_id,
+            body=body,
+            version=version,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "TemplatePreview",
+            '409': "ErrorResponse",
+            '422': "ErrorResponse",
+            '429': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_template_preview_serialize(
+        self,
+        template_id,
+        body,
+        version,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        # process the query parameters
+        if version is not None:
+            
+            _query_params.append(('version', version))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if body is not None:
+            _body_params = body
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/templates/{template_id}/previews',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
     @checks_request("createWebhook")
     @validate_call
     def create_webhook(
@@ -3231,6 +3654,7 @@ class Client:
             '201': "Webhook",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3301,6 +3725,7 @@ class Client:
             '201': "Webhook",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3371,6 +3796,7 @@ class Client:
             '201': "Webhook",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3515,6 +3941,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3586,6 +4013,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3657,6 +4085,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3788,6 +4217,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3859,6 +4289,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3930,6 +4361,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4066,6 +4498,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4142,6 +4575,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4218,6 +4652,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4353,6 +4788,7 @@ class Client:
             '200': "Webhook",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4423,6 +4859,7 @@ class Client:
             '200': "Webhook",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4493,6 +4930,7 @@ class Client:
             '200': "Webhook",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4624,6 +5062,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4695,6 +5134,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4766,6 +5206,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4897,6 +5338,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4968,6 +5410,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5039,6 +5482,7 @@ class Client:
             '403': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5179,6 +5623,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5259,6 +5705,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5339,6 +5787,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5491,6 +5941,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5562,6 +6013,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5633,6 +6085,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5763,6 +6216,7 @@ class Client:
             '200': "CombinedPdf",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5833,6 +6287,7 @@ class Client:
             '200': "CombinedPdf",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5903,6 +6358,7 @@ class Client:
             '200': "CombinedPdf",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6033,6 +6489,7 @@ class Client:
             '200': "CustomFile",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6103,6 +6560,7 @@ class Client:
             '200': "CustomFile",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6173,6 +6631,7 @@ class Client:
             '200': "CustomFile",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6303,6 +6762,7 @@ class Client:
             '200': "Folder",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6373,6 +6833,7 @@ class Client:
             '200': "Folder",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6443,6 +6904,7 @@ class Client:
             '200': "Folder",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6568,6 +7030,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UploadPresign",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6633,6 +7096,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UploadPresign",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6698,6 +7162,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UploadPresign",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6825,6 +7290,7 @@ class Client:
             '200': "SignatureRequest",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6895,6 +7361,7 @@ class Client:
             '200': "SignatureRequest",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6965,6 +7432,7 @@ class Client:
             '200': "SignatureRequest",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7095,6 +7563,7 @@ class Client:
             '200': "Submission",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7165,6 +7634,7 @@ class Client:
             '200': "Submission",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7235,6 +7705,7 @@ class Client:
             '200': "Submission",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7369,6 +7840,7 @@ class Client:
             '200': "SubmissionBatch",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7443,6 +7915,7 @@ class Client:
             '200': "SubmissionBatch",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7517,6 +7990,7 @@ class Client:
             '200': "SubmissionBatch",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7657,6 +8131,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7732,6 +8207,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7807,6 +8283,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7947,6 +8424,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8022,6 +8500,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8097,6 +8576,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8181,6 +8661,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         lang: Annotated[ModelCodeLanguage, Field(description="The language to generate the code in.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.")] = None,
+        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8196,7 +8677,7 @@ class Client:
     ) -> TemplateModelCode:
         """Generate typed code for a template's submission data
 
-        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
+        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -8204,6 +8685,8 @@ class Client:
         :type lang: ModelCodeLanguage
         :param version: The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.
         :type version: str
+        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.
+        :type just_types: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8230,6 +8713,7 @@ class Client:
             template_id=template_id,
             lang=lang,
             version=version,
+            just_types=just_types,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8241,6 +8725,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8260,6 +8745,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         lang: Annotated[ModelCodeLanguage, Field(description="The language to generate the code in.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.")] = None,
+        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8275,7 +8761,7 @@ class Client:
     ) -> ApiResponse[TemplateModelCode]:
         """Generate typed code for a template's submission data
 
-        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
+        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -8283,6 +8769,8 @@ class Client:
         :type lang: ModelCodeLanguage
         :param version: The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.
         :type version: str
+        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.
+        :type just_types: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8309,6 +8797,7 @@ class Client:
             template_id=template_id,
             lang=lang,
             version=version,
+            just_types=just_types,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8320,6 +8809,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8339,6 +8829,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         lang: Annotated[ModelCodeLanguage, Field(description="The language to generate the code in.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.")] = None,
+        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8354,7 +8845,7 @@ class Client:
     ) -> RESTResponseType:
         """Generate typed code for a template's submission data
 
-        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
+        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -8362,6 +8853,8 @@ class Client:
         :type lang: ModelCodeLanguage
         :param version: The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.
         :type version: str
+        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.
+        :type just_types: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8388,6 +8881,7 @@ class Client:
             template_id=template_id,
             lang=lang,
             version=version,
+            just_types=just_types,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8399,6 +8893,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8412,6 +8907,7 @@ class Client:
         template_id,
         lang,
         version,
+        just_types,
         _request_auth,
         _content_type,
         _headers,
@@ -8443,6 +8939,10 @@ class Client:
         if lang is not None:
             
             _query_params.append(('lang', lang.value))
+            
+        if just_types is not None:
+            
+            _query_params.append(('just_types', just_types))
             
         # process the header parameters
         # process the form parameters
@@ -8544,6 +9044,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8619,6 +9120,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8694,6 +9196,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8771,6 +9274,291 @@ class Client:
 
 
 
+    @checks_request("getTemplatePreview")
+    @validate_call
+    def get_template_preview(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        preview_id: Annotated[StrictStr, Field(description="The preview's ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> TemplatePreview:
+        """Get a template preview
+
+        Returns a preview made with POST /templates/{template_id}/previews. Once it's `processed`, `pages` has a PNG image of each page with a temporary link to download it: a preview has no PDF. Previews are deleted an hour after they're created. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param preview_id: The preview's ID. (required)
+        :type preview_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_preview_serialize(
+            template_id=template_id,
+            preview_id=preview_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePreview",
+            '404': "ErrorResponse",
+            '429': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @checks_request("getTemplatePreview")
+    @validate_call
+    def get_template_preview_with_http_info(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        preview_id: Annotated[StrictStr, Field(description="The preview's ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[TemplatePreview]:
+        """Get a template preview
+
+        Returns a preview made with POST /templates/{template_id}/previews. Once it's `processed`, `pages` has a PNG image of each page with a temporary link to download it: a preview has no PDF. Previews are deleted an hour after they're created. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param preview_id: The preview's ID. (required)
+        :type preview_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_preview_serialize(
+            template_id=template_id,
+            preview_id=preview_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePreview",
+            '404': "ErrorResponse",
+            '429': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @checks_request("getTemplatePreview")
+    @validate_call
+    def get_template_preview_without_preload_content(
+        self,
+        template_id: Annotated[StrictStr, Field(description="The template's ID.")],
+        preview_id: Annotated[StrictStr, Field(description="The preview's ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get a template preview
+
+        Returns a preview made with POST /templates/{template_id}/previews. Once it's `processed`, `pages` has a PNG image of each page with a temporary link to download it: a preview has no PDF. Previews are deleted an hour after they're created. 
+
+        :param template_id: The template's ID. (required)
+        :type template_id: str
+        :param preview_id: The preview's ID. (required)
+        :type preview_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_template_preview_serialize(
+            template_id=template_id,
+            preview_id=preview_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TemplatePreview",
+            '404': "ErrorResponse",
+            '429': "ErrorResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_template_preview_serialize(
+        self,
+        template_id,
+        preview_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if template_id is not None:
+            _path_params['template_id'] = template_id
+        if preview_id is not None:
+            _path_params['preview_id'] = preview_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'api_token_basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/templates/{template_id}/previews/{preview_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
     @checks_request("getTemplateSchema")
     @validate_call
     def get_template_schema(
@@ -8833,6 +9621,7 @@ class Client:
             '200': "Dict[str, object]",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8907,6 +9696,7 @@ class Client:
             '200': "Dict[str, object]",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8981,6 +9771,7 @@ class Client:
             '200': "Dict[str, object]",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9116,6 +9907,7 @@ class Client:
             '200': "Webhook",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9186,6 +9978,7 @@ class Client:
             '200': "Webhook",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9256,6 +10049,7 @@ class Client:
             '200': "Webhook",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9390,6 +10184,7 @@ class Client:
             '200': "CombinedPdfList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9464,6 +10259,7 @@ class Client:
             '200': "CombinedPdfList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9538,6 +10334,7 @@ class Client:
             '200': "CombinedPdfList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9679,6 +10476,7 @@ class Client:
             '200': "CustomFileList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9753,6 +10551,7 @@ class Client:
             '200': "CustomFileList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9827,6 +10626,7 @@ class Client:
             '200': "CustomFileList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9972,6 +10772,7 @@ class Client:
             '200': "FolderList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10050,6 +10851,7 @@ class Client:
             '200': "FolderList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10128,6 +10930,7 @@ class Client:
             '200': "FolderList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10223,6 +11026,8 @@ class Client:
         include_data: Annotated[Optional[StrictBool], Field(description="Include each submission's `data` (null without it).")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="How many items to return (1-100, default 50).")] = None,
         cursor: Annotated[Optional[StrictStr], Field(description="The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.")] = None,
+        state: Annotated[Optional[SubmissionState], Field(description="Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.")] = None,
+        include_files: Annotated[Optional[StrictBool], Field(description="Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -10238,7 +11043,7 @@ class Client:
     ) -> SubmissionList:
         """List submissions
 
-        Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission's `data` unless you pass `include_data=true`. 
+        Returns the submissions in your account, newest first, one page at a time. Each one is a summary: its `data` is null unless you pass `include_data=true`, and its `files` are empty unless you pass `include_files=true`. Get a submission by its ID for its signature requests, uploads and page images. 
 
         :param template_id: Only list this template's submissions.
         :type template_id: str
@@ -10254,6 +11059,10 @@ class Client:
         :type limit: int
         :param cursor: The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.
         :type cursor: str
+        :param state: Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.
+        :type state: SubmissionState
+        :param include_files: Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.
+        :type include_files: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10284,6 +11093,8 @@ class Client:
             include_data=include_data,
             limit=limit,
             cursor=cursor,
+            state=state,
+            include_files=include_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -10294,6 +11105,7 @@ class Client:
             '200': "SubmissionList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10317,6 +11129,8 @@ class Client:
         include_data: Annotated[Optional[StrictBool], Field(description="Include each submission's `data` (null without it).")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="How many items to return (1-100, default 50).")] = None,
         cursor: Annotated[Optional[StrictStr], Field(description="The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.")] = None,
+        state: Annotated[Optional[SubmissionState], Field(description="Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.")] = None,
+        include_files: Annotated[Optional[StrictBool], Field(description="Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -10332,7 +11146,7 @@ class Client:
     ) -> ApiResponse[SubmissionList]:
         """List submissions
 
-        Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission's `data` unless you pass `include_data=true`. 
+        Returns the submissions in your account, newest first, one page at a time. Each one is a summary: its `data` is null unless you pass `include_data=true`, and its `files` are empty unless you pass `include_files=true`. Get a submission by its ID for its signature requests, uploads and page images. 
 
         :param template_id: Only list this template's submissions.
         :type template_id: str
@@ -10348,6 +11162,10 @@ class Client:
         :type limit: int
         :param cursor: The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.
         :type cursor: str
+        :param state: Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.
+        :type state: SubmissionState
+        :param include_files: Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.
+        :type include_files: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10378,6 +11196,8 @@ class Client:
             include_data=include_data,
             limit=limit,
             cursor=cursor,
+            state=state,
+            include_files=include_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -10388,6 +11208,7 @@ class Client:
             '200': "SubmissionList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10411,6 +11232,8 @@ class Client:
         include_data: Annotated[Optional[StrictBool], Field(description="Include each submission's `data` (null without it).")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="How many items to return (1-100, default 50).")] = None,
         cursor: Annotated[Optional[StrictStr], Field(description="The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.")] = None,
+        state: Annotated[Optional[SubmissionState], Field(description="Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.")] = None,
+        include_files: Annotated[Optional[StrictBool], Field(description="Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -10426,7 +11249,7 @@ class Client:
     ) -> RESTResponseType:
         """List submissions
 
-        Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission's `data` unless you pass `include_data=true`. 
+        Returns the submissions in your account, newest first, one page at a time. Each one is a summary: its `data` is null unless you pass `include_data=true`, and its `files` are empty unless you pass `include_files=true`. Get a submission by its ID for its signature requests, uploads and page images. 
 
         :param template_id: Only list this template's submissions.
         :type template_id: str
@@ -10442,6 +11265,10 @@ class Client:
         :type limit: int
         :param cursor: The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.
         :type cursor: str
+        :param state: Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.
+        :type state: SubmissionState
+        :param include_files: Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.
+        :type include_files: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10472,6 +11299,8 @@ class Client:
             include_data=include_data,
             limit=limit,
             cursor=cursor,
+            state=state,
+            include_files=include_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -10482,6 +11311,7 @@ class Client:
             '200': "SubmissionList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10499,6 +11329,8 @@ class Client:
         include_data,
         limit,
         cursor,
+        state,
+        include_files,
         _request_auth,
         _content_type,
         _headers,
@@ -10562,6 +11394,14 @@ class Client:
         if cursor is not None:
             
             _query_params.append(('cursor', cursor))
+            
+        if state is not None:
+            
+            _query_params.append(('state', state.value))
+            
+        if include_files is not None:
+            
+            _query_params.append(('include_files', include_files))
             
         # process the header parameters
         # process the form parameters
@@ -10663,6 +11503,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10738,6 +11579,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10813,6 +11655,7 @@ class Client:
             '409': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10901,6 +11744,8 @@ class Client:
         include_data: Annotated[Optional[StrictBool], Field(description="Include each submission's `data` (null without it).")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="How many items to return (1-100, default 50).")] = None,
         cursor: Annotated[Optional[StrictStr], Field(description="The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.")] = None,
+        state: Annotated[Optional[SubmissionState], Field(description="Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.")] = None,
+        include_files: Annotated[Optional[StrictBool], Field(description="Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -10932,6 +11777,10 @@ class Client:
         :type limit: int
         :param cursor: The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.
         :type cursor: str
+        :param state: Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.
+        :type state: SubmissionState
+        :param include_files: Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.
+        :type include_files: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10962,6 +11811,8 @@ class Client:
             include_data=include_data,
             limit=limit,
             cursor=cursor,
+            state=state,
+            include_files=include_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -10973,6 +11824,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10996,6 +11848,8 @@ class Client:
         include_data: Annotated[Optional[StrictBool], Field(description="Include each submission's `data` (null without it).")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="How many items to return (1-100, default 50).")] = None,
         cursor: Annotated[Optional[StrictStr], Field(description="The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.")] = None,
+        state: Annotated[Optional[SubmissionState], Field(description="Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.")] = None,
+        include_files: Annotated[Optional[StrictBool], Field(description="Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11027,6 +11881,10 @@ class Client:
         :type limit: int
         :param cursor: The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.
         :type cursor: str
+        :param state: Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.
+        :type state: SubmissionState
+        :param include_files: Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.
+        :type include_files: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -11057,6 +11915,8 @@ class Client:
             include_data=include_data,
             limit=limit,
             cursor=cursor,
+            state=state,
+            include_files=include_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -11068,6 +11928,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11091,6 +11952,8 @@ class Client:
         include_data: Annotated[Optional[StrictBool], Field(description="Include each submission's `data` (null without it).")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="How many items to return (1-100, default 50).")] = None,
         cursor: Annotated[Optional[StrictStr], Field(description="The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.")] = None,
+        state: Annotated[Optional[SubmissionState], Field(description="Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.")] = None,
+        include_files: Annotated[Optional[StrictBool], Field(description="Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11122,6 +11985,10 @@ class Client:
         :type limit: int
         :param cursor: The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one.
         :type cursor: str
+        :param state: Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck.
+        :type state: SubmissionState
+        :param include_files: Include each submission's generated files and their download links (`files`, empty without it), without the page images' links.
+        :type include_files: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -11152,6 +12019,8 @@ class Client:
             include_data=include_data,
             limit=limit,
             cursor=cursor,
+            state=state,
+            include_files=include_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -11163,6 +12032,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11180,6 +12050,8 @@ class Client:
         include_data,
         limit,
         cursor,
+        state,
+        include_files,
         _request_auth,
         _content_type,
         _headers,
@@ -11242,6 +12114,14 @@ class Client:
             
             _query_params.append(('cursor', cursor))
             
+        if state is not None:
+            
+            _query_params.append(('state', state.value))
+            
+        if include_files is not None:
+            
+            _query_params.append(('include_files', include_files))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -11302,7 +12182,7 @@ class Client:
     ) -> TemplateSummaryList:
         """List templates
 
-        Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
+        Returns the templates in your account (their drafts), newest first, one page at a time. Each one is a summary: get a template by its ID for its settings, its PDF in full, its HTML, defaults and published versions. 
 
         :param query: Only list templates whose name contains this text (ignoring case).
         :type query: str
@@ -11349,6 +12229,7 @@ class Client:
             '200': "TemplateSummaryList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11384,7 +12265,7 @@ class Client:
     ) -> ApiResponse[TemplateSummaryList]:
         """List templates
 
-        Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
+        Returns the templates in your account (their drafts), newest first, one page at a time. Each one is a summary: get a template by its ID for its settings, its PDF in full, its HTML, defaults and published versions. 
 
         :param query: Only list templates whose name contains this text (ignoring case).
         :type query: str
@@ -11431,6 +12312,7 @@ class Client:
             '200': "TemplateSummaryList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11466,7 +12348,7 @@ class Client:
     ) -> RESTResponseType:
         """List templates
 
-        Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
+        Returns the templates in your account (their drafts), newest first, one page at a time. Each one is a summary: get a template by its ID for its settings, its PDF in full, its HTML, defaults and published versions. 
 
         :param query: Only list templates whose name contains this text (ignoring case).
         :type query: str
@@ -11513,6 +12395,7 @@ class Client:
             '200': "TemplateSummaryList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11684,6 +12567,7 @@ class Client:
             '200': "WebhookList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11778,6 +12662,7 @@ class Client:
             '200': "WebhookList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11872,6 +12757,7 @@ class Client:
             '200': "WebhookList",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12039,6 +12925,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12114,6 +13001,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12189,6 +13077,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12340,6 +13229,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12415,6 +13305,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12490,6 +13381,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12642,6 +13534,7 @@ class Client:
             '404': "ErrorResponse",
             '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12718,6 +13611,7 @@ class Client:
             '404': "ErrorResponse",
             '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12794,6 +13688,7 @@ class Client:
             '404': "ErrorResponse",
             '409': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12945,6 +13840,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13020,6 +13916,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13095,6 +13992,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13246,6 +14144,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13321,6 +14220,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13396,6 +14296,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13547,6 +14448,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13622,6 +14524,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13697,6 +14600,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13849,6 +14753,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13925,6 +14830,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14001,6 +14907,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14142,6 +15049,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AuthenticationCheck",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14207,6 +15115,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AuthenticationCheck",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14272,6 +15181,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AuthenticationCheck",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14405,6 +15315,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14481,6 +15392,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14557,6 +15469,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14709,6 +15622,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14785,6 +15699,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -14861,6 +15776,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15017,6 +15933,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15097,6 +16015,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15177,6 +16097,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15333,6 +16255,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15408,6 +16331,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15483,6 +16407,7 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15634,6 +16559,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15709,6 +16635,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15784,6 +16711,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -15967,6 +16895,8 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -16074,6 +17004,8 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -16181,6 +17113,8 @@ class Client:
             '422': "ErrorResponse",
             '403': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -16366,6 +17300,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -16449,6 +17385,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -16532,6 +17470,8 @@ class Client:
             '422': "ErrorResponse",
             '404': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
+            '504': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -16695,6 +17635,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -16774,6 +17715,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -16853,6 +17795,7 @@ class Client:
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
+            '429': "ErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,

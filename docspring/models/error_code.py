@@ -48,6 +48,8 @@ class ErrorCode(str, Enum):
     SERVICE_UNAVAILABLE = 'service_unavailable'
     UPSTREAM_TIMEOUT = 'upstream_timeout'
     POLLING_TIMEOUT = 'polling_timeout'
+    IDEMPOTENCY_KEY_IN_USE = 'idempotency_key_in_use'
+    IDEMPOTENCY_KEY_REUSED = 'idempotency_key_reused'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

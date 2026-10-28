@@ -123,6 +123,7 @@ class TestCreateTemplateRequest(unittest.TestCase):
                     margin_bottom = '', 
                     margin_left = '', 
                     margin_right = '', ),
+                html_escape_data = True,
                 cache_id = '',
                 document_url = '',
                 document_base64 = '',

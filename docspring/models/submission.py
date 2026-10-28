@@ -46,24 +46,24 @@ class Submission(BaseModel):
     state: SubmissionState = Field(description="`pending` until the PDF has been generated, then `processed`. `waiting_for_signature_requests` until every signature request is completed. `insufficient_credits`: waiting for credits; `error_message` says whether the PDF is generated once you add them. `account_suspended`: waiting for the account to be reactivated, for up to 30 days. Waiting ends in `error` if it's discarded or takes over 30 days. Every other state is final, with no PDF: `invalid_data` (the data doesn't match the template's fields: see `data_errors`), `declined` (a signature request was declined), and the states where generating the PDF failed, which have an `error_message`: `syntax_error` (a mistake in an HTML template's Liquid or SCSS), `image_download_failed` or `image_processing_failed` (an image in the data or the template couldn't be downloaded or read) and `error` (anything else). Older submissions can also be `license_revoked` or `accidental`.")
     test: StrictBool = Field(description="Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.")
     editable: StrictBool = Field(description="`true` keeps the PDF's text and check fields fillable, and `false` flattens every field. Left out, the template decides: its `editable_submissions` setting, or each field's own Editable option. A response shows the template's setting when the request left this out. Can't be `true` with `signature_requests`.")
-    data: Optional[Dict[str, Any]] = Field(description="The submission's data, with the values entered in completed signature requests. Lists leave it out (null) unless you pass `include_data=true`. Empty once the submission has expired.")
+    data: Optional[Dict[str, Any]] = Field(description="The submission's data, with the values entered in completed signature requests. Empty once the submission has expired. Null in a batch's submissions unless you pass `include_data=true`, and in the events of a webhook that leaves out submission data.")
     data_errors: List[ErrorDetail] = Field(description="Why the data doesn't match the template's fields, when `state` is `invalid_data`: the same details as the 422 response that recorded it, with pointers into the request that created the submission (`/data/name`). Cleared once the submission has expired.")
     error_message: Optional[StrictStr] = Field(description="Why the PDF couldn't be generated, when `state` is `error`.")
-    metadata: Dict[str, Any] = Field(description="Your own data about the submission, such as an ID from your app. It isn't printed on the PDF.")
-    has_password: StrictBool = Field(description="Whether the PDF needs a password to open (`password`).")
-    signature_requests: List[SignatureRequest] = Field(description="The people asked to sign the submission (and fill in their fields), in order.")
-    actions: List[SubmissionAction] = Field(description="The uploads of the submission's PDF to your storage (account integrations).")
-    truncated_text: Optional[Dict[str, List[StrictStr]]] = Field(description="The text of each field that didn't fit in it, by field name. Left out (null) with `data`, and empty once the submission has expired.")
-    output_formats: List[OutputFormat] = Field(description="What the submission makes: `pdf`, and `png` (an image of each page of the PDF, up to 100 pages) when you ask for it. Default `[\"pdf\"]`. POST /submissions/{submission_id}/generate_files adds `png` to a processed submission.")
+    metadata: Dict[str, Any] = Field(description="Your own data about the submission, such as an ID from your app. It isn't printed on the PDF. Two keys also change the PDF: `pdf_filename` names its file (`files.pdf.filename`, and its download), and `pdf_title` is its title in the PDF's document properties (and an HTML template's `<title>`, unless its HTML has one). Without `pdf_title`, the title is the template's name. In `pdf_filename`, a `.pdf` ending is removed, each run of characters other than letters, digits, `-`, `_` and `.` becomes one `_`, and the first 128 characters are kept, then `.pdf` is added. Without it, the file is named after the submission's ID (`sub_1234567890abcdef01.pdf`).")
     files: SubmissionFiles = Field(description="The generated files: `pdf` once the submission has been processed, `png` (the images of the PDF's pages, when `output_formats` has it: `files.png.pages[0]` is page 1), `audit_trail` once its signature requests are completed, and `preview` once a preview PDF has been generated. Empty once the submission has expired.")
-    preview_generated_at: Optional[datetime] = Field(description="When the preview PDF was generated. Null if there is no preview.")
     expired: StrictBool = Field(description="An expired submission's data, metadata, password and PDF have been deleted.")
     expires_at: Optional[datetime] = Field(description="When the submission expires. Null if it's kept until you delete it.")
     processed_at: Optional[datetime] = Field(description="When the PDF was generated. Null until then.")
     created_at: datetime = Field(description="When the submission was created.")
     updated_at: datetime = Field(description="When the submission was last updated.")
+    has_password: StrictBool = Field(description="Whether the PDF needs a password to open (`password`).")
+    signature_requests: List[SignatureRequest] = Field(description="The people asked to sign the submission (and fill in their fields), in order.")
+    actions: List[SubmissionAction] = Field(description="The uploads of the submission's PDF to your storage (account integrations).")
+    truncated_text: Optional[Dict[str, List[StrictStr]]] = Field(description="The text of each field that didn't fit in it, by field name. Left out (null) with `data`, and empty once the submission has expired.")
+    output_formats: List[OutputFormat] = Field(description="What the submission makes: `pdf`, and `png` (an image of each page of the PDF, up to 100 pages) when you ask for it. Default `[\"pdf\"]`. POST /submissions/{submission_id}/generate_files adds `png` to a processed submission.")
+    preview_generated_at: Optional[datetime] = Field(description="When the preview PDF was generated. Null if there is no preview.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "template_id", "template_type", "template_version", "batch_id", "source", "state", "test", "editable", "data", "data_errors", "error_message", "metadata", "has_password", "signature_requests", "actions", "truncated_text", "output_formats", "files", "preview_generated_at", "expired", "expires_at", "processed_at", "created_at", "updated_at"]
+    __properties: ClassVar[List[str]] = ["id", "template_id", "template_type", "template_version", "batch_id", "source", "state", "test", "editable", "data", "data_errors", "error_message", "metadata", "files", "expired", "expires_at", "processed_at", "created_at", "updated_at", "has_password", "signature_requests", "actions", "truncated_text", "output_formats", "preview_generated_at"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -112,6 +112,9 @@ class Submission(BaseModel):
             for _item_data_errors in self.data_errors:
                 _items.append(_item_data_errors.to_dict() if _item_data_errors is not None else None)
             _dict['data_errors'] = _items
+        # override the default output from pydantic by calling `to_dict()` of files
+        if self.files:
+            _dict['files'] = self.files.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in signature_requests (list)
         _items = []
         if self.signature_requests:
@@ -124,9 +127,6 @@ class Submission(BaseModel):
             for _item_actions in self.actions:
                 _items.append(_item_actions.to_dict() if _item_actions is not None else None)
             _dict['actions'] = _items
-        # override the default output from pydantic by calling `to_dict()` of files
-        if self.files:
-            _dict['files'] = self.files.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -157,16 +157,6 @@ class Submission(BaseModel):
         if self.error_message is None and "error_message" in self.model_fields_set:
             _dict['error_message'] = None
 
-        # set to None if truncated_text (nullable) is None
-        # and model_fields_set contains the field
-        if self.truncated_text is None and "truncated_text" in self.model_fields_set:
-            _dict['truncated_text'] = None
-
-        # set to None if preview_generated_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.preview_generated_at is None and "preview_generated_at" in self.model_fields_set:
-            _dict['preview_generated_at'] = None
-
         # set to None if expires_at (nullable) is None
         # and model_fields_set contains the field
         if self.expires_at is None and "expires_at" in self.model_fields_set:
@@ -176,6 +166,16 @@ class Submission(BaseModel):
         # and model_fields_set contains the field
         if self.processed_at is None and "processed_at" in self.model_fields_set:
             _dict['processed_at'] = None
+
+        # set to None if truncated_text (nullable) is None
+        # and model_fields_set contains the field
+        if self.truncated_text is None and "truncated_text" in self.model_fields_set:
+            _dict['truncated_text'] = None
+
+        # set to None if preview_generated_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.preview_generated_at is None and "preview_generated_at" in self.model_fields_set:
+            _dict['preview_generated_at'] = None
 
         return _dict
 
@@ -202,18 +202,18 @@ class Submission(BaseModel):
             "data_errors": [ErrorDetail.from_dict(_item) for _item in obj["data_errors"]] if obj.get("data_errors") is not None else None,
             "error_message": obj.get("error_message"),
             "metadata": obj.get("metadata"),
+            "files": SubmissionFiles.from_dict(obj["files"]) if obj.get("files") is not None else None,
+            "expired": obj.get("expired"),
+            "expires_at": obj.get("expires_at"),
+            "processed_at": obj.get("processed_at"),
+            "created_at": obj.get("created_at"),
+            "updated_at": obj.get("updated_at"),
             "has_password": obj.get("has_password"),
             "signature_requests": [SignatureRequest.from_dict(_item) for _item in obj["signature_requests"]] if obj.get("signature_requests") is not None else None,
             "actions": [SubmissionAction.from_dict(_item) for _item in obj["actions"]] if obj.get("actions") is not None else None,
             "truncated_text": obj.get("truncated_text"),
             "output_formats": obj.get("output_formats"),
-            "files": SubmissionFiles.from_dict(obj["files"]) if obj.get("files") is not None else None,
-            "preview_generated_at": obj.get("preview_generated_at"),
-            "expired": obj.get("expired"),
-            "expires_at": obj.get("expires_at"),
-            "processed_at": obj.get("processed_at"),
-            "created_at": obj.get("created_at"),
-            "updated_at": obj.get("updated_at")
+            "preview_generated_at": obj.get("preview_generated_at")
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties
         for _key in obj.keys():

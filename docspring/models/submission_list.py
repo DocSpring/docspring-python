@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from docspring.models.submission import Submission
+from docspring.models.submission_summary import SubmissionSummary
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -29,7 +29,7 @@ class SubmissionList(BaseModel):
     """
     A page of submissions, newest first.
     """ # noqa: E501
-    data: List[Submission] = Field(description="The items on this page.")
+    data: List[SubmissionSummary] = Field(description="The items on this page.")
     next_cursor: Optional[StrictStr] = Field(description="Pass it as `cursor` to get the next page. Null on the last page.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["data", "next_cursor"]
@@ -103,7 +103,7 @@ class SubmissionList(BaseModel):
             return cls.model_validate(obj, context={"skip_enum_validation": True})
 
         _obj = cls.model_validate({
-            "data": [Submission.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None,
+            "data": [SubmissionSummary.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None,
             "next_cursor": obj.get("next_cursor")
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties

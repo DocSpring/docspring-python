@@ -41,70 +41,17 @@ class TestTemplateSummary(unittest.TestCase):
                 description = '',
                 template_type = 'pdf',
                 ready = True,
-                document = docspring.models.template_document.TemplateDocument(
+                document = docspring.models.template_document_summary.TemplateDocumentSummary(
                     filename = '', 
-                    md5 = '', 
                     state = null, 
                     error_message = '', 
-                    field_reimport_state = null, 
-                    page_count = 56, 
-                    page_dimensions = [
-                        [
-                            1.337
-                            ]
-                        ], 
-                    has_fillable_fields = True, 
-                    page_processing_statuses = [
-                        docspring.models.template_page_processing_status.TemplatePageProcessingStatus(
-                            image = null, 
-                            fields = null, 
-                            ai_naming = null, 
-                            ai_error = null, 
-                            detected_boxes = [
-                                [
-                                    1.337
-                                    ]
-                                ], )
-                        ], 
-                    field_logic_status = null, 
-                    download_url = '', 
-                    permanent_url = '', ),
+                    page_count = 56, ),
                 parent_folder_id = '',
                 path = '',
-                version = '',
                 latest_version = '',
                 version_published_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 locked = True,
-                add_signature_request_submission_id_footers = True,
-                ai_field_naming_language = 'auto',
-                allow_additional_properties = True,
-                allow_skipping_optional_fields = True,
-                default_form_mode = 'web',
-                editable_submissions = True,
-                embed_domains = [
-                    ''
-                    ],
-                embed_edit_allow_settings = True,
-                embed_edit_allow_versioning = True,
-                embed_edit_allow_document_replacement = True,
-                encrypt_pdfs = True,
-                has_encrypt_pdfs_password = True,
-                expire_submissions = True,
-                expire_after = 56,
-                expiration_interval = 'minutes',
-                merge_audit_trail_pdf = True,
-                parse_dates_using_template_date_format = True,
-                public_submissions = True,
-                public_web_form = True,
-                redirect_url = '',
-                has_slack_webhook_url = True,
                 last_changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                last_changed_by = docspring.models.template_actor.TemplateActor(
-                    type = null, 
-                    user_id = '', 
-                    external_id = '', 
-                    name = '', 
-                    email = '', ),
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
@@ -115,70 +62,17 @@ class TestTemplateSummary(unittest.TestCase):
                 description = '',
                 template_type = 'pdf',
                 ready = True,
-                document = docspring.models.template_document.TemplateDocument(
+                document = docspring.models.template_document_summary.TemplateDocumentSummary(
                     filename = '', 
-                    md5 = '', 
                     state = null, 
                     error_message = '', 
-                    field_reimport_state = null, 
-                    page_count = 56, 
-                    page_dimensions = [
-                        [
-                            1.337
-                            ]
-                        ], 
-                    has_fillable_fields = True, 
-                    page_processing_statuses = [
-                        docspring.models.template_page_processing_status.TemplatePageProcessingStatus(
-                            image = null, 
-                            fields = null, 
-                            ai_naming = null, 
-                            ai_error = null, 
-                            detected_boxes = [
-                                [
-                                    1.337
-                                    ]
-                                ], )
-                        ], 
-                    field_logic_status = null, 
-                    download_url = '', 
-                    permanent_url = '', ),
+                    page_count = 56, ),
                 parent_folder_id = '',
                 path = '',
-                version = '',
                 latest_version = '',
                 version_published_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 locked = True,
-                add_signature_request_submission_id_footers = True,
-                ai_field_naming_language = 'auto',
-                allow_additional_properties = True,
-                allow_skipping_optional_fields = True,
-                default_form_mode = 'web',
-                editable_submissions = True,
-                embed_domains = [
-                    ''
-                    ],
-                embed_edit_allow_settings = True,
-                embed_edit_allow_versioning = True,
-                embed_edit_allow_document_replacement = True,
-                encrypt_pdfs = True,
-                has_encrypt_pdfs_password = True,
-                expire_submissions = True,
-                expire_after = 56,
-                expiration_interval = 'minutes',
-                merge_audit_trail_pdf = True,
-                parse_dates_using_template_date_format = True,
-                public_submissions = True,
-                public_web_form = True,
-                redirect_url = '',
-                has_slack_webhook_url = True,
                 last_changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                last_changed_by = docspring.models.template_actor.TemplateActor(
-                    type = null, 
-                    user_id = '', 
-                    external_id = '', 
-                    name = '', 
-                    email = '', ),
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
         )

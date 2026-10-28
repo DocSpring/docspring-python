@@ -45,21 +45,24 @@ class Template(BaseModel):
     name: Optional[StrictStr] = Field(description="The template's name.")
     description: Optional[StrictStr] = Field(description="Shown under the template's name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests.")
     template_type: TemplateType = Field(description="`pdf`: fields placed on an uploaded PDF. `html`: a PDF rendered from HTML and SCSS. It can't be changed after the template is created.")
-    ready: StrictBool = Field(description="Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once its document has been processed (`document.state` is `processed`).")
+    ready: StrictBool = Field(description="Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after `document.state` becomes `processed`. A PDF template with no PDF (`document` is null) isn't ready.")
     document: Optional[TemplateDocument] = Field(description="The PDF of a PDF template. Null for HTML templates, and for a PDF template that has no PDF yet.")
     parent_folder_id: Optional[StrictStr] = Field(description="The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.")
     path: StrictStr = Field(description="The path of the folder the template is in, such as `/Contracts`. `/` for a template at the root.")
-    version: Optional[StrictStr] = Field(description="The published version this is, such as `1.2.0`. Null for the draft.")
     latest_version: Optional[StrictStr] = Field(description="The template's latest published version. Null if no version has been published.")
     version_published_at: Optional[datetime] = Field(description="When this version was published. Null for the draft.")
     locked: StrictBool = Field(description="A locked template can't be changed or deleted until it's unlocked (`locked` can always be changed).")
+    last_changed_at: Optional[datetime] = Field(description="When the draft was last changed.")
+    created_at: datetime = Field(description="When the template was created.")
+    updated_at: datetime = Field(description="When the template was last updated.")
+    version: Optional[StrictStr] = Field(description="The published version this is, such as `1.2.0`. Null for the draft.")
     add_signature_request_submission_id_footers: StrictBool = Field(description="Print the submission ID in the footer of each page of PDFs signed through signature requests.")
     ai_field_naming_language: Optional[AiFieldNamingLanguage] = Field(description="The language AI field setup names fields in: `auto` uses the form's language when it's written in the Latin alphabet without accents, and English otherwise; `english` always uses English; `form_language` uses the form's language and script. New templates take it from your account's template settings. Null for HTML templates.")
     allow_additional_properties: StrictBool = Field(description="Accept submission data with properties that aren't fields of the template.")
     allow_skipping_optional_fields: StrictBool = Field(description="Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The `allowSkippingOptionalFields` embed option overrides it.")
     default_form_mode: TemplateFormMode = Field(description="The hosted form that /templates/{template_id}/form shows when its URL has no `mode` parameter: `web` (the web form), `visual` (the visual form, where fields are filled in on the PDF) or `dual` (both, in tabs). HTML templates have no visual form, so `web` is the only value they accept.")
     editable_submissions: StrictBool = Field(description="Generate PDFs whose text and check fields stay fillable (\"Generate Editable PDFs\"). A submission's `editable` overrides it.")
-    embed_domains: List[StrictStr] = Field(description="The sites where the template's signature requests, forms and embedded template editor can be loaded: a host such as `app.example.com`, with an optional leading wildcard (`*.example.com`), port (`localhost:3000`) or scheme (`https://app.example.com`; without one, `http` and `https` both work). When it's empty, live signature requests don't load on any site, and the embedded template editor loads on every site.")
+    embed_domains: List[StrictStr] = Field(description="The sites that can embed the template's live signature requests and its embedded template editor: a host such as `app.example.com`, with an optional leading wildcard (`*.example.com`), port (`localhost:3000`) or scheme (`https://app.example.com`; without one, `http` and `https` both work). Browsers open a live signature request in a frame only on these sites (and DocSpring's), so with an empty list it can't be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren't restricted.")
     embed_edit_allow_settings: StrictBool = Field(description="Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).")
     embed_edit_allow_versioning: StrictBool = Field(description="Allow the embedded template editor to publish, restore, compare and delete published versions.")
     embed_edit_allow_document_replacement: StrictBool = Field(description="Allow the embedded template editor to replace the template's PDF.")
@@ -74,10 +77,7 @@ class Template(BaseModel):
     public_web_form: StrictBool = Field(description="Allow anyone to fill in the template's web form.")
     redirect_url: Optional[StrictStr] = Field(description="Where the web form sends people after they submit it.")
     has_slack_webhook_url: StrictBool = Field(description="Whether `slack_webhook_url` is set.")
-    last_changed_at: Optional[datetime] = Field(description="When the draft was last changed.")
     last_changed_by: Optional[TemplateActor] = Field(description="Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.")
-    created_at: datetime = Field(description="When the template was created.")
-    updated_at: datetime = Field(description="When the template was last updated.")
     defaults: TemplateDefaults
     field_dependencies: List[TemplateFieldDependency] = Field(description="Conditional logic: each rule shows or hides its target fields, or makes them required, depending on the values of other fields.")
     field_groups: List[FieldGroup] = Field(description="The groups of the template's fields, with their settings. A field's name puts it in groups: `address/city` is in the group `address`, and `items/0/price` is in the list `items` and its items' group `items/~`.")
@@ -88,10 +88,11 @@ class Template(BaseModel):
     header_html: Optional[StrictStr] = Field(description="The HTML printed at the top of each page of an HTML template.")
     footer_html: Optional[StrictStr] = Field(description="The HTML printed at the bottom of each page of an HTML template.")
     html_engine_options: Optional[HtmlEngineOptions] = Field(description="How an HTML template's PDFs are printed. Null for PDF templates. Setting it replaces the whole object: options left out use their defaults.")
+    html_escape_data: Optional[StrictBool] = Field(description="Whether an HTML template HTML-escapes the values it prints. When true, `{{ value }}` prints a value as text, so a `<` or `&` in it is printed as that character, and `{{ value | raw }}` prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.")
     embed_edit_token: Optional[StrictStr] = Field(description="The token that opens the template in the embedded template editor.")
     versions: List[TemplateVersion] = Field(description="The template's published versions, newest first (up to 100).")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "template_type", "ready", "document", "parent_folder_id", "path", "version", "latest_version", "version_published_at", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "has_encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "has_slack_webhook_url", "last_changed_at", "last_changed_by", "created_at", "updated_at", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "embed_edit_token", "versions"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "template_type", "ready", "document", "parent_folder_id", "path", "latest_version", "version_published_at", "locked", "last_changed_at", "created_at", "updated_at", "version", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "has_encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "has_slack_webhook_url", "last_changed_by", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "html_escape_data", "embed_edit_token", "versions"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -195,11 +196,6 @@ class Template(BaseModel):
         if self.parent_folder_id is None and "parent_folder_id" in self.model_fields_set:
             _dict['parent_folder_id'] = None
 
-        # set to None if version (nullable) is None
-        # and model_fields_set contains the field
-        if self.version is None and "version" in self.model_fields_set:
-            _dict['version'] = None
-
         # set to None if latest_version (nullable) is None
         # and model_fields_set contains the field
         if self.latest_version is None and "latest_version" in self.model_fields_set:
@@ -210,6 +206,16 @@ class Template(BaseModel):
         if self.version_published_at is None and "version_published_at" in self.model_fields_set:
             _dict['version_published_at'] = None
 
+        # set to None if last_changed_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_changed_at is None and "last_changed_at" in self.model_fields_set:
+            _dict['last_changed_at'] = None
+
+        # set to None if version (nullable) is None
+        # and model_fields_set contains the field
+        if self.version is None and "version" in self.model_fields_set:
+            _dict['version'] = None
+
         # set to None if ai_field_naming_language (nullable) is None
         # and model_fields_set contains the field
         if self.ai_field_naming_language is None and "ai_field_naming_language" in self.model_fields_set:
@@ -219,11 +225,6 @@ class Template(BaseModel):
         # and model_fields_set contains the field
         if self.redirect_url is None and "redirect_url" in self.model_fields_set:
             _dict['redirect_url'] = None
-
-        # set to None if last_changed_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.last_changed_at is None and "last_changed_at" in self.model_fields_set:
-            _dict['last_changed_at'] = None
 
         # set to None if last_changed_by (nullable) is None
         # and model_fields_set contains the field
@@ -260,6 +261,11 @@ class Template(BaseModel):
         if self.html_engine_options is None and "html_engine_options" in self.model_fields_set:
             _dict['html_engine_options'] = None
 
+        # set to None if html_escape_data (nullable) is None
+        # and model_fields_set contains the field
+        if self.html_escape_data is None and "html_escape_data" in self.model_fields_set:
+            _dict['html_escape_data'] = None
+
         # set to None if embed_edit_token (nullable) is None
         # and model_fields_set contains the field
         if self.embed_edit_token is None and "embed_edit_token" in self.model_fields_set:
@@ -285,10 +291,13 @@ class Template(BaseModel):
             "document": TemplateDocument.from_dict(obj["document"]) if obj.get("document") is not None else None,
             "parent_folder_id": obj.get("parent_folder_id"),
             "path": obj.get("path"),
-            "version": obj.get("version"),
             "latest_version": obj.get("latest_version"),
             "version_published_at": obj.get("version_published_at"),
             "locked": obj.get("locked"),
+            "last_changed_at": obj.get("last_changed_at"),
+            "created_at": obj.get("created_at"),
+            "updated_at": obj.get("updated_at"),
+            "version": obj.get("version"),
             "add_signature_request_submission_id_footers": obj.get("add_signature_request_submission_id_footers"),
             "ai_field_naming_language": obj.get("ai_field_naming_language"),
             "allow_additional_properties": obj.get("allow_additional_properties"),
@@ -310,10 +319,7 @@ class Template(BaseModel):
             "public_web_form": obj.get("public_web_form"),
             "redirect_url": obj.get("redirect_url"),
             "has_slack_webhook_url": obj.get("has_slack_webhook_url"),
-            "last_changed_at": obj.get("last_changed_at"),
             "last_changed_by": TemplateActor.from_dict(obj["last_changed_by"]) if obj.get("last_changed_by") is not None else None,
-            "created_at": obj.get("created_at"),
-            "updated_at": obj.get("updated_at"),
             "defaults": TemplateDefaults.from_dict(obj["defaults"]) if obj.get("defaults") is not None else None,
             "field_dependencies": [TemplateFieldDependency.from_dict(_item) for _item in obj["field_dependencies"]] if obj.get("field_dependencies") is not None else None,
             "field_groups": [FieldGroup.from_dict(_item) for _item in obj["field_groups"]] if obj.get("field_groups") is not None else None,
@@ -324,6 +330,7 @@ class Template(BaseModel):
             "header_html": obj.get("header_html"),
             "footer_html": obj.get("footer_html"),
             "html_engine_options": HtmlEngineOptions.from_dict(obj["html_engine_options"]) if obj.get("html_engine_options") is not None else None,
+            "html_escape_data": obj.get("html_escape_data"),
             "embed_edit_token": obj.get("embed_edit_token"),
             "versions": [TemplateVersion.from_dict(_item) for _item in obj["versions"]] if obj.get("versions") is not None else None
         }, context={"skip_enum_validation": True})

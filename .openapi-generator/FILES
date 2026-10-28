@@ -26,6 +26,7 @@ docs/CreateSignatureRequestEventRequest.md
 docs/CreateSignatureRequestTokenRequest.md
 docs/CreateSubmissionBatchRequest.md
 docs/CreateSubmissionRequest.md
+docs/CreateTemplatePreviewRequest.md
 docs/CreateTemplateRequest.md
 docs/CreateWebhookRequest.md
 docs/CustomFile.md
@@ -107,6 +108,7 @@ docs/SubmissionList.md
 docs/SubmissionSource.md
 docs/SubmissionSourcePdf.md
 docs/SubmissionState.md
+docs/SubmissionSummary.md
 docs/SubmissionValidation.md
 docs/Template.md
 docs/TemplateActor.md
@@ -117,6 +119,7 @@ docs/TemplateDiff.md
 docs/TemplateDiffSummary.md
 docs/TemplateDocument.md
 docs/TemplateDocumentState.md
+docs/TemplateDocumentSummary.md
 docs/TemplateFieldChange.md
 docs/TemplateFieldChanges.md
 docs/TemplateFieldDependency.md
@@ -137,6 +140,8 @@ docs/TemplatePageFieldsStatus.md
 docs/TemplatePageImageStatus.md
 docs/TemplatePageImages.md
 docs/TemplatePageProcessingStatus.md
+docs/TemplatePreview.md
+docs/TemplatePreviewState.md
 docs/TemplateSourcePdf.md
 docs/TemplateSummary.md
 docs/TemplateSummaryList.md
@@ -190,6 +195,7 @@ docspring/models/create_signature_request_event_request.py
 docspring/models/create_signature_request_token_request.py
 docspring/models/create_submission_batch_request.py
 docspring/models/create_submission_request.py
+docspring/models/create_template_preview_request.py
 docspring/models/create_template_request.py
 docspring/models/create_webhook_request.py
 docspring/models/custom_file.py
@@ -271,6 +277,7 @@ docspring/models/submission_list.py
 docspring/models/submission_source.py
 docspring/models/submission_source_pdf.py
 docspring/models/submission_state.py
+docspring/models/submission_summary.py
 docspring/models/submission_validation.py
 docspring/models/template.py
 docspring/models/template_actor.py
@@ -281,6 +288,7 @@ docspring/models/template_diff.py
 docspring/models/template_diff_summary.py
 docspring/models/template_document.py
 docspring/models/template_document_state.py
+docspring/models/template_document_summary.py
 docspring/models/template_field_change.py
 docspring/models/template_field_changes.py
 docspring/models/template_field_dependency.py
@@ -301,6 +309,8 @@ docspring/models/template_page_fields_status.py
 docspring/models/template_page_image_status.py
 docspring/models/template_page_images.py
 docspring/models/template_page_processing_status.py
+docspring/models/template_preview.py
+docspring/models/template_preview_state.py
 docspring/models/template_source_pdf.py
 docspring/models/template_summary.py
 docspring/models/template_summary_list.py
@@ -356,6 +366,7 @@ test/test_create_signature_request_event_request.py
 test/test_create_signature_request_token_request.py
 test/test_create_submission_batch_request.py
 test/test_create_submission_request.py
+test/test_create_template_preview_request.py
 test/test_create_template_request.py
 test/test_create_webhook_request.py
 test/test_custom_file.py
@@ -437,6 +448,7 @@ test/test_submission_list.py
 test/test_submission_source.py
 test/test_submission_source_pdf.py
 test/test_submission_state.py
+test/test_submission_summary.py
 test/test_submission_validation.py
 test/test_template.py
 test/test_template_actor.py
@@ -447,6 +459,7 @@ test/test_template_diff.py
 test/test_template_diff_summary.py
 test/test_template_document.py
 test/test_template_document_state.py
+test/test_template_document_summary.py
 test/test_template_field_change.py
 test/test_template_field_changes.py
 test/test_template_field_dependency.py
@@ -467,6 +480,8 @@ test/test_template_page_fields_status.py
 test/test_template_page_image_status.py
 test/test_template_page_images.py
 test/test_template_page_processing_status.py
+test/test_template_preview.py
+test/test_template_preview_state.py
 test/test_template_source_pdf.py
 test/test_template_summary.py
 test/test_template_summary_list.py

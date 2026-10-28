@@ -19,13 +19,9 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from docspring.models.ai_field_naming_language import AiFieldNamingLanguage
-from docspring.models.expiration_interval import ExpirationInterval
-from docspring.models.template_actor import TemplateActor
-from docspring.models.template_document import TemplateDocument
-from docspring.models.template_form_mode import TemplateFormMode
+from docspring.models.template_document_summary import TemplateDocumentSummary
 from docspring.models.template_type import TemplateType
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,47 +29,24 @@ from pydantic_core import to_jsonable_python
 
 class TemplateSummary(BaseModel):
     """
-    A template in a list. Get a template by its ID for its HTML, defaults, field dependency rules and published versions.
+    A template in a list: its name, type, folder, latest published version and whether it's ready. Get a template by its ID for its settings, its PDF in full, its HTML, defaults, field dependency rules and published versions.
     """ # noqa: E501
     id: StrictStr = Field(description="The template's ID.")
     name: Optional[StrictStr] = Field(description="The template's name.")
     description: Optional[StrictStr] = Field(description="Shown under the template's name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests.")
     template_type: TemplateType = Field(description="`pdf`: fields placed on an uploaded PDF. `html`: a PDF rendered from HTML and SCSS. It can't be changed after the template is created.")
-    ready: StrictBool = Field(description="Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once its document has been processed (`document.state` is `processed`).")
-    document: Optional[TemplateDocument] = Field(description="The PDF of a PDF template. Null for HTML templates, and for a PDF template that has no PDF yet.")
+    ready: StrictBool = Field(description="Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after `document.state` becomes `processed`. A PDF template with no PDF (`document` is null) isn't ready.")
+    document: Optional[TemplateDocumentSummary] = Field(description="The PDF of a PDF template: its file name, page count and processing state. Null for HTML templates, and for a PDF template that has no PDF yet.")
     parent_folder_id: Optional[StrictStr] = Field(description="The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.")
     path: StrictStr = Field(description="The path of the folder the template is in, such as `/Contracts`. `/` for a template at the root.")
-    version: Optional[StrictStr] = Field(description="The published version this is, such as `1.2.0`. Null for the draft.")
     latest_version: Optional[StrictStr] = Field(description="The template's latest published version. Null if no version has been published.")
     version_published_at: Optional[datetime] = Field(description="When this version was published. Null for the draft.")
     locked: StrictBool = Field(description="A locked template can't be changed or deleted until it's unlocked (`locked` can always be changed).")
-    add_signature_request_submission_id_footers: StrictBool = Field(description="Print the submission ID in the footer of each page of PDFs signed through signature requests.")
-    ai_field_naming_language: Optional[AiFieldNamingLanguage] = Field(description="The language AI field setup names fields in: `auto` uses the form's language when it's written in the Latin alphabet without accents, and English otherwise; `english` always uses English; `form_language` uses the form's language and script. New templates take it from your account's template settings. Null for HTML templates.")
-    allow_additional_properties: StrictBool = Field(description="Accept submission data with properties that aren't fields of the template.")
-    allow_skipping_optional_fields: StrictBool = Field(description="Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The `allowSkippingOptionalFields` embed option overrides it.")
-    default_form_mode: TemplateFormMode = Field(description="The hosted form that /templates/{template_id}/form shows when its URL has no `mode` parameter: `web` (the web form), `visual` (the visual form, where fields are filled in on the PDF) or `dual` (both, in tabs). HTML templates have no visual form, so `web` is the only value they accept.")
-    editable_submissions: StrictBool = Field(description="Generate PDFs whose text and check fields stay fillable (\"Generate Editable PDFs\"). A submission's `editable` overrides it.")
-    embed_domains: List[StrictStr] = Field(description="The sites where the template's signature requests, forms and embedded template editor can be loaded: a host such as `app.example.com`, with an optional leading wildcard (`*.example.com`), port (`localhost:3000`) or scheme (`https://app.example.com`; without one, `http` and `https` both work). When it's empty, live signature requests don't load on any site, and the embedded template editor loads on every site.")
-    embed_edit_allow_settings: StrictBool = Field(description="Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).")
-    embed_edit_allow_versioning: StrictBool = Field(description="Allow the embedded template editor to publish, restore, compare and delete published versions.")
-    embed_edit_allow_document_replacement: StrictBool = Field(description="Allow the embedded template editor to replace the template's PDF.")
-    encrypt_pdfs: StrictBool = Field(description="Encrypt generated PDFs with `encrypt_pdfs_password`.")
-    has_encrypt_pdfs_password: StrictBool = Field(description="Whether `encrypt_pdfs_password` is set.")
-    expire_submissions: StrictBool = Field(description="Delete each submission's data and PDF after `expire_after` `expiration_interval`.")
-    expire_after: StrictInt = Field(description="How many `expiration_interval`s a submission's data and PDF are kept for, when `expire_submissions` is on. At most 5256000 (10 years in minutes).")
-    expiration_interval: ExpirationInterval = Field(description="The unit of `expire_after`.")
-    merge_audit_trail_pdf: StrictBool = Field(description="Add the audit trail to the end of PDFs signed through signature requests.")
-    parse_dates_using_template_date_format: StrictBool = Field(description="Date fields also accept NN/NN/YYYY dates (with slashes, dashes or dots), read in the order of the template's default date format: month first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields only accept YYYY-MM-DD. Applies to PDF templates: an HTML template's date fields only accept YYYY-MM-DD. Date fields that include a time take RFC 3339 date-times either way.")
-    public_submissions: StrictBool = Field(description="Allow anyone with a submission's ID to download its PDF.")
-    public_web_form: StrictBool = Field(description="Allow anyone to fill in the template's web form.")
-    redirect_url: Optional[StrictStr] = Field(description="Where the web form sends people after they submit it.")
-    has_slack_webhook_url: StrictBool = Field(description="Whether `slack_webhook_url` is set.")
     last_changed_at: Optional[datetime] = Field(description="When the draft was last changed.")
-    last_changed_by: Optional[TemplateActor] = Field(description="Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.")
     created_at: datetime = Field(description="When the template was created.")
     updated_at: datetime = Field(description="When the template was last updated.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "template_type", "ready", "document", "parent_folder_id", "path", "version", "latest_version", "version_published_at", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "has_encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "has_slack_webhook_url", "last_changed_at", "last_changed_by", "created_at", "updated_at"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "template_type", "ready", "document", "parent_folder_id", "path", "latest_version", "version_published_at", "locked", "last_changed_at", "created_at", "updated_at"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -119,9 +92,6 @@ class TemplateSummary(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of document
         if self.document:
             _dict['document'] = self.document.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of last_changed_by
-        if self.last_changed_by:
-            _dict['last_changed_by'] = self.last_changed_by.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -147,11 +117,6 @@ class TemplateSummary(BaseModel):
         if self.parent_folder_id is None and "parent_folder_id" in self.model_fields_set:
             _dict['parent_folder_id'] = None
 
-        # set to None if version (nullable) is None
-        # and model_fields_set contains the field
-        if self.version is None and "version" in self.model_fields_set:
-            _dict['version'] = None
-
         # set to None if latest_version (nullable) is None
         # and model_fields_set contains the field
         if self.latest_version is None and "latest_version" in self.model_fields_set:
@@ -162,25 +127,10 @@ class TemplateSummary(BaseModel):
         if self.version_published_at is None and "version_published_at" in self.model_fields_set:
             _dict['version_published_at'] = None
 
-        # set to None if ai_field_naming_language (nullable) is None
-        # and model_fields_set contains the field
-        if self.ai_field_naming_language is None and "ai_field_naming_language" in self.model_fields_set:
-            _dict['ai_field_naming_language'] = None
-
-        # set to None if redirect_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.redirect_url is None and "redirect_url" in self.model_fields_set:
-            _dict['redirect_url'] = None
-
         # set to None if last_changed_at (nullable) is None
         # and model_fields_set contains the field
         if self.last_changed_at is None and "last_changed_at" in self.model_fields_set:
             _dict['last_changed_at'] = None
-
-        # set to None if last_changed_by (nullable) is None
-        # and model_fields_set contains the field
-        if self.last_changed_by is None and "last_changed_by" in self.model_fields_set:
-            _dict['last_changed_by'] = None
 
         return _dict
 
@@ -199,36 +149,13 @@ class TemplateSummary(BaseModel):
             "description": obj.get("description"),
             "template_type": obj.get("template_type"),
             "ready": obj.get("ready"),
-            "document": TemplateDocument.from_dict(obj["document"]) if obj.get("document") is not None else None,
+            "document": TemplateDocumentSummary.from_dict(obj["document"]) if obj.get("document") is not None else None,
             "parent_folder_id": obj.get("parent_folder_id"),
             "path": obj.get("path"),
-            "version": obj.get("version"),
             "latest_version": obj.get("latest_version"),
             "version_published_at": obj.get("version_published_at"),
             "locked": obj.get("locked"),
-            "add_signature_request_submission_id_footers": obj.get("add_signature_request_submission_id_footers"),
-            "ai_field_naming_language": obj.get("ai_field_naming_language"),
-            "allow_additional_properties": obj.get("allow_additional_properties"),
-            "allow_skipping_optional_fields": obj.get("allow_skipping_optional_fields"),
-            "default_form_mode": obj.get("default_form_mode"),
-            "editable_submissions": obj.get("editable_submissions"),
-            "embed_domains": obj.get("embed_domains"),
-            "embed_edit_allow_settings": obj.get("embed_edit_allow_settings"),
-            "embed_edit_allow_versioning": obj.get("embed_edit_allow_versioning"),
-            "embed_edit_allow_document_replacement": obj.get("embed_edit_allow_document_replacement"),
-            "encrypt_pdfs": obj.get("encrypt_pdfs"),
-            "has_encrypt_pdfs_password": obj.get("has_encrypt_pdfs_password"),
-            "expire_submissions": obj.get("expire_submissions"),
-            "expire_after": obj.get("expire_after"),
-            "expiration_interval": obj.get("expiration_interval"),
-            "merge_audit_trail_pdf": obj.get("merge_audit_trail_pdf"),
-            "parse_dates_using_template_date_format": obj.get("parse_dates_using_template_date_format"),
-            "public_submissions": obj.get("public_submissions"),
-            "public_web_form": obj.get("public_web_form"),
-            "redirect_url": obj.get("redirect_url"),
-            "has_slack_webhook_url": obj.get("has_slack_webhook_url"),
             "last_changed_at": obj.get("last_changed_at"),
-            "last_changed_by": TemplateActor.from_dict(obj["last_changed_by"]) if obj.get("last_changed_by") is not None else None,
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at")
         }, context={"skip_enum_validation": True})

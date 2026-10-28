@@ -31,7 +31,7 @@ class ErrorDetail(BaseModel):
     code: StrictStr = Field(description="What's wrong: `required`, `unknown_property`, `type`, `enum`, `format`, a JSON Schema keyword such as `minLength`, or a DocSpring code. New codes can be added.")
     message: StrictStr = Field(description="A human-readable explanation of the problem.")
     pointer: Optional[StrictStr] = Field(default=None, description="A JSON pointer to the value in the request body (RFC 6901). An empty string means the whole body. In a submission's `data_errors`, it points into the request that created the submission.")
-    parameter: Optional[StrictStr] = Field(default=None, description="The query parameter the detail is about.")
+    parameter: Optional[StrictStr] = Field(default=None, description="The query parameter or header the detail is about.")
     submission_id: Optional[StrictStr] = Field(default=None, description="For a batch item that failed validation, the ID of the submission recorded for it.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["code", "message", "pointer", "parameter", "submission_id"]

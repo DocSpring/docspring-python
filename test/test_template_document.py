@@ -37,11 +37,11 @@ class TestTemplateDocument(unittest.TestCase):
         if include_optional:
             return TemplateDocument(
                 filename = '',
-                md5 = '',
                 state = 'pending',
                 error_message = '',
-                field_reimport_state = 'none',
                 page_count = 56,
+                md5 = '',
+                field_reimport_state = 'none',
                 page_dimensions = [
                     [
                         1.337
@@ -67,11 +67,11 @@ class TestTemplateDocument(unittest.TestCase):
         else:
             return TemplateDocument(
                 filename = '',
-                md5 = '',
                 state = 'pending',
                 error_message = '',
-                field_reimport_state = 'none',
                 page_count = 56,
+                md5 = '',
+                field_reimport_state = 'none',
                 page_dimensions = [
                     [
                         1.337

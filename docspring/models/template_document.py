@@ -33,18 +33,18 @@ class TemplateDocument(BaseModel):
     A PDF template's PDF.
     """ # noqa: E501
     filename: Optional[StrictStr] = Field(description="The PDF's file name. Null until a `document_url` has been downloaded.")
-    md5: Optional[StrictStr] = Field(description="The MD5 hash of the PDF.")
-    state: TemplateDocumentState = Field(description="`pending` while DocSpring processes the PDF, then `processed`. `password_required`, `malformed_pdf` and `unknown_error` mean the PDF couldn't be processed, and `error_message` says why: upload it again or upload another one. `downloading` while DocSpring downloads a `document_url`, then as for an upload. `download_failed` means it couldn't be downloaded, and `error_message` says why. A template keeps its PDF while a new one is downloaded, and when it couldn't be.")
+    state: TemplateDocumentState = Field(description="`pending` while DocSpring processes the PDF, then `processed` (`ready` says when its pages are done too). `password_required`, `malformed_pdf` and `unknown_error` mean the PDF couldn't be processed, and `error_message` says why: upload it again or upload another one. `downloading` while DocSpring downloads a `document_url`, then as for an upload. `download_failed` means it couldn't be downloaded, and `error_message` says why. A template keeps its PDF while a new one is downloaded, and when it couldn't be.")
     error_message: Optional[StrictStr] = Field(description="Why the PDF couldn't be processed or downloaded, and how to fix it. Null unless `state` is an error.")
-    field_reimport_state: FieldReimportState = Field(description="Whether the fields are being re-imported from this PDF (`reimport_fields` when the PDF was replaced): `requested` while DocSpring processes the PDF, then `imported`, or `no_fields` when the PDF had no fillable fields and the template kept its fields. `none` when no re-import was asked for, or when it couldn't run (the PDF couldn't be processed, or the template was locked or published while it was).")
     page_count: StrictInt = Field(description="0 until the PDF has been processed.")
+    md5: Optional[StrictStr] = Field(description="The MD5 hash of the PDF.")
+    field_reimport_state: FieldReimportState = Field(description="Whether the fields are being re-imported from this PDF (`reimport_fields` when the PDF was replaced): `requested` while DocSpring processes the PDF, then `imported`, or `no_fields` when the PDF had no fillable fields and the template kept its fields. `none` when no re-import was asked for, or when it couldn't run (the PDF couldn't be processed, or the template was locked or published while it was).")
     page_dimensions: Optional[List[List[Union[StrictFloat, StrictInt]]]] = Field(description="Each page's width and height in PDF points. Null until the PDF has been processed.")
     has_fillable_fields: Optional[StrictBool] = Field(description="Whether the PDF has fillable form fields. Null until DocSpring has read the PDF.")
     page_processing_statuses: List[TemplatePageProcessingStatus] = Field(description="How processing is going on each page, in page order: its image, and its fields when DocSpring sets them up (`detect_fields` when the template was created). `state` becomes `processed` once every page is done. Empty until DocSpring has read the PDF, and for PDFs uploaded before DocSpring recorded page statuses.")
     field_logic_status: Optional[TemplateFieldLogicStatus] = Field(description="AI field setup's last step, which reads the whole form once every page is done and can still rename fields and add conditional logic and required fields: `pending` or `processing` until it finishes, then `processed`, `failed` or `skipped`. Null until every page is done, and when there's no logic step to run (`field_logic` is `none`, or the PDF has no fields).")
     download_url: Optional[StrictStr] = Field(description="A temporary link to download the PDF.")
     permanent_url: Optional[StrictStr] = Field(description="A link to download the PDF that doesn't expire. Null until the PDF has been processed.")
-    __properties: ClassVar[List[str]] = ["filename", "md5", "state", "error_message", "field_reimport_state", "page_count", "page_dimensions", "has_fillable_fields", "page_processing_statuses", "field_logic_status", "download_url", "permanent_url"]
+    __properties: ClassVar[List[str]] = ["filename", "state", "error_message", "page_count", "md5", "field_reimport_state", "page_dimensions", "has_fillable_fields", "page_processing_statuses", "field_logic_status", "download_url", "permanent_url"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -96,15 +96,15 @@ class TemplateDocument(BaseModel):
         if self.filename is None and "filename" in self.model_fields_set:
             _dict['filename'] = None
 
-        # set to None if md5 (nullable) is None
-        # and model_fields_set contains the field
-        if self.md5 is None and "md5" in self.model_fields_set:
-            _dict['md5'] = None
-
         # set to None if error_message (nullable) is None
         # and model_fields_set contains the field
         if self.error_message is None and "error_message" in self.model_fields_set:
             _dict['error_message'] = None
+
+        # set to None if md5 (nullable) is None
+        # and model_fields_set contains the field
+        if self.md5 is None and "md5" in self.model_fields_set:
+            _dict['md5'] = None
 
         # set to None if page_dimensions (nullable) is None
         # and model_fields_set contains the field
@@ -144,11 +144,11 @@ class TemplateDocument(BaseModel):
 
         _obj = cls.model_validate({
             "filename": obj.get("filename"),
-            "md5": obj.get("md5"),
             "state": obj.get("state"),
             "error_message": obj.get("error_message"),
-            "field_reimport_state": obj.get("field_reimport_state"),
             "page_count": obj.get("page_count"),
+            "md5": obj.get("md5"),
+            "field_reimport_state": obj.get("field_reimport_state"),
             "page_dimensions": obj.get("page_dimensions"),
             "has_fillable_fields": obj.get("has_fillable_fields"),
             "page_processing_statuses": [TemplatePageProcessingStatus.from_dict(_item) for _item in obj["page_processing_statuses"]] if obj.get("page_processing_statuses") is not None else None,
