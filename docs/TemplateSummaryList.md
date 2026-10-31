@@ -26,6 +26,6 @@ template_summary_list_dict = template_summary_list_instance.to_dict()
 # create an instance of TemplateSummaryList from a dict
 template_summary_list_from_dict = TemplateSummaryList.from_dict(template_summary_list_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

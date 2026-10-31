@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -24,6 +24,7 @@ from docspring.models.ai_field_naming_language import AiFieldNamingLanguage
 from docspring.models.expiration_interval import ExpirationInterval
 from docspring.models.field_group_input import FieldGroupInput
 from docspring.models.html_engine_options_input import HtmlEngineOptionsInput
+from docspring.models.output_format import OutputFormat
 from docspring.models.predefined_field_input import PredefinedFieldInput
 from docspring.models.template_defaults_input import TemplateDefaultsInput
 from docspring.models.template_field_dependency_input import TemplateFieldDependencyInput
@@ -38,25 +39,26 @@ class UpdateTemplateRequest(BaseModel):
     """ # noqa: E501
     name: Optional[StrictStr] = Field(default=None, description="The template's name.")
     description: Optional[StrictStr] = Field(default=None, description="Shown under the template's name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests.")
+    output_format: Optional[OutputFormat] = Field(default=None, description="What each submission makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. A Word template's is chosen when it's created; PDF and HTML templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can't be password-protected.")
     parent_folder_id: Optional[StrictStr] = Field(default=None, description="The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.")
     locked: Optional[StrictBool] = Field(default=None, description="A locked template can't be changed or deleted until it's unlocked (`locked` can always be changed).")
     add_signature_request_submission_id_footers: Optional[StrictBool] = Field(default=None, description="Print the submission ID in the footer of each page of PDFs signed through signature requests.")
     ai_field_naming_language: Optional[AiFieldNamingLanguage] = Field(default=None, description="The language AI field setup names fields in: `auto` uses the form's language when it's written in the Latin alphabet without accents, and English otherwise; `english` always uses English; `form_language` uses the form's language and script. New templates take it from your account's template settings. Null for HTML templates.")
     allow_additional_properties: Optional[StrictBool] = Field(default=None, description="Accept submission data with properties that aren't fields of the template.")
     allow_skipping_optional_fields: Optional[StrictBool] = Field(default=None, description="Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The `allowSkippingOptionalFields` embed option overrides it.")
-    default_form_mode: Optional[TemplateFormMode] = Field(default=None, description="The hosted form that /templates/{template_id}/form shows when its URL has no `mode` parameter: `web` (the web form), `visual` (the visual form, where fields are filled in on the PDF) or `dual` (both, in tabs). HTML templates have no visual form, so `web` is the only value they accept.")
+    default_form_mode: Optional[TemplateFormMode] = Field(default=None, description="The hosted form that /templates/{template_id}/form shows when its URL has no `mode` parameter: `web` (the web form), `visual` (the visual form, where fields are filled in on the PDF) or `dual` (both, in tabs). Only PDF templates have a visual form, so other templates accept only `web`.")
     editable_submissions: Optional[StrictBool] = Field(default=None, description="Generate PDFs whose text and check fields stay fillable (\"Generate Editable PDFs\"). A submission's `editable` overrides it.")
     embed_domains: Optional[List[StrictStr]] = Field(default=None, description="The sites that can embed the template's live signature requests and its embedded template editor: a host such as `app.example.com`, with an optional leading wildcard (`*.example.com`), port (`localhost:3000`) or scheme (`https://app.example.com`; without one, `http` and `https` both work). Browsers open a live signature request in a frame only on these sites (and DocSpring's), so with an empty list it can't be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren't restricted.")
     embed_edit_allow_settings: Optional[StrictBool] = Field(default=None, description="Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).")
     embed_edit_allow_versioning: Optional[StrictBool] = Field(default=None, description="Allow the embedded template editor to publish, restore, compare and delete published versions.")
     embed_edit_allow_document_replacement: Optional[StrictBool] = Field(default=None, description="Allow the embedded template editor to replace the template's PDF.")
-    encrypt_pdfs: Optional[StrictBool] = Field(default=None, description="Encrypt generated PDFs with `encrypt_pdfs_password`.")
+    encrypt_pdfs: Optional[StrictBool] = Field(default=None, description="Encrypt generated PDFs with `encrypt_pdfs_password`. A Word template can only encrypt its PDFs when its `output_format` is `pdf`, because Word documents and OpenDocument files can't be password-protected.")
     encrypt_pdfs_password: Optional[StrictStr] = Field(default=None, description="The password that opens encrypted PDFs. It's never returned; `has_encrypt_pdfs_password` says if it's set.")
     expire_submissions: Optional[StrictBool] = Field(default=None, description="Delete each submission's data and PDF after `expire_after` `expiration_interval`.")
     expire_after: Optional[StrictInt] = Field(default=None, description="How many `expiration_interval`s a submission's data and PDF are kept for, when `expire_submissions` is on. At most 5256000 (10 years in minutes).")
     expiration_interval: Optional[ExpirationInterval] = Field(default=None, description="The unit of `expire_after`.")
     merge_audit_trail_pdf: Optional[StrictBool] = Field(default=None, description="Add the audit trail to the end of PDFs signed through signature requests.")
-    parse_dates_using_template_date_format: Optional[StrictBool] = Field(default=None, description="Date fields also accept NN/NN/YYYY dates (with slashes, dashes or dots), read in the order of the template's default date format: month first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields only accept YYYY-MM-DD. Applies to PDF templates: an HTML template's date fields only accept YYYY-MM-DD. Date fields that include a time take RFC 3339 date-times either way.")
+    parse_dates_using_template_date_format: Optional[StrictBool] = Field(default=None, description="Date fields also accept NN/NN/YYYY dates (with slashes, dashes or dots), read in the order of the template's default date format: month first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields only accept YYYY-MM-DD. Applies to PDF templates: an HTML or Word template's date fields only accept YYYY-MM-DD. Date fields that include a time take RFC 3339 date-times either way.")
     public_submissions: Optional[StrictBool] = Field(default=None, description="Allow anyone with a submission's ID to download its PDF.")
     public_web_form: Optional[StrictBool] = Field(default=None, description="Allow anyone to fill in the template's web form.")
     redirect_url: Optional[StrictStr] = Field(default=None, description="Where the web form sends people after they submit it.")
@@ -66,14 +68,14 @@ class UpdateTemplateRequest(BaseModel):
     field_groups: Optional[List[FieldGroupInput]] = Field(default=None, description="Changes to the settings of the template's field groups, each with the `name` of the group it changes. Settings left out keep their values, and groups left out are unchanged.")
     predefined_fields: Optional[List[PredefinedFieldInput]] = Field(default=None, description="The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it's given that name. Setting it replaces the whole list; an empty list turns them off.")
     predefined_fields_sample_data: Optional[Dict[str, Any]] = Field(default=None, description="Sample submission data that sets `predefined_fields`: each value becomes a predefined field, with a type that fits it (`string`, `number`, `boolean`, `date`, `email` or `url`) and `required_in_template` true. Nested objects and arrays become names with `/`, such as `customer/email`. Without `predefined_fields` in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.")
-    html: Optional[StrictStr] = Field(default=None, description="The HTML of an HTML template, as a Liquid template. Null for PDF templates.")
+    html: Optional[StrictStr] = Field(default=None, description="The HTML of an HTML template, as a Liquid template. Null for PDF and Word templates.")
     scss: Optional[StrictStr] = Field(default=None, description="The SCSS of an HTML template.")
     header_html: Optional[StrictStr] = Field(default=None, description="The HTML printed at the top of each page of an HTML template.")
     footer_html: Optional[StrictStr] = Field(default=None, description="The HTML printed at the bottom of each page of an HTML template.")
     html_engine_options: Optional[HtmlEngineOptionsInput] = Field(default=None, description="Null resets the options to their defaults.")
     html_escape_data: Optional[StrictBool] = Field(default=None, description="Whether an HTML template HTML-escapes the values it prints. When true, `{{ value }}` prints a value as text, so a `<` or `&` in it is printed as that character, and `{{ value | raw }}` prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "description", "parent_folder_id", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "slack_webhook_url", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "html_escape_data"]
+    __properties: ClassVar[List[str]] = ["name", "description", "output_format", "parent_folder_id", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "slack_webhook_url", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "html_escape_data"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -215,6 +217,7 @@ class UpdateTemplateRequest(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "description": obj.get("description"),
+            "output_format": obj.get("output_format"),
             "parent_folder_id": obj.get("parent_folder_id"),
             "locked": obj.get("locked"),
             "add_signature_request_submission_id_footers": obj.get("add_signature_request_submission_id_footers"),

@@ -27,6 +27,6 @@ field_dependency_dict = field_dependency_instance.to_dict()
 # create an instance of FieldDependency from a dict
 field_dependency_from_dict = FieldDependency.from_dict(field_dependency_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

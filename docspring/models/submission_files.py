@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -33,9 +33,11 @@ class SubmissionFiles(BaseModel):
     pdf: Optional[GeneratedFile] = Field(default=None, description="The submission's PDF.")
     audit_trail: Optional[GeneratedFile] = Field(default=None, description="The audit trail of a submission with signature requests: who signed, when and how. It's also added to the end of the PDF when the template's `merge_audit_trail_pdf` is on.")
     preview: Optional[GeneratedFile] = Field(default=None, description="The preview PDF from POST /submissions/{submission_id}/generate_preview, such as for a submission still waiting for its signature requests.")
+    docx: Optional[GeneratedFile] = Field(default=None, description="The Word document of a Word template's submission, when the submission makes one (`output_formats`).")
+    odt: Optional[GeneratedFile] = Field(default=None, description="The OpenDocument file (.odt, the format LibreOffice uses) of a Word template's submission, converted from its Word document, when the submission makes one (`output_formats`).")
     png: Optional[PageImages] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["pdf", "audit_trail", "preview", "png"]
+    __properties: ClassVar[List[str]] = ["pdf", "audit_trail", "preview", "docx", "odt", "png"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -87,6 +89,12 @@ class SubmissionFiles(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of preview
         if self.preview:
             _dict['preview'] = self.preview.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of docx
+        if self.docx:
+            _dict['docx'] = self.docx.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of odt
+        if self.odt:
+            _dict['odt'] = self.odt.to_dict()
         # override the default output from pydantic by calling `to_dict()` of png
         if self.png:
             _dict['png'] = self.png.to_dict()
@@ -110,6 +118,8 @@ class SubmissionFiles(BaseModel):
             "pdf": GeneratedFile.from_dict(obj["pdf"]) if obj.get("pdf") is not None else None,
             "audit_trail": GeneratedFile.from_dict(obj["audit_trail"]) if obj.get("audit_trail") is not None else None,
             "preview": GeneratedFile.from_dict(obj["preview"]) if obj.get("preview") is not None else None,
+            "docx": GeneratedFile.from_dict(obj["docx"]) if obj.get("docx") is not None else None,
+            "odt": GeneratedFile.from_dict(obj["odt"]) if obj.get("odt") is not None else None,
             "png": PageImages.from_dict(obj["png"]) if obj.get("png") is not None else None
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties

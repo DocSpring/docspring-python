@@ -33,6 +33,6 @@ page_image_dict = page_image_instance.to_dict()
 # create an instance of PageImage from a dict
 page_image_from_dict = PageImage.from_dict(page_image_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

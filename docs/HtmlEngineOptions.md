@@ -34,6 +34,6 @@ html_engine_options_dict = html_engine_options_instance.to_dict()
 # create an instance of HtmlEngineOptions from a dict
 html_engine_options_from_dict = HtmlEngineOptions.from_dict(html_engine_options_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

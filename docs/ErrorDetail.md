@@ -29,6 +29,6 @@ error_detail_dict = error_detail_instance.to_dict()
 # create an instance of ErrorDetail from a dict
 error_detail_from_dict = ErrorDetail.from_dict(error_detail_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

@@ -87,6 +87,6 @@ field_override_dict = field_override_instance.to_dict()
 # create an instance of FieldOverride from a dict
 field_override_from_dict = FieldOverride.from_dict(field_override_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

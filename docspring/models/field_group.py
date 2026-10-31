@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -30,12 +30,12 @@ class FieldGroup(BaseModel):
     A group of a template's fields: the fields whose names start with the group's name and a `/`. In submission data, a group is an object, or an array for a list.
     """ # noqa: E501
     name: StrictStr = Field(description="The group's name: `address` for the field `address/city`. A list's item numbers are written as `~`, so the fields `items/0/price` and `items/1/price` are in the groups `items` and `items/~`, the list's items.")
-    type: FieldGroupType = Field(description="`array` for a list, whose fields' names number its items after the group's name (`items/0/price`, or `items/~/price` in an HTML template), and `object` for the other groups.")
+    type: FieldGroupType = Field(description="`array` for a list, whose fields' names number its items after the group's name (`items/0/price`, or `items/~/price` in an HTML or Word template), and `object` for the other groups.")
     title: StrictStr = Field(description="The group's title in the template's data schema and on forms. When it's empty, a title is made from the group's name.")
     description: StrictStr = Field(description="Help text for the group, added to the template's data schema and shown on forms.")
     metadata: StrictStr = Field(description="Text for your own use, added to the template's data schema as `x-metadata`. DocSpring doesn't use it.")
     min_items: Optional[StrictInt] = Field(description="Lists only (`type` `array`): the fewest items submission data must have. Null for no minimum.")
-    max_items: Optional[StrictInt] = Field(description="HTML templates' lists only: the most items submission data can have. Null for no limit. A PDF template's list takes as many items as its fields are numbered for, or more with `allow_additional_items`.")
+    max_items: Optional[StrictInt] = Field(description="HTML and Word templates' lists only: the most items submission data can have. Null for no limit. A PDF template's list takes as many items as its fields are numbered for, or more with `allow_additional_items`.")
     allow_additional_items: StrictBool = Field(description="PDF templates' lists only: submission data can have more items than the list's fields are numbered for. Default false.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["name", "type", "title", "description", "metadata", "min_items", "max_items", "allow_additional_items"]

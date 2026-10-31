@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -41,7 +41,7 @@ from pydantic_core import to_jsonable_python
 
 class FieldInput(BaseModel):
     """
-    A field of a template: the name of a value in submission data, and how and where it prints. Fields with the same `name` share one value and the settings the descriptions say are shared. A PDF template's fields are placed on its pages: `x`, `y`, `width` and `height` are in units where every page is 2480 wide, measured from the top-left corner of the field's `page`. To convert from PDF points, multiply by 2480 and divide by the page's width in points (`document.page_dimensions` on the template). An HTML template's fields are all on page 1, and their placement and style settings aren't used.
+    A field of a template: the name of a value in submission data, and how and where it prints. Fields with the same `name` share one value and the settings the descriptions say are shared. A PDF template's fields are placed on its pages: `x`, `y`, `width` and `height` are in units where every page is 2480 wide, measured from the top-left corner of the field's `page`. To convert from PDF points, multiply by 2480 and divide by the page's width in points (`document.page_dimensions` on the template). An HTML or Word template's fields are all on page 1, and their placement and style settings aren't used: its HTML or Word document places and styles each value.
     """ # noqa: E501
     name: Optional[StrictStr] = Field(default=None, description="The field's name, the key of its value in submission data. A `/` nests the key in objects and arrays (`client/address`, `items/0/price`); write a literal `/` as `~1` and `~` as `~0`. Fields with the same name share one value and their shared settings, and array indexes inside a name are ignored for settings, so `items/0/price` and `items/1/price` share settings but not values. A `#` and a line number (`notes#0`, `notes#1`) splits one value over several fields as lines of text, and names that start with `@@` print submission details such as `@@date`.")
     page: Optional[StrictInt] = Field(default=None, description="The number of the page the field is on, starting at 1. A field added without one goes on page 1, and a field moved to another page without a new `y` keeps its place on the page.")

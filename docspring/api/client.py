@@ -1,7 +1,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -2644,7 +2644,7 @@ class Client:
     def create_submission_batch(
         self,
         body: Annotated[CreateSubmissionBatchRequest, Field(description="The submissions to create, and the settings they share.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until every file in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
         idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
@@ -2665,7 +2665,7 @@ class Client:
 
         :param body: The submissions to create, and the settings they share. (required)
         :type body: CreateSubmissionBatchRequest
-        :param wait: Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.
+        :param wait: Wait until every file in the batch has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
         :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
         :type idempotency_key: str
@@ -2727,7 +2727,7 @@ class Client:
     def create_submission_batch_with_http_info(
         self,
         body: Annotated[CreateSubmissionBatchRequest, Field(description="The submissions to create, and the settings they share.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until every file in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
         idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
@@ -2748,7 +2748,7 @@ class Client:
 
         :param body: The submissions to create, and the settings they share. (required)
         :type body: CreateSubmissionBatchRequest
-        :param wait: Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.
+        :param wait: Wait until every file in the batch has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
         :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
         :type idempotency_key: str
@@ -2810,7 +2810,7 @@ class Client:
     def create_submission_batch_without_preload_content(
         self,
         body: Annotated[CreateSubmissionBatchRequest, Field(description="The submissions to create, and the settings they share.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until every file in the batch has been generated before responding. Default true on sync.api hosts.")] = None,
         idempotency_key: Annotated[Optional[StrictStr], Field(description="A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.")] = None,
         _request_timeout: Union[
             None,
@@ -2831,7 +2831,7 @@ class Client:
 
         :param body: The submissions to create, and the settings they share. (required)
         :type body: CreateSubmissionBatchRequest
-        :param wait: Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts.
+        :param wait: Wait until every file in the batch has been generated before responding. Default true on sync.api hosts.
         :type wait: bool
         :param idempotency_key: A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds.
         :type idempotency_key: str
@@ -2974,7 +2974,7 @@ class Client:
     def create_template(
         self,
         body: Annotated[CreateTemplateRequest, Field(description="The template to create.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2990,11 +2990,11 @@ class Client:
     ) -> Template:
         """Create a template
 
-        Creates an HTML template, or a PDF template from a PDF you uploaded with the presigned upload (GET /uploads/presign): pass its `fields.key` as `cache_id`. To send the PDF with the request instead, use POST /templates/upload.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF (`ready` is true). On sync.api hosts the request waits for that unless you pass `wait=false`. 
+        Creates an HTML template, or a PDF or Word template from a file you uploaded with the presigned upload (GET /uploads/presign): pass its `fields.key` as `cache_id`. You can send a link to the file (`document_url`) or the file in base64 (`document_base64`) instead, or send the file with the request with POST /templates/upload. A Word template is made from a Word document (.docx) or an OpenDocument text file (.odt), which DocSpring converts to a Word document. It needs its `output_format`: what each submission makes, a Word document (`docx`), an OpenDocument file (`odt`) or a PDF.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF, a template created from a `document_url` once its document has been downloaded, and one created from an .odt once it has been converted (`ready` is true). On sync.api hosts the request waits for that unless you pass `wait=false`. 
 
         :param body: The template to create. (required)
         :type body: CreateTemplateRequest
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3051,7 +3051,7 @@ class Client:
     def create_template_with_http_info(
         self,
         body: Annotated[CreateTemplateRequest, Field(description="The template to create.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3067,11 +3067,11 @@ class Client:
     ) -> ApiResponse[Template]:
         """Create a template
 
-        Creates an HTML template, or a PDF template from a PDF you uploaded with the presigned upload (GET /uploads/presign): pass its `fields.key` as `cache_id`. To send the PDF with the request instead, use POST /templates/upload.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF (`ready` is true). On sync.api hosts the request waits for that unless you pass `wait=false`. 
+        Creates an HTML template, or a PDF or Word template from a file you uploaded with the presigned upload (GET /uploads/presign): pass its `fields.key` as `cache_id`. You can send a link to the file (`document_url`) or the file in base64 (`document_base64`) instead, or send the file with the request with POST /templates/upload. A Word template is made from a Word document (.docx) or an OpenDocument text file (.odt), which DocSpring converts to a Word document. It needs its `output_format`: what each submission makes, a Word document (`docx`), an OpenDocument file (`odt`) or a PDF.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF, a template created from a `document_url` once its document has been downloaded, and one created from an .odt once it has been converted (`ready` is true). On sync.api hosts the request waits for that unless you pass `wait=false`. 
 
         :param body: The template to create. (required)
         :type body: CreateTemplateRequest
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3128,7 +3128,7 @@ class Client:
     def create_template_without_preload_content(
         self,
         body: Annotated[CreateTemplateRequest, Field(description="The template to create.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3144,11 +3144,11 @@ class Client:
     ) -> RESTResponseType:
         """Create a template
 
-        Creates an HTML template, or a PDF template from a PDF you uploaded with the presigned upload (GET /uploads/presign): pass its `fields.key` as `cache_id`. To send the PDF with the request instead, use POST /templates/upload.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF (`ready` is true). On sync.api hosts the request waits for that unless you pass `wait=false`. 
+        Creates an HTML template, or a PDF or Word template from a file you uploaded with the presigned upload (GET /uploads/presign): pass its `fields.key` as `cache_id`. You can send a link to the file (`document_url`) or the file in base64 (`document_base64`) instead, or send the file with the request with POST /templates/upload. A Word template is made from a Word document (.docx) or an OpenDocument text file (.odt), which DocSpring converts to a Word document. It needs its `output_format`: what each submission makes, a Word document (`docx`), an OpenDocument file (`odt`) or a PDF.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF, a template created from a `document_url` once its document has been downloaded, and one created from an .odt once it has been converted (`ready` is true). On sync.api hosts the request waits for that unless you pass `wait=false`. 
 
         :param body: The template to create. (required)
         :type body: CreateTemplateRequest
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3300,7 +3300,7 @@ class Client:
     ) -> TemplatePreview:
         """Preview a template with data
 
-        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
+        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML, PDF or Word template prints with your data before you publish a version or send live data. A Word template's pages are its PDF's, whatever its `output_format`. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -3379,7 +3379,7 @@ class Client:
     ) -> ApiResponse[TemplatePreview]:
         """Preview a template with data
 
-        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
+        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML, PDF or Word template prints with your data before you publish a version or send live data. A Word template's pages are its PDF's, whatever its `output_format`. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -3458,7 +3458,7 @@ class Client:
     ) -> RESTResponseType:
         """Preview a template with data
 
-        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
+        Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML, PDF or Word template prints with your data before you publish a version or send live data. A Word template's pages are its PDF's, whatever its `output_format`. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -3653,6 +3653,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "Webhook",
             '422': "ErrorResponse",
+            '403': "ErrorResponse",
             '401': "ErrorResponse",
             '429': "ErrorResponse",
         }
@@ -3724,6 +3725,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "Webhook",
             '422': "ErrorResponse",
+            '403': "ErrorResponse",
             '401': "ErrorResponse",
             '429': "ErrorResponse",
         }
@@ -3795,6 +3797,7 @@ class Client:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "Webhook",
             '422': "ErrorResponse",
+            '403': "ErrorResponse",
             '401': "ErrorResponse",
             '429': "ErrorResponse",
         }
@@ -5577,7 +5580,7 @@ class Client:
     ) -> Submission:
         """Generate more files
 
-        Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+        Adds formats to a processed submission's files, in the background, without using credits again: `pdf`, the PDF of a Word template's submission that made only its Word document (converted from that document), `docx`, the Word document of a Word template's submission that made only its PDF (made again from its data and the template version it used), `odt`, a Word template's submission's OpenDocument file (converted from its Word document, or from one made again when it didn't keep one), and `png`, a PNG image of each page of the PDF (up to 100 pages), which makes the PDF first when the submission doesn't have one. To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
 
         :param submission_id: The submission's ID. (required)
         :type submission_id: str
@@ -5659,7 +5662,7 @@ class Client:
     ) -> ApiResponse[Submission]:
         """Generate more files
 
-        Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+        Adds formats to a processed submission's files, in the background, without using credits again: `pdf`, the PDF of a Word template's submission that made only its Word document (converted from that document), `docx`, the Word document of a Word template's submission that made only its PDF (made again from its data and the template version it used), `odt`, a Word template's submission's OpenDocument file (converted from its Word document, or from one made again when it didn't keep one), and `png`, a PNG image of each page of the PDF (up to 100 pages), which makes the PDF first when the submission doesn't have one. To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
 
         :param submission_id: The submission's ID. (required)
         :type submission_id: str
@@ -5741,7 +5744,7 @@ class Client:
     ) -> RESTResponseType:
         """Generate more files
 
-        Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+        Adds formats to a processed submission's files, in the background, without using credits again: `pdf`, the PDF of a Word template's submission that made only its Word document (converted from that document), `docx`, the Word document of a Word template's submission that made only its PDF (made again from its data and the template version it used), `odt`, a Word template's submission's OpenDocument file (converted from its Word document, or from one made again when it didn't keep one), and `png`, a PNG image of each page of the PDF (up to 100 pages), which makes the PDF first when the submission doesn't have one. To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
 
         :param submission_id: The submission's ID. (required)
         :type submission_id: str
@@ -8661,7 +8664,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         lang: Annotated[ModelCodeLanguage, Field(description="The language to generate the code in.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.")] = None,
-        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.")] = None,
+        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types, PHP has no types-only code, and Rust's code is only types (serde converts the JSON), so theirs is the same either way.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8677,7 +8680,7 @@ class Client:
     ) -> TemplateModelCode:
         """Generate typed code for a template's submission data
 
-        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
+        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir, Go or Rust, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -8685,7 +8688,7 @@ class Client:
         :type lang: ModelCodeLanguage
         :param version: The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.
         :type version: str
-        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.
+        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types, PHP has no types-only code, and Rust's code is only types (serde converts the JSON), so theirs is the same either way.
         :type just_types: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -8745,7 +8748,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         lang: Annotated[ModelCodeLanguage, Field(description="The language to generate the code in.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.")] = None,
-        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.")] = None,
+        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types, PHP has no types-only code, and Rust's code is only types (serde converts the JSON), so theirs is the same either way.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8761,7 +8764,7 @@ class Client:
     ) -> ApiResponse[TemplateModelCode]:
         """Generate typed code for a template's submission data
 
-        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
+        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir, Go or Rust, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -8769,7 +8772,7 @@ class Client:
         :type lang: ModelCodeLanguage
         :param version: The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.
         :type version: str
-        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.
+        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types, PHP has no types-only code, and Rust's code is only types (serde converts the JSON), so theirs is the same either way.
         :type just_types: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -8829,7 +8832,7 @@ class Client:
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
         lang: Annotated[ModelCodeLanguage, Field(description="The language to generate the code in.")],
         version: Annotated[Optional[StrictStr], Field(description="The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.")] = None,
-        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.")] = None,
+        just_types: Annotated[Optional[StrictBool], Field(description="Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types, PHP has no types-only code, and Rust's code is only types (serde converts the JSON), so theirs is the same either way.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8845,7 +8848,7 @@ class Client:
     ) -> RESTResponseType:
         """Generate typed code for a template's submission data
 
-        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
+        Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir, Go or Rust, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -8853,7 +8856,7 @@ class Client:
         :type lang: ModelCodeLanguage
         :param version: The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default.
         :type version: str
-        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way.
+        :param just_types: Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types, PHP has no types-only code, and Rust's code is only types (serde converts the JSON), so theirs is the same either way.
         :type just_types: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -13491,7 +13494,7 @@ class Client:
     ) -> TemplateVersion:
         """Publish a template version
 
-        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
+        Publishes the template's draft as a new version. Its content (the PDF or HTML, fields, name and description) never changes, while settings such as `webhook_url` and `public_submissions` keep following the draft. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -13568,7 +13571,7 @@ class Client:
     ) -> ApiResponse[TemplateVersion]:
         """Publish a template version
 
-        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
+        Publishes the template's draft as a new version. Its content (the PDF or HTML, fields, name and description) never changes, while settings such as `webhook_url` and `public_submissions` keep following the draft. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -13645,7 +13648,7 @@ class Client:
     ) -> RESTResponseType:
         """Publish a template version
 
-        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
+        Publishes the template's draft as a new version. Its content (the PDF or HTML, fields, name and description) never changes, while settings such as `webhook_url` and `public_submissions` keep following the draft. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -14710,7 +14713,7 @@ class Client:
     ) -> Template:
         """Restore a template version
 
-        Replaces the template's draft with a copy of one of its published versions.
+        Replaces the template's draft with a copy of one of its published versions. The draft keeps its settings that apply to every version, such as `webhook_url`.
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -14787,7 +14790,7 @@ class Client:
     ) -> ApiResponse[Template]:
         """Restore a template version
 
-        Replaces the template's draft with a copy of one of its published versions.
+        Replaces the template's draft with a copy of one of its published versions. The draft keeps its settings that apply to every version, such as `webhook_url`.
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -14864,7 +14867,7 @@ class Client:
     ) -> RESTResponseType:
         """Restore a template version
 
-        Replaces the template's draft with a copy of one of its published versions.
+        Replaces the template's draft with a copy of one of its published versions. The draft keeps its settings that apply to every version, such as `webhook_url`.
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -15579,7 +15582,7 @@ class Client:
     ) -> Template:
         """Update a template
 
-        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id` moves the template and all of its published versions. 
+        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Settings such as `webhook_url`, `public_submissions` and `expire_after` apply to every published version too, and setting `parent_folder_id` moves the template and all of its published versions. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -15656,7 +15659,7 @@ class Client:
     ) -> ApiResponse[Template]:
         """Update a template
 
-        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id` moves the template and all of its published versions. 
+        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Settings such as `webhook_url`, `public_submissions` and `expire_after` apply to every published version too, and setting `parent_folder_id` moves the template and all of its published versions. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -15733,7 +15736,7 @@ class Client:
     ) -> RESTResponseType:
         """Update a template
 
-        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id` moves the template and all of its published versions. 
+        Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Settings such as `webhook_url`, `public_submissions` and `expire_after` apply to every published version too, and setting `parent_folder_id` moves the template and all of its published versions. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
@@ -15870,8 +15873,8 @@ class Client:
     def update_template_document(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, as one of `cache_id`, `document_url` and `document_base64`.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, or a Word template's new Word document, as one of `cache_id`, `document_url` and `document_base64`.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -15885,15 +15888,15 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Template:
-        """Replace a template's PDF
+        """Replace a template's document
 
-        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
+        Replaces a PDF template's PDF, or a Word template's Word document (from a .docx or an .odt), with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). A PDF template's fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields, and a Word template gets a field for each new tag. To send the file as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param body: The new PDF, as one of `cache_id`, `document_url` and `document_base64`. (required)
+        :param body: The new PDF, or a Word template's new Word document, as one of `cache_id`, `document_url` and `document_base64`. (required)
         :type body: UpdateTemplateDocumentRequest
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -15952,8 +15955,8 @@ class Client:
     def update_template_document_with_http_info(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, as one of `cache_id`, `document_url` and `document_base64`.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, or a Word template's new Word document, as one of `cache_id`, `document_url` and `document_base64`.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -15967,15 +15970,15 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Template]:
-        """Replace a template's PDF
+        """Replace a template's document
 
-        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
+        Replaces a PDF template's PDF, or a Word template's Word document (from a .docx or an .odt), with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). A PDF template's fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields, and a Word template gets a field for each new tag. To send the file as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param body: The new PDF, as one of `cache_id`, `document_url` and `document_base64`. (required)
+        :param body: The new PDF, or a Word template's new Word document, as one of `cache_id`, `document_url` and `document_base64`. (required)
         :type body: UpdateTemplateDocumentRequest
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -16034,8 +16037,8 @@ class Client:
     def update_template_document_without_preload_content(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, as one of `cache_id`, `document_url` and `document_base64`.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        body: Annotated[UpdateTemplateDocumentRequest, Field(description="The new PDF, or a Word template's new Word document, as one of `cache_id`, `document_url` and `document_base64`.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -16049,15 +16052,15 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Replace a template's PDF
+        """Replace a template's document
 
-        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
+        Replaces a PDF template's PDF, or a Word template's Word document (from a .docx or an .odt), with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). A PDF template's fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields, and a Word template gets a field for each new tag. To send the file as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param body: The new PDF, as one of `cache_id`, `document_url` and `document_base64`. (required)
+        :param body: The new PDF, or a Word template's new Word document, as one of `cache_id`, `document_url` and `document_base64`. (required)
         :type body: UpdateTemplateDocumentRequest
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -16556,6 +16559,7 @@ class Client:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
@@ -16632,6 +16636,7 @@ class Client:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
@@ -16708,6 +16713,7 @@ class Client:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorResponse",
             '404': "ErrorResponse",
             '422': "ErrorResponse",
             '401': "ErrorResponse",
@@ -16804,8 +16810,8 @@ class Client:
     @validate_call
     def upload_template(
         self,
-        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="A PDF (for a PDF template) or a Word document (.docx or .odt, for a Word template). DocSpring converts an OpenDocument text file (.odt) to a Word document after responding: the template's `document.state` is `converting` until then (sync.api hosts wait for it).")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         name: Annotated[Optional[StrictStr], Field(description="The template's name.")] = None,
         description: Annotated[Optional[StrictStr], Field(description="The template's description.")] = None,
         parent_folder_id: Annotated[Optional[StrictStr], Field(description="The folder to put the template in. Left out, it's created at the root.")] = None,
@@ -16814,6 +16820,7 @@ class Client:
         field_source: Annotated[Optional[Any], Field(description="With `detect_fields`, where the fields come from. `auto` (the default) imports the form fields of a fillable PDF and detects the fields of a PDF without them; `pdf_detection` detects the fields from the page layout, even on a fillable PDF; `pdf_form_fields` only imports the PDF's form fields.")] = None,
         field_naming: Annotated[Optional[Any], Field(description="With `detect_fields`, how the fields are named. `ai` (the default) names them and sets their types and settings with AI; `preserve` keeps the names of the PDF's form fields, and AI only names the fields it detected. `preserve` needs `field_source` `auto` or `pdf_form_fields`.")] = None,
         field_logic: Annotated[Optional[Any], Field(description="With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings.")] = None,
+        output_format: Annotated[Optional[Any], Field(description="What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -16827,13 +16834,13 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Template:
-        """Create a PDF template from an uploaded PDF
+        """Create a template from an uploaded PDF or Word document
 
-        Creates a PDF template from a PDF sent with the request (`multipart/form-data`). For large files, upload the PDF with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
+        Creates a PDF template from a PDF, or a Word template from a Word document (.docx) or an OpenDocument text file (.odt), sent with the request (`multipart/form-data`). A Word template needs its `output_format`. For large files, upload the file with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
 
-        :param document: The PDF. (required)
+        :param document: A PDF (for a PDF template) or a Word document (.docx or .odt, for a Word template). DocSpring converts an OpenDocument text file (.odt) to a Word document after responding: the template's `document.state` is `converting` until then (sync.api hosts wait for it). (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param name: The template's name.
         :type name: str
@@ -16851,6 +16858,8 @@ class Client:
         :type field_naming: FieldSetupNaming
         :param field_logic: With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings.
         :type field_logic: FieldSetupLogic
+        :param output_format: What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document.
+        :type output_format: OutputFormat
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -16884,6 +16893,7 @@ class Client:
             field_source=field_source,
             field_naming=field_naming,
             field_logic=field_logic,
+            output_format=output_format,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -16913,8 +16923,8 @@ class Client:
     @validate_call
     def upload_template_with_http_info(
         self,
-        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="A PDF (for a PDF template) or a Word document (.docx or .odt, for a Word template). DocSpring converts an OpenDocument text file (.odt) to a Word document after responding: the template's `document.state` is `converting` until then (sync.api hosts wait for it).")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         name: Annotated[Optional[StrictStr], Field(description="The template's name.")] = None,
         description: Annotated[Optional[StrictStr], Field(description="The template's description.")] = None,
         parent_folder_id: Annotated[Optional[StrictStr], Field(description="The folder to put the template in. Left out, it's created at the root.")] = None,
@@ -16923,6 +16933,7 @@ class Client:
         field_source: Annotated[Optional[Any], Field(description="With `detect_fields`, where the fields come from. `auto` (the default) imports the form fields of a fillable PDF and detects the fields of a PDF without them; `pdf_detection` detects the fields from the page layout, even on a fillable PDF; `pdf_form_fields` only imports the PDF's form fields.")] = None,
         field_naming: Annotated[Optional[Any], Field(description="With `detect_fields`, how the fields are named. `ai` (the default) names them and sets their types and settings with AI; `preserve` keeps the names of the PDF's form fields, and AI only names the fields it detected. `preserve` needs `field_source` `auto` or `pdf_form_fields`.")] = None,
         field_logic: Annotated[Optional[Any], Field(description="With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings.")] = None,
+        output_format: Annotated[Optional[Any], Field(description="What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -16936,13 +16947,13 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Template]:
-        """Create a PDF template from an uploaded PDF
+        """Create a template from an uploaded PDF or Word document
 
-        Creates a PDF template from a PDF sent with the request (`multipart/form-data`). For large files, upload the PDF with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
+        Creates a PDF template from a PDF, or a Word template from a Word document (.docx) or an OpenDocument text file (.odt), sent with the request (`multipart/form-data`). A Word template needs its `output_format`. For large files, upload the file with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
 
-        :param document: The PDF. (required)
+        :param document: A PDF (for a PDF template) or a Word document (.docx or .odt, for a Word template). DocSpring converts an OpenDocument text file (.odt) to a Word document after responding: the template's `document.state` is `converting` until then (sync.api hosts wait for it). (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param name: The template's name.
         :type name: str
@@ -16960,6 +16971,8 @@ class Client:
         :type field_naming: FieldSetupNaming
         :param field_logic: With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings.
         :type field_logic: FieldSetupLogic
+        :param output_format: What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document.
+        :type output_format: OutputFormat
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -16993,6 +17006,7 @@ class Client:
             field_source=field_source,
             field_naming=field_naming,
             field_logic=field_logic,
+            output_format=output_format,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -17022,8 +17036,8 @@ class Client:
     @validate_call
     def upload_template_without_preload_content(
         self,
-        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
+        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="A PDF (for a PDF template) or a Word document (.docx or .odt, for a Word template). DocSpring converts an OpenDocument text file (.odt) to a Word document after responding: the template's `document.state` is `converting` until then (sync.api hosts wait for it).")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
         name: Annotated[Optional[StrictStr], Field(description="The template's name.")] = None,
         description: Annotated[Optional[StrictStr], Field(description="The template's description.")] = None,
         parent_folder_id: Annotated[Optional[StrictStr], Field(description="The folder to put the template in. Left out, it's created at the root.")] = None,
@@ -17032,6 +17046,7 @@ class Client:
         field_source: Annotated[Optional[Any], Field(description="With `detect_fields`, where the fields come from. `auto` (the default) imports the form fields of a fillable PDF and detects the fields of a PDF without them; `pdf_detection` detects the fields from the page layout, even on a fillable PDF; `pdf_form_fields` only imports the PDF's form fields.")] = None,
         field_naming: Annotated[Optional[Any], Field(description="With `detect_fields`, how the fields are named. `ai` (the default) names them and sets their types and settings with AI; `preserve` keeps the names of the PDF's form fields, and AI only names the fields it detected. `preserve` needs `field_source` `auto` or `pdf_form_fields`.")] = None,
         field_logic: Annotated[Optional[Any], Field(description="With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings.")] = None,
+        output_format: Annotated[Optional[Any], Field(description="What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -17045,13 +17060,13 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create a PDF template from an uploaded PDF
+        """Create a template from an uploaded PDF or Word document
 
-        Creates a PDF template from a PDF sent with the request (`multipart/form-data`). For large files, upload the PDF with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
+        Creates a PDF template from a PDF, or a Word template from a Word document (.docx) or an OpenDocument text file (.odt), sent with the request (`multipart/form-data`). A Word template needs its `output_format`. For large files, upload the file with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
 
-        :param document: The PDF. (required)
+        :param document: A PDF (for a PDF template) or a Word document (.docx or .odt, for a Word template). DocSpring converts an OpenDocument text file (.odt) to a Word document after responding: the template's `document.state` is `converting` until then (sync.api hosts wait for it). (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
         :param name: The template's name.
         :type name: str
@@ -17069,6 +17084,8 @@ class Client:
         :type field_naming: FieldSetupNaming
         :param field_logic: With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings.
         :type field_logic: FieldSetupLogic
+        :param output_format: What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document.
+        :type output_format: OutputFormat
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -17102,6 +17119,7 @@ class Client:
             field_source=field_source,
             field_naming=field_naming,
             field_logic=field_logic,
+            output_format=output_format,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -17135,6 +17153,7 @@ class Client:
         field_source,
         field_naming,
         field_logic,
+        output_format,
         _request_auth,
         _content_type,
         _headers,
@@ -17181,6 +17200,8 @@ class Client:
             _form_params.append(('field_naming', field_naming))
         if field_logic is not None:
             _form_params.append(('field_logic', field_logic))
+        if output_format is not None:
+            _form_params.append(('output_format', output_format))
         # process the body parameter
 
 
@@ -17234,9 +17255,9 @@ class Client:
     def upload_template_document(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
-        reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.")] = None,
+        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF, or the new Word document (.docx or .odt) of a Word template.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
+        reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -17250,17 +17271,17 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Template:
-        """Replace a template's PDF with an uploaded PDF
+        """Replace a template's document with an uploaded file
 
-        Replaces a PDF template's PDF with one sent with the request (`multipart/form-data`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. 
+        Replaces a PDF template's PDF, or a Word template's Word document, with one sent with the request (`multipart/form-data`). A PDF template's fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields, and a Word template gets a field for each new tag. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param document: The new PDF. (required)
+        :param document: The new PDF, or the new Word document (.docx or .odt) of a Word template. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
-        :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.
+        :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.
         :type reimport_fields: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -17319,9 +17340,9 @@ class Client:
     def upload_template_document_with_http_info(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
-        reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.")] = None,
+        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF, or the new Word document (.docx or .odt) of a Word template.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
+        reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -17335,17 +17356,17 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Template]:
-        """Replace a template's PDF with an uploaded PDF
+        """Replace a template's document with an uploaded file
 
-        Replaces a PDF template's PDF with one sent with the request (`multipart/form-data`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. 
+        Replaces a PDF template's PDF, or a Word template's Word document, with one sent with the request (`multipart/form-data`). A PDF template's fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields, and a Word template gets a field for each new tag. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param document: The new PDF. (required)
+        :param document: The new PDF, or the new Word document (.docx or .odt) of a Word template. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
-        :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.
+        :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.
         :type reimport_fields: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -17404,9 +17425,9 @@ class Client:
     def upload_template_document_without_preload_content(
         self,
         template_id: Annotated[StrictStr, Field(description="The template's ID.")],
-        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF.")],
-        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.")] = None,
-        reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.")] = None,
+        document: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The new PDF, or the new Word document (.docx or .odt) of a Word template.")],
+        wait: Annotated[Optional[StrictBool], Field(description="Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.")] = None,
+        reimport_fields: Annotated[Optional[StrictBool], Field(description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -17420,17 +17441,17 @@ class Client:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Replace a template's PDF with an uploaded PDF
+        """Replace a template's document with an uploaded file
 
-        Replaces a PDF template's PDF with one sent with the request (`multipart/form-data`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. 
+        Replaces a PDF template's PDF, or a Word template's Word document, with one sent with the request (`multipart/form-data`). A PDF template's fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields, and a Word template gets a field for each new tag. 
 
         :param template_id: The template's ID. (required)
         :type template_id: str
-        :param document: The new PDF. (required)
+        :param document: The new PDF, or the new Word document (.docx or .odt) of a Word template. (required)
         :type document: bytes
-        :param wait: Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts.
+        :param wait: Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts.
         :type wait: bool
-        :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields.
+        :param reimport_fields: Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.
         :type reimport_fields: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

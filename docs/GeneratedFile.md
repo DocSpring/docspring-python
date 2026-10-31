@@ -1,6 +1,6 @@
 # GeneratedFile
 
-A file that DocSpring generated, such as a submission's PDF. A file made after its submission was processed is listed while it's being made: check its `state` before using its links.
+A file that DocSpring generated, such as a submission's PDF or Word document. A file made after its submission was processed is listed while it's being made: check its `state` before using its links.
 
 ## Properties
 
@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **error_message** | **str** | Why the file couldn't be made, when `state` is `error`. | 
 **download_url** | **str** | A temporary link to download the file. Null until the file has been made, and when your account turns off download links for submissions. | 
 **permanent_url** | **str** | A link to download the file that doesn't expire: it redirects to a new temporary link. It needs your API token or a signed-in session, except for a submission of a template that makes its submissions public. Null until the file has been made. | 
-**filename** | **str** | The file's name, such as `sub_123.pdf`. | 
-**content_type** | **str** | The file's media type, such as `application/pdf`. | 
+**filename** | **str** | The file's name, such as `sub_123.pdf`, `sub_123.docx` or `sub_123.odt`. | 
+**content_type** | **str** | The file's media type: `application/pdf`, `application/vnd.openxmlformats-officedocument.wordprocessingml.document` for a Word document, or `application/vnd.oasis.opendocument.text` for an OpenDocument file. | 
 **size** | **int** | The file's size in bytes. Null until the file has been made. | 
 **sha256** | **str** | The SHA-256 hash of the file. Null until the file has been made. | 
 
@@ -32,6 +32,6 @@ generated_file_dict = generated_file_instance.to_dict()
 # create an instance of GeneratedFile from a dict
 generated_file_from_dict = GeneratedFile.from_dict(generated_file_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

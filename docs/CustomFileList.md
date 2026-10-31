@@ -26,6 +26,6 @@ custom_file_list_dict = custom_file_list_instance.to_dict()
 # create an instance of CustomFileList from a dict
 custom_file_list_from_dict = CustomFileList.from_dict(custom_file_list_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

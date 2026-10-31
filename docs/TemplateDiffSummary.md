@@ -30,6 +30,6 @@ template_diff_summary_dict = template_diff_summary_instance.to_dict()
 # create an instance of TemplateDiffSummary from a dict
 template_diff_summary_from_dict = TemplateDiffSummary.from_dict(template_diff_summary_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

@@ -28,6 +28,6 @@ submission_validation_dict = submission_validation_instance.to_dict()
 # create an instance of SubmissionValidation from a dict
 submission_validation_from_dict = SubmissionValidation.from_dict(submission_validation_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

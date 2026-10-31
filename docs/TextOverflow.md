@@ -8,6 +8,6 @@ What happens to text that doesn't fit in its field.
 
 * `TRUNCATE` (value: `'truncate'`)
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

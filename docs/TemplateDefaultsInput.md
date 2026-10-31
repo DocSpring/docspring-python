@@ -44,6 +44,6 @@ template_defaults_input_dict = template_defaults_input_instance.to_dict()
 # create an instance of TemplateDefaultsInput from a dict
 template_defaults_input_from_dict = TemplateDefaultsInput.from_dict(template_defaults_input_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

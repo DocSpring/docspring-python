@@ -27,6 +27,6 @@ field_comparison_condition_dict = field_comparison_condition_instance.to_dict()
 # create an instance of FieldComparisonCondition from a dict
 field_comparison_condition_from_dict = FieldComparisonCondition.from_dict(field_comparison_condition_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

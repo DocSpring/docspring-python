@@ -14,6 +14,6 @@ How a string field's value is compared with a check mark's or shape's condition.
 
 * `REGEX` (value: `'regex'`)
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

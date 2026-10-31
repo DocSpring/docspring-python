@@ -38,6 +38,6 @@ combined_pdf_dict = combined_pdf_instance.to_dict()
 # create an instance of CombinedPdf from a dict
 combined_pdf_from_dict = CombinedPdf.from_dict(combined_pdf_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

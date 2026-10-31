@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -33,7 +33,7 @@ class FieldGroupInput(BaseModel):
     description: Optional[StrictStr] = Field(default=None, description="Help text for the group, added to the template's data schema and shown on forms.")
     metadata: Optional[StrictStr] = Field(default=None, description="Text for your own use, added to the template's data schema as `x-metadata`. DocSpring doesn't use it.")
     min_items: Optional[StrictInt] = Field(default=None, description="Lists only (`type` `array`): the fewest items submission data must have. Null for no minimum.")
-    max_items: Optional[StrictInt] = Field(default=None, description="HTML templates' lists only: the most items submission data can have. Null for no limit. A PDF template's list takes as many items as its fields are numbered for, or more with `allow_additional_items`.")
+    max_items: Optional[StrictInt] = Field(default=None, description="HTML and Word templates' lists only: the most items submission data can have. Null for no limit. A PDF template's list takes as many items as its fields are numbered for, or more with `allow_additional_items`.")
     allow_additional_items: Optional[StrictBool] = Field(default=None, description="PDF templates' lists only: submission data can have more items than the list's fields are numbered for. Default false.")
     __properties: ClassVar[List[str]] = ["name", "title", "description", "metadata", "min_items", "max_items", "allow_additional_items"]
 

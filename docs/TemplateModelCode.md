@@ -27,6 +27,6 @@ template_model_code_dict = template_model_code_instance.to_dict()
 # create an instance of TemplateModelCode from a dict
 template_model_code_from_dict = TemplateModelCode.from_dict(template_model_code_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

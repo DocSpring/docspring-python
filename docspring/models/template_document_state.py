@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class TemplateDocumentState(str, Enum):
     """
-    Where a template's PDF is in its processing.
+    Where a template's document is in its processing.
     """
 
     """
@@ -34,6 +34,8 @@ class TemplateDocumentState(str, Enum):
     UNKNOWN_ERROR = 'unknown_error'
     DOWNLOADING = 'downloading'
     DOWNLOAD_FAILED = 'download_failed'
+    CONVERTING = 'converting'
+    CONVERSION_FAILED = 'conversion_failed'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

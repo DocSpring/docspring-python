@@ -1,6 +1,6 @@
 # TemplateDocumentState
 
-Where a template's PDF is in its processing.
+Where a template's document is in its processing.
 
 ## Enum
 
@@ -18,6 +18,10 @@ Where a template's PDF is in its processing.
 
 * `DOWNLOAD_FAILED` (value: `'download_failed'`)
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+* `CONVERTING` (value: `'converting'`)
+
+* `CONVERSION_FAILED` (value: `'conversion_failed'`)
+
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

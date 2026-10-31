@@ -28,6 +28,6 @@ template_page_images_dict = template_page_images_instance.to_dict()
 # create an instance of TemplatePageImages from a dict
 template_page_images_from_dict = TemplatePageImages.from_dict(template_page_images_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

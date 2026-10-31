@@ -27,6 +27,6 @@ template_fields_dict = template_fields_instance.to_dict()
 # create an instance of TemplateFields from a dict
 template_fields_from_dict = TemplateFields.from_dict(template_fields_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

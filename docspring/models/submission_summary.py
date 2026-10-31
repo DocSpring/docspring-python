@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -36,11 +36,11 @@ class SubmissionSummary(BaseModel):
     """ # noqa: E501
     id: StrictStr = Field(description="The submission's ID.")
     template_id: Optional[StrictStr] = Field(description="Null once the template has been permanently deleted.")
-    template_type: TemplateType = Field(description="The template's type: `pdf` or `html`.")
+    template_type: TemplateType = Field(description="The template's type: `pdf`, `html` or `docx`.")
     template_version: Optional[StrictStr] = Field(description="The published version of the template the submission used. Null for the draft.")
     batch_id: Optional[StrictStr] = Field(description="The ID of the batch the submission was created in.")
     source: SubmissionSource = Field(description="`api`: created with the API. `web`: a web form. `reprocess`: a copy of another submission, made to generate its PDF again.")
-    state: SubmissionState = Field(description="`pending` until the PDF has been generated, then `processed`. `waiting_for_signature_requests` until every signature request is completed. `insufficient_credits`: waiting for credits; `error_message` says whether the PDF is generated once you add them. `account_suspended`: waiting for the account to be reactivated, for up to 30 days. Waiting ends in `error` if it's discarded or takes over 30 days. Every other state is final, with no PDF: `invalid_data` (the data doesn't match the template's fields: see `data_errors`), `declined` (a signature request was declined), and the states where generating the PDF failed, which have an `error_message`: `syntax_error` (a mistake in an HTML template's Liquid or SCSS), `image_download_failed` or `image_processing_failed` (an image in the data or the template couldn't be downloaded or read) and `error` (anything else). Older submissions can also be `license_revoked` or `accidental`.")
+    state: SubmissionState = Field(description="`pending` until the files have been generated, then `processed`. `waiting_for_signature_requests` until every signature request is completed. `insufficient_credits`: waiting for credits; `error_message` says whether the files are generated once you add them. `account_suspended`: waiting for the account to be reactivated, for up to 30 days. Waiting ends in `error` if it's discarded or takes over 30 days. Every other state is final, with no files: `invalid_data` (the data doesn't match the template's fields: see `data_errors`), `declined` (a signature request was declined), and the states where generating the files failed, which have an `error_message`: `syntax_error` (a mistake in an HTML template's Liquid or SCSS, or in a Word template's tags), `image_download_failed` or `image_processing_failed` (an image in the data or the template couldn't be downloaded or read) and `error` (anything else). Older submissions can also be `license_revoked` or `accidental`.")
     test: StrictBool = Field(description="Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.")
     editable: StrictBool = Field(description="`true` keeps the PDF's text and check fields fillable, and `false` flattens every field. Left out, the template decides: its `editable_submissions` setting, or each field's own Editable option. A response shows the template's setting when the request left this out. Can't be `true` with `signature_requests`.")
     data: Optional[Dict[str, Any]] = Field(description="The submission's data, with the values entered in completed signature requests. Null unless you pass `include_data=true`. Empty once the submission has expired.")

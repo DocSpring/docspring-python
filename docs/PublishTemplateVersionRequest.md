@@ -26,6 +26,6 @@ publish_template_version_request_dict = publish_template_version_request_instanc
 # create an instance of PublishTemplateVersionRequest from a dict
 publish_template_version_request_from_dict = PublishTemplateVersionRequest.from_dict(publish_template_version_request_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

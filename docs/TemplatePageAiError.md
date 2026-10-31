@@ -12,6 +12,6 @@ Why AI naming failed or was skipped on a page.
 
 * `SKIPPED` (value: `'skipped'`)
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

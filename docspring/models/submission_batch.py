@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -29,14 +29,14 @@ from pydantic_core import to_jsonable_python
 
 class SubmissionBatch(BaseModel):
     """
-    Submissions created together in one request. Their PDFs are only generated when every submission in the batch is valid.
+    Submissions created together in one request. Their files are only generated when every submission in the batch is valid.
     """ # noqa: E501
     id: StrictStr = Field(description="The batch's ID.")
-    state: SubmissionBatchState = Field(description="`pending` while the PDFs are being generated, then `processed`. `error` as soon as a submission fails, while the others can still be pending: the batch has finished once `processed_at` is set.")
+    state: SubmissionBatchState = Field(description="`pending` while the files are being generated, then `processed`. `error` as soon as a submission fails, while the others can still be pending: the batch has finished once `processed_at` is set.")
     metadata: Dict[str, Any] = Field(description="Your own data about the batch, such as an ID from your app.")
     total_count: StrictInt = Field(description="The number of submissions in the request.")
-    pending_count: StrictInt = Field(description="The submissions whose PDFs haven't been generated yet.")
-    error_count: StrictInt = Field(description="The submissions that were invalid or whose PDFs couldn't be generated.")
+    pending_count: StrictInt = Field(description="The submissions whose files haven't been generated yet.")
+    error_count: StrictInt = Field(description="The submissions that were invalid or whose files couldn't be generated.")
     completion_percentage: StrictInt = Field(description="The percentage of the batch's submissions that have finished, from 0 to 100.")
     submissions: List[Submission] = Field(description="The batch's submissions, in the order of the request. Their `data` is null unless you pass `include_data=true`. A batch that failed validation only has the submissions that were recorded as `invalid_data`.")
     processed_at: Optional[datetime] = Field(description="When every submission had finished.")

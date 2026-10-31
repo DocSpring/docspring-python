@@ -28,6 +28,6 @@ field_range_condition_dict = field_range_condition_instance.to_dict()
 # create an instance of FieldRangeCondition from a dict
 field_range_condition_from_dict = FieldRangeCondition.from_dict(field_range_condition_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

@@ -33,6 +33,6 @@ update_signature_request_request_dict = update_signature_request_request_instanc
 # create an instance of UpdateSignatureRequestRequest from a dict
 update_signature_request_request_from_dict = UpdateSignatureRequestRequest.from_dict(update_signature_request_request_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

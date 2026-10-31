@@ -28,6 +28,6 @@ template_field_dependency_condition_input_dict = template_field_dependency_condi
 # create an instance of TemplateFieldDependencyConditionInput from a dict
 template_field_dependency_condition_input_from_dict = TemplateFieldDependencyConditionInput.from_dict(template_field_dependency_condition_input_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

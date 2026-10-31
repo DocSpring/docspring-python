@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **description** | **str** | Help text for the group, added to the template's data schema and shown on forms. | [optional] 
 **metadata** | **str** | Text for your own use, added to the template's data schema as `x-metadata`. DocSpring doesn't use it. | [optional] 
 **min_items** | **int** | Lists only (`type` `array`): the fewest items submission data must have. Null for no minimum. | [optional] 
-**max_items** | **int** | HTML templates' lists only: the most items submission data can have. Null for no limit. A PDF template's list takes as many items as its fields are numbered for, or more with `allow_additional_items`. | [optional] 
+**max_items** | **int** | HTML and Word templates' lists only: the most items submission data can have. Null for no limit. A PDF template's list takes as many items as its fields are numbered for, or more with `allow_additional_items`. | [optional] 
 **allow_additional_items** | **bool** | PDF templates' lists only: submission data can have more items than the list's fields are numbered for. Default false. | [optional] 
 
 ## Example
@@ -31,6 +31,6 @@ field_group_input_dict = field_group_input_instance.to_dict()
 # create an instance of FieldGroupInput from a dict
 field_group_input_from_dict = FieldGroupInput.from_dict(field_group_input_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

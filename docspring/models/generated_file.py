@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -27,14 +27,14 @@ from pydantic_core import to_jsonable_python
 
 class GeneratedFile(BaseModel):
     """
-    A file that DocSpring generated, such as a submission's PDF. A file made after its submission was processed is listed while it's being made: check its `state` before using its links.
+    A file that DocSpring generated, such as a submission's PDF or Word document. A file made after its submission was processed is listed while it's being made: check its `state` before using its links.
     """ # noqa: E501
     state: GeneratedFileState = Field(description="`processed` once the file has been made. `pending` while it's being made, and `error` if it couldn't be made (see `error_message`).")
     error_message: Optional[StrictStr] = Field(description="Why the file couldn't be made, when `state` is `error`.")
     download_url: Optional[StrictStr] = Field(description="A temporary link to download the file. Null until the file has been made, and when your account turns off download links for submissions.")
     permanent_url: Optional[StrictStr] = Field(description="A link to download the file that doesn't expire: it redirects to a new temporary link. It needs your API token or a signed-in session, except for a submission of a template that makes its submissions public. Null until the file has been made.")
-    filename: StrictStr = Field(description="The file's name, such as `sub_123.pdf`.")
-    content_type: StrictStr = Field(description="The file's media type, such as `application/pdf`.")
+    filename: StrictStr = Field(description="The file's name, such as `sub_123.pdf`, `sub_123.docx` or `sub_123.odt`.")
+    content_type: StrictStr = Field(description="The file's media type: `application/pdf`, `application/vnd.openxmlformats-officedocument.wordprocessingml.document` for a Word document, or `application/vnd.oasis.opendocument.text` for an OpenDocument file.")
     size: Optional[StrictInt] = Field(description="The file's size in bytes. Null until the file has been made.")
     sha256: Optional[StrictStr] = Field(description="The SHA-256 hash of the file. Null until the file has been made.")
     additional_properties: Dict[str, Any] = {}

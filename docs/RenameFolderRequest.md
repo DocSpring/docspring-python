@@ -25,6 +25,6 @@ rename_folder_request_dict = rename_folder_request_instance.to_dict()
 # create an instance of RenameFolderRequest from a dict
 rename_folder_request_from_dict = RenameFolderRequest.from_dict(rename_folder_request_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

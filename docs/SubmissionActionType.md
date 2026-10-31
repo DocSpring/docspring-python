@@ -18,6 +18,6 @@ The kind of storage a submission action uploads the PDF to.
 
 * `BOX_UPLOAD` (value: `'box_upload'`)
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

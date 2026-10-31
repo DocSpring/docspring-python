@@ -27,6 +27,6 @@ template_field_move_dict = template_field_move_instance.to_dict()
 # create an instance of TemplateFieldMove from a dict
 template_field_move_from_dict = TemplateFieldMove.from_dict(template_field_move_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

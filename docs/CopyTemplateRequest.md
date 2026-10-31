@@ -27,6 +27,6 @@ copy_template_request_dict = copy_template_request_instance.to_dict()
 # create an instance of CopyTemplateRequest from a dict
 copy_template_request_from_dict = CopyTemplateRequest.from_dict(copy_template_request_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

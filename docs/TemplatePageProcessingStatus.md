@@ -29,6 +29,6 @@ template_page_processing_status_dict = template_page_processing_status_instance.
 # create an instance of TemplatePageProcessingStatus from a dict
 template_page_processing_status_from_dict = TemplatePageProcessingStatus.from_dict(template_page_processing_status_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

@@ -25,6 +25,6 @@ reorder_template_fields_request_dict = reorder_template_fields_request_instance.
 # create an instance of ReorderTemplateFieldsRequest from a dict
 reorder_template_fields_request_from_dict = ReorderTemplateFieldsRequest.from_dict(reorder_template_fields_request_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

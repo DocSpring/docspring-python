@@ -28,6 +28,6 @@ template_version_dict = template_version_instance.to_dict()
 # create an instance of TemplateVersion from a dict
 template_version_from_dict = TemplateVersion.from_dict(template_version_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

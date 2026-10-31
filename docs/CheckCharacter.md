@@ -14,6 +14,6 @@ A check mark or cross, as the HTML entity of its character: âœ“ (`&#10003;`), âœ
 
 * `AMPERSAND_HASH_10008_SEMICOLON` (value: `'&#10008;'`)
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

@@ -32,6 +32,6 @@ signature_request_event_dict = signature_request_event_instance.to_dict()
 # create an instance of SignatureRequestEvent from a dict
 signature_request_event_from_dict = SignatureRequestEvent.from_dict(signature_request_event_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

@@ -25,6 +25,6 @@ create_custom_file_from_upload_request_dict = create_custom_file_from_upload_req
 # create an instance of CreateCustomFileFromUploadRequest from a dict
 create_custom_file_from_upload_request_from_dict = CreateCustomFileFromUploadRequest.from_dict(create_custom_file_from_upload_request_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

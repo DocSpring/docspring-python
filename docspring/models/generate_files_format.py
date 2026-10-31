@@ -3,7 +3,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -21,12 +21,15 @@ from typing_extensions import Self
 
 class GenerateFilesFormat(str, Enum):
     """
-    A format DocSpring can add to a processed submission: `png` (images of the PDF's pages).
+    A format DocSpring can add to a processed submission: `pdf`, `docx` or `odt` (a Word template's submission's PDF, Word document or OpenDocument file), or `png` (images of the PDF's pages).
     """
 
     """
     allowed enum values
     """
+    PDF = 'pdf'
+    DOCX = 'docx'
+    ODT = 'odt'
     PNG = 'png'
 
     @classmethod

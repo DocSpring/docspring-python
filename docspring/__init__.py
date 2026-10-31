@@ -5,7 +5,7 @@
 """
     DocSpring API
 
-    Use DocSpring's API to programmatically fill out PDF forms, convert HTML to PDFs, merge PDFs, or request legally binding e-signatures.
+    Use DocSpring's API to fill PDF forms, generate PDFs and Word documents from HTML or Word templates, merge PDFs, and request legally binding e-signatures.
 
     The version of the OpenAPI document: v2
     Contact: support@docspring.com
@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.2.0"
+__version__ = "4.3.0"
 
 # Define package exports
 __all__ = [

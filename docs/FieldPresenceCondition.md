@@ -26,6 +26,6 @@ field_presence_condition_dict = field_presence_condition_instance.to_dict()
 # create an instance of FieldPresenceCondition from a dict
 field_presence_condition_from_dict = FieldPresenceCondition.from_dict(field_presence_condition_dict)
 ```
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 
