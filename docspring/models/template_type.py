@@ -30,6 +30,7 @@ class TemplateType(str, Enum):
     PDF = 'pdf'
     HTML = 'html'
     DOCX = 'docx'
+    PAGE_DESIGNER = 'page_designer'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

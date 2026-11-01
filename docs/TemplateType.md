@@ -10,6 +10,8 @@ The kind of template: `pdf` (fields placed on an uploaded PDF), `html` (a PDF re
 
 * `DOCX` (value: `'docx'`)
 
+* `PAGE_DESIGNER` (value: `'page_designer'`)
+
 [[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

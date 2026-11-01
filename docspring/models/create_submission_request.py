@@ -23,6 +23,8 @@ from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.field_override import FieldOverride
 from docspring.models.output_format import OutputFormat
 from docspring.models.signature_request_input import SignatureRequestInput
+from docspring.models.signature_request_reminders import SignatureRequestReminders
+from docspring.models.signing_order import SigningOrder
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -31,19 +33,28 @@ class CreateSubmissionRequest(BaseModel):
     """
     The submission's data and settings.
     """ # noqa: E501
-    test: Optional[StrictBool] = Field(default=None, description="Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.")
+    test: Optional[StrictBool] = Field(default=None, description="Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token's are always live.")
     editable: Optional[StrictBool] = Field(default=None, description="`true` keeps the PDF's text and check fields fillable, and `false` flattens every field. Left out, the template decides: its `editable_submissions` setting, or each field's own Editable option. A response shows the template's setting when the request left this out. Can't be `true` with `signature_requests`.")
-    data: Optional[Dict[str, Any]] = Field(default=None, description="The values of the template's fields, by field name. Required for PDF and Word templates, unless `signature_requests` collects them (PDF templates only).")
+    data: Optional[Dict[str, Any]] = Field(default=None, description="The values of the template's fields, by field name. Required for PDF templates, Word templates and page designs, unless `signature_requests` collects them (PDF templates only).")
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Your own data about the submission, such as an ID from your app. It isn't printed on the PDF. Two keys also change the PDF: `pdf_filename` names its file (`files.pdf.filename`, and its download), and `pdf_title` is its title in the PDF's document properties (and an HTML template's `<title>`, unless its HTML has one). Without `pdf_title`, the title is the template's name. In `pdf_filename`, a `.pdf` ending is removed, each run of characters other than letters, digits, `-`, `_` and `.` becomes one `_`, and the first 128 characters are kept, then `.pdf` is added. Without it, the file is named after the submission's ID (`sub_1234567890abcdef01.pdf`).")
     password: Optional[StrictStr] = Field(default=None, description="A password that the PDF needs to be opened with. It's never returned; `has_password` says if it's set. Word documents and OpenDocument files can't be password-protected, so a submission with a password can't make them.")
     output_formats: Optional[List[OutputFormat]] = Field(default=None, description="What the submission makes: `pdf`, `docx` (a Word document, from a Word template), `odt` (an OpenDocument file, the format LibreOffice uses, converted from a Word template's Word document), and `png` (an image of each page of the PDF, up to 100 pages, which adds `pdf`) when you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`. POST /submissions/{submission_id}/generate_files adds `png`, and a Word template's submission's `pdf`, `docx` or `odt`, to a processed submission.")
-    expires_in: Optional[StrictInt] = Field(default=None, description="Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template's expiration setting. A submission that isn't processed, such as one with invalid data, is kept for at least 48 hours.")
+    expires_in: Optional[StrictInt] = Field(default=None, description="Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template's expiration setting. A submission that isn't processed, such as one with invalid data, is kept for at least 48 hours. The demo API token's submissions expire within an hour: up to 3600, and that's their default.")
     field_overrides: Optional[Dict[str, FieldOverride]] = Field(default=None, description="Changes to field settings for this submission only, by field name, such as `{\"name\": {\"required\": false, \"font_size\": 9}}`. A setting that identifies the field (`id`, `name`, `type`), that only the template sets (such as `description`), or that doesn't apply to the field's type and display type (such as `check_character` on a field displayed as text) is a 422. With `signature_requests`, `editable: true` is a 422, and a `default` for a signature or initials field makes the submission `invalid_data`.")
     html: Optional[StrictStr] = Field(default=None, description="For an HTML template, HTML to use instead of the template's.")
     css: Optional[StrictStr] = Field(default=None, description="For an HTML template, SCSS (plain CSS works too) added after the template's styles, on the page and in its header and footer. It doesn't replace them: its rules come later, so they win over the template's rules of the same specificity.")
     signature_requests: Optional[List[SignatureRequestInput]] = Field(default=None, description="The people who sign the PDF, and fill in their fields first. The PDF is generated once every signature request is completed. PDF templates only. Without `role`s, the first signature request is `Signer 1`, the second `Signer 2`, and so on. To leave a signer out, give every signature request its `role` and leave that one's out. Only the signers sign: a value for a signature or initials field in `data` makes the submission `invalid_data`.")
+    send_email: Optional[StrictBool] = Field(default=None, description="Whether DocSpring emails the signers their signing links, and sends the reminders and the completed document. Default true. Each signature request's own `send_email` overrides it. A test submission only emails your DocSpring team: every other address is a 422. `true` needs `signature_requests`. DocSpring doesn't email the signers of a form library template: leave `send_email` out, and send them their links yourself.")
+    signing_order: Optional[SigningOrder] = Field(default=None, description="`parallel` (the default): everyone can sign at once. `sequential`: people sign one step at a time (`signing_step`), and DocSpring emails each step when the one before it is done. Needs `signature_requests`.")
+    email_subject: Optional[StrictStr] = Field(default=None, description="The subject of the emails that ask people to sign. You can use `{{ signer.name }}`, `{{ signer.email }}`, `{{ document.name }}`, `{{ sender.name }}` and `{{ account.name }}`. Default \"<sender> sent you <document> to sign\" when you leave it out (a blank subject is a 422). Links and web addresses are shown as plain text (`example[.]com`).")
+    email_message: Optional[StrictStr] = Field(default=None, description="A message for the people who sign, shown above the signing button. It takes the same variables as `email_subject`. Links and web addresses are shown as plain text. Leave it out for none: a blank message is a 422.")
+    cc: Optional[List[StrictStr]] = Field(default=None, description="People who get a copy of the completed document. They don't sign.")
+    reply_to: Optional[StrictStr] = Field(default=None, description="Where replies to the emails go: a member of your DocSpring team, or an address at one of your verified email domains. Leave it out for the template's reply-to address (the account owner when it has none).")
+    notification_emails: Optional[List[StrictStr]] = Field(default=None, description="Who DocSpring tells when the document is completed or declined, or an email bounces or can't be sent: members of your DocSpring team or addresses at your verified email domains. Leave it out for the template's notification addresses (the account owner when it has none); an empty list means the account owner.")
+    notify_when_signed: Optional[StrictBool] = Field(default=None, description="Also email `notification_emails` each time someone signs. Default false.")
+    reminders: Optional[SignatureRequestReminders] = Field(default=None, description="Remind people who haven't signed: every `interval_days` days, up to `max_count` times. Each reminder has a new signing link. Without it, DocSpring sends no reminders.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["test", "editable", "data", "metadata", "password", "output_formats", "expires_in", "field_overrides", "html", "css", "signature_requests"]
+    __properties: ClassVar[List[str]] = ["test", "editable", "data", "metadata", "password", "output_formats", "expires_in", "field_overrides", "html", "css", "signature_requests", "send_email", "signing_order", "email_subject", "email_message", "cc", "reply_to", "notification_emails", "notify_when_signed", "reminders"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -99,6 +110,9 @@ class CreateSubmissionRequest(BaseModel):
             for _item_signature_requests in self.signature_requests:
                 _items.append(_item_signature_requests.to_dict() if _item_signature_requests is not None else None)
             _dict['signature_requests'] = _items
+        # override the default output from pydantic by calling `to_dict()` of reminders
+        if self.reminders:
+            _dict['reminders'] = self.reminders.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -131,7 +145,16 @@ class CreateSubmissionRequest(BaseModel):
             else None,
             "html": obj.get("html"),
             "css": obj.get("css"),
-            "signature_requests": [SignatureRequestInput.from_dict(_item) for _item in obj["signature_requests"]] if obj.get("signature_requests") is not None else None
+            "signature_requests": [SignatureRequestInput.from_dict(_item) for _item in obj["signature_requests"]] if obj.get("signature_requests") is not None else None,
+            "send_email": obj.get("send_email"),
+            "signing_order": obj.get("signing_order"),
+            "email_subject": obj.get("email_subject"),
+            "email_message": obj.get("email_message"),
+            "cc": obj.get("cc"),
+            "reply_to": obj.get("reply_to"),
+            "notification_emails": obj.get("notification_emails"),
+            "notify_when_signed": obj.get("notify_when_signed"),
+            "reminders": SignatureRequestReminders.from_dict(obj["reminders"]) if obj.get("reminders") is not None else None
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties
         for _key in obj.keys():

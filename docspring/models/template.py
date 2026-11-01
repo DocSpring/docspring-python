@@ -27,6 +27,7 @@ from docspring.models.field_group import FieldGroup
 from docspring.models.html_engine_options import HtmlEngineOptions
 from docspring.models.output_format import OutputFormat
 from docspring.models.predefined_field import PredefinedField
+from docspring.models.signature_request_email_attachments import SignatureRequestEmailAttachments
 from docspring.models.template_actor import TemplateActor
 from docspring.models.template_defaults import TemplateDefaults
 from docspring.models.template_document import TemplateDocument
@@ -45,9 +46,9 @@ class Template(BaseModel):
     id: StrictStr = Field(description="The template's ID.")
     name: Optional[StrictStr] = Field(description="The template's name.")
     description: Optional[StrictStr] = Field(description="Shown under the template's name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests.")
-    template_type: TemplateType = Field(description="`pdf`: fields placed on an uploaded PDF. `html`: a PDF rendered from HTML and SCSS. `docx`: a Word document with tags where the data goes, which makes Word documents or PDFs. It can't be changed after the template is created.")
-    output_format: OutputFormat = Field(description="What each submission makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. A Word template's is chosen when it's created; PDF and HTML templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can't be password-protected.")
-    ready: StrictBool = Field(description="Whether the template can make documents. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after `document.state` becomes `processed`. A PDF template with no PDF (`document` is null) isn't ready. A Word template is ready once it has a Word document (a `document_url`'s has been downloaded).")
+    template_type: TemplateType = Field(description="`pdf`: fields placed on an uploaded PDF. `html`: a PDF rendered from HTML and SCSS. `docx`: a Word document with tags where the data goes, which makes Word documents or PDFs. `page_designer`: a page design, a PDF laid out in the Page Designer from its `layout`. It can't be changed after the template is created.")
+    output_format: OutputFormat = Field(description="What each submission makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. A Word template's is chosen when it's created; other templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can't be password-protected.")
+    ready: StrictBool = Field(description="Whether the template can make documents. HTML templates and page designs are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after `document.state` becomes `processed`. A PDF template with no PDF (`document` is null) isn't ready. A Word template is ready once it has a Word document (a `document_url`'s has been downloaded).")
     document: Optional[TemplateDocument] = Field(description="The PDF of a PDF template, or the Word document of a Word template. Null for HTML templates, and for a PDF template that has no PDF yet. A template created from a `document_url` has one, with no file, while it's downloaded.")
     parent_folder_id: Optional[StrictStr] = Field(description="The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.")
     path: StrictStr = Field(description="The path of the folder the template is in, such as `/Contracts`. `/` for a template at the root.")
@@ -64,7 +65,7 @@ class Template(BaseModel):
     allow_skipping_optional_fields: StrictBool = Field(description="Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The `allowSkippingOptionalFields` embed option overrides it.")
     default_form_mode: TemplateFormMode = Field(description="The hosted form that /templates/{template_id}/form shows when its URL has no `mode` parameter: `web` (the web form), `visual` (the visual form, where fields are filled in on the PDF) or `dual` (both, in tabs). Only PDF templates have a visual form, so other templates accept only `web`.")
     editable_submissions: StrictBool = Field(description="Generate PDFs whose text and check fields stay fillable (\"Generate Editable PDFs\"). A submission's `editable` overrides it.")
-    embed_domains: List[StrictStr] = Field(description="The sites that can embed the template's live signature requests and its embedded template editor: a host such as `app.example.com`, with an optional leading wildcard (`*.example.com`), port (`localhost:3000`) or scheme (`https://app.example.com`; without one, `http` and `https` both work). Browsers open a live signature request in a frame only on these sites (and DocSpring's), so with an empty list it can't be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren't restricted.")
+    embed_domains: List[StrictStr] = Field(description="The sites that can embed the template's live signature requests and its embedded template editor: a host such as `app.example.com`, with an optional leading wildcard (`*.example.com`), port (`localhost:3000`) or scheme (`https://app.example.com`; without one, `http` and `https` both work), without a path. Browsers open a live signature request in a frame only on these sites (and DocSpring's), so with an empty list it can't be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren't restricted.")
     embed_edit_allow_settings: StrictBool = Field(description="Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).")
     embed_edit_allow_versioning: StrictBool = Field(description="Allow the embedded template editor to publish, restore, compare and delete published versions.")
     embed_edit_allow_document_replacement: StrictBool = Field(description="Allow the embedded template editor to replace the template's PDF.")
@@ -78,6 +79,13 @@ class Template(BaseModel):
     public_submissions: StrictBool = Field(description="Allow anyone with a submission's ID to download its PDF.")
     public_web_form: StrictBool = Field(description="Allow anyone to fill in the template's web form.")
     redirect_url: Optional[StrictStr] = Field(description="Where the web form sends people after they submit it.")
+    signature_request_email_attachments: Optional[SignatureRequestEmailAttachments] = Field(description="How DocSpring's completed emails send the signed PDF to your signers and CCs: `attachment` (attached, or a download link when it's too big to attach) or `link` (a download link). Null uses your account's rule: a link if your account has signed a BAA, otherwise attached. PDF templates only. A signature request uses the value it had when the request was created.")
+    signature_request_from_address: Optional[StrictStr] = Field(description="The address DocSpring's emails to your signers come from: an address at one of your verified email domains, on the Growth plan or higher. Null sends them from DocSpring's shared address, with \"via DocSpring\" after the sender name. PDF templates only.")
+    signature_request_include_signing_token: StrictBool = Field(description="Puts a signing token in `signature_request_signing_url`, as `{{ token_id }}` and `{{ token_secret }}`, so your page can open the signing form without creating a token itself. The email then carries a credential: anyone who has it can open the form and sign. PDF templates only.")
+    signature_request_from_name: Optional[StrictStr] = Field(description="The sender name on the emails DocSpring sends your signers, as in \"Acme via DocSpring\". It can't contain an email address, a website or quotes. Null uses your account's name. PDF templates only.")
+    signature_request_notification_emails: List[StrictStr] = Field(description="Who DocSpring tells when a signature request's document is completed or declined, or an email bounces or can't be sent: members of your DocSpring team or addresses at your verified email domains. Empty means your account's owner. A submission's `notification_emails` replaces them. PDF templates only.")
+    signature_request_reply_to: Optional[StrictStr] = Field(description="Where your signers' replies to DocSpring's emails go: a member of your DocSpring team or an address at one of your verified email domains. Null means your account's owner. A submission's `reply_to` replaces it. PDF templates only.")
+    signature_request_signing_url: Optional[StrictStr] = Field(description="A page on your own site that the button in DocSpring's email to a signer opens, instead of DocSpring's signing page: an https URL on one of your verified email domains or a subdomain of one, on the Growth plan or higher. It must include `{{ signature_request_id }}`. Your page authenticates the signer, creates a token for the signature request, and opens the signing form with it. Null links to DocSpring's signing page. PDF templates only.")
     has_slack_webhook_url: StrictBool = Field(description="Whether `slack_webhook_url` is set.")
     last_changed_by: Optional[TemplateActor] = Field(description="Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.")
     defaults: TemplateDefaults
@@ -85,16 +93,17 @@ class Template(BaseModel):
     field_groups: List[FieldGroup] = Field(description="The groups of the template's fields, with their settings. A field's name puts it in groups: `address/city` is in the group `address`, and `items/0/price` is in the list `items` and its items' group `items/~`.")
     predefined_fields: List[PredefinedField] = Field(description="The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it's given that name. Setting it replaces the whole list; an empty list turns them off.")
     predefined_fields_sample_data: Optional[Dict[str, Any]] = Field(description="Sample submission data that sets `predefined_fields`: each value becomes a predefined field, with a type that fits it (`string`, `number`, `boolean`, `date`, `email` or `url`) and `required_in_template` true. Nested objects and arrays become names with `/`, such as `customer/email`. Without `predefined_fields` in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.")
-    html: Optional[StrictStr] = Field(description="The HTML of an HTML template, as a Liquid template. Null for PDF and Word templates.")
+    html: Optional[StrictStr] = Field(description="The HTML of an HTML template, as a Liquid template. Null for other templates.")
     scss: Optional[StrictStr] = Field(description="The SCSS of an HTML template.")
     header_html: Optional[StrictStr] = Field(description="The HTML printed at the top of each page of an HTML template.")
     footer_html: Optional[StrictStr] = Field(description="The HTML printed at the bottom of each page of an HTML template.")
-    html_engine_options: Optional[HtmlEngineOptions] = Field(description="How an HTML template's PDFs are printed. Null for PDF and Word templates. Setting it replaces the whole object: options left out use their defaults.")
-    html_escape_data: Optional[StrictBool] = Field(description="Whether an HTML template HTML-escapes the values it prints. When true, `{{ value }}` prints a value as text, so a `<` or `&` in it is printed as that character, and `{{ value | raw }}` prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.")
+    html_engine_options: Optional[HtmlEngineOptions] = Field(description="How an HTML template's PDFs are printed. Null for other templates. Setting it replaces the whole object: options left out use their defaults.")
+    html_escape_data: Optional[StrictBool] = Field(description="Whether an HTML template HTML-escapes the values it prints. When true, `{{ value }}` prints a value as text, so a `<` or `&` in it is printed as that character, and `{{ value | raw }}` prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for other templates.")
+    layout: Optional[Dict[str, Any]] = Field(description="A page design's layout: its page setup, its sections and the elements placed in them, in the Page Designer layout format (https://docspring.com/docs/page-designer/layout-format/). Its JSON Schema is at https://docspring.com/schemas/page-designer/layout.v1.json. Null for other templates. Setting it replaces the whole layout, and DocSpring adds a field for each value it reads. Left out when a page design is created, it starts with an empty page.")
     embed_edit_token: Optional[StrictStr] = Field(description="The token that opens the template in the embedded template editor.")
     versions: List[TemplateVersion] = Field(description="The template's published versions, newest first (up to 100).")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "template_type", "output_format", "ready", "document", "parent_folder_id", "path", "latest_version", "version_published_at", "locked", "last_changed_at", "created_at", "updated_at", "version", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "has_encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "has_slack_webhook_url", "last_changed_by", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "html_escape_data", "embed_edit_token", "versions"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "template_type", "output_format", "ready", "document", "parent_folder_id", "path", "latest_version", "version_published_at", "locked", "last_changed_at", "created_at", "updated_at", "version", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "has_encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "signature_request_email_attachments", "signature_request_from_address", "signature_request_include_signing_token", "signature_request_from_name", "signature_request_notification_emails", "signature_request_reply_to", "signature_request_signing_url", "has_slack_webhook_url", "last_changed_by", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "html_escape_data", "layout", "embed_edit_token", "versions"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -228,6 +237,31 @@ class Template(BaseModel):
         if self.redirect_url is None and "redirect_url" in self.model_fields_set:
             _dict['redirect_url'] = None
 
+        # set to None if signature_request_email_attachments (nullable) is None
+        # and model_fields_set contains the field
+        if self.signature_request_email_attachments is None and "signature_request_email_attachments" in self.model_fields_set:
+            _dict['signature_request_email_attachments'] = None
+
+        # set to None if signature_request_from_address (nullable) is None
+        # and model_fields_set contains the field
+        if self.signature_request_from_address is None and "signature_request_from_address" in self.model_fields_set:
+            _dict['signature_request_from_address'] = None
+
+        # set to None if signature_request_from_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.signature_request_from_name is None and "signature_request_from_name" in self.model_fields_set:
+            _dict['signature_request_from_name'] = None
+
+        # set to None if signature_request_reply_to (nullable) is None
+        # and model_fields_set contains the field
+        if self.signature_request_reply_to is None and "signature_request_reply_to" in self.model_fields_set:
+            _dict['signature_request_reply_to'] = None
+
+        # set to None if signature_request_signing_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.signature_request_signing_url is None and "signature_request_signing_url" in self.model_fields_set:
+            _dict['signature_request_signing_url'] = None
+
         # set to None if last_changed_by (nullable) is None
         # and model_fields_set contains the field
         if self.last_changed_by is None and "last_changed_by" in self.model_fields_set:
@@ -267,6 +301,11 @@ class Template(BaseModel):
         # and model_fields_set contains the field
         if self.html_escape_data is None and "html_escape_data" in self.model_fields_set:
             _dict['html_escape_data'] = None
+
+        # set to None if layout (nullable) is None
+        # and model_fields_set contains the field
+        if self.layout is None and "layout" in self.model_fields_set:
+            _dict['layout'] = None
 
         # set to None if embed_edit_token (nullable) is None
         # and model_fields_set contains the field
@@ -321,6 +360,13 @@ class Template(BaseModel):
             "public_submissions": obj.get("public_submissions"),
             "public_web_form": obj.get("public_web_form"),
             "redirect_url": obj.get("redirect_url"),
+            "signature_request_email_attachments": obj.get("signature_request_email_attachments"),
+            "signature_request_from_address": obj.get("signature_request_from_address"),
+            "signature_request_include_signing_token": obj.get("signature_request_include_signing_token"),
+            "signature_request_from_name": obj.get("signature_request_from_name"),
+            "signature_request_notification_emails": obj.get("signature_request_notification_emails"),
+            "signature_request_reply_to": obj.get("signature_request_reply_to"),
+            "signature_request_signing_url": obj.get("signature_request_signing_url"),
             "has_slack_webhook_url": obj.get("has_slack_webhook_url"),
             "last_changed_by": TemplateActor.from_dict(obj["last_changed_by"]) if obj.get("last_changed_by") is not None else None,
             "defaults": TemplateDefaults.from_dict(obj["defaults"]) if obj.get("defaults") is not None else None,
@@ -334,6 +380,7 @@ class Template(BaseModel):
             "footer_html": obj.get("footer_html"),
             "html_engine_options": HtmlEngineOptions.from_dict(obj["html_engine_options"]) if obj.get("html_engine_options") is not None else None,
             "html_escape_data": obj.get("html_escape_data"),
+            "layout": obj.get("layout"),
             "embed_edit_token": obj.get("embed_edit_token"),
             "versions": [TemplateVersion.from_dict(_item) for _item in obj["versions"]] if obj.get("versions") is not None else None
         }, context={"skip_enum_validation": True})

@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.signature_request_auth_second_factor_type import SignatureRequestAuthSecondFactorType
 from docspring.models.signature_request_auth_type import SignatureRequestAuthType
@@ -32,11 +32,11 @@ class SignatureRequestInput(BaseModel):
     A request for someone to fill in their fields of a submission and sign it. Someone who only fills in fields for the people who sign later (such as an employer's section) has a signature request too. The submission's PDF is generated once every signature request is completed.
     """ # noqa: E501
     name: Optional[StrictStr] = Field(default=None, description="The name of the person the request is for.")
-    email: Optional[StrictStr] = Field(default=None, description="Their email address.")
+    email: Optional[StrictStr] = Field(default=None, description="Their email address. Null when they have none.")
     fields: List[StrictStr] = Field(description="The fields this person fills in. Each field can only be in one signature request, and a field that `data` fills in needs `prefilled_values_editable`.")
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Your own data about the signature request, such as an ID from your app.")
     role: Optional[StrictStr] = Field(default=None, description="Which of the template's signers the person is: `Signer 1`, `Signer 2` and so on, up to `Signer 100`, until templates have roles of their own. Either every signature request has a `role` or none does, and each role can only have one.")
-    auth_type: SignatureRequestAuthType = Field(description="How your app authenticated the person before it showed them the signature request.")
+    auth_type: Optional[SignatureRequestAuthType] = Field(default=None, description="How your app authenticated the person before it showed them the signature request.")
     auth_second_factor_type: Optional[SignatureRequestAuthSecondFactorType] = Field(default=None, description="The second factor your app authenticated them with, if any.")
     auth_provider: Optional[StrictStr] = Field(default=None, description="The service that authenticated them, such as `google`. Required when `auth_type` is `oauth`.")
     auth_session_started_at: Optional[datetime] = Field(default=None, description="When your app authenticated them. Set for you with `email_link`.")
@@ -46,8 +46,10 @@ class SignatureRequestInput(BaseModel):
     auth_phone_number_hash: Optional[StrictStr] = Field(default=None, description="The phone number they authenticated with, or a SHA-256 hash of a salt and the phone number.")
     ignore_unknown_fields: Optional[StrictBool] = Field(default=None, description="Leave out names in `fields` that the template doesn't have, for one field list that you send with several templates. Without it, an unknown name makes the submission `invalid_data`.")
     prefilled_values_editable: Optional[StrictBool] = Field(default=None, description="Let the person change the values that `data` already has for fields in `fields`. Without it, those fields are a 422.")
+    send_email: Optional[StrictBool] = Field(default=None, description="Whether DocSpring emails this person their signing link. Default: the submission's `send_email`. Set it to false for someone who signs in your app (embedded signing) or whose link you send yourself. When DocSpring emails them, `email` is required and `auth_type` is `email_link` (the default). Otherwise `auth_type` is required.")
+    signing_step: Optional[StrictInt] = Field(default=None, description="When this person signs, with `signing_order: sequential`: everyone in step 1 first, then step 2, and so on. People in the same step sign in any order. Only the order of the numbers matters. Either every signature request has a `signing_step` or none does; without them, each person is a step of their own, in the order of `signature_requests`.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "email", "fields", "metadata", "role", "auth_type", "auth_second_factor_type", "auth_provider", "auth_session_started_at", "auth_session_id_hash", "auth_user_id_hash", "auth_username_hash", "auth_phone_number_hash", "ignore_unknown_fields", "prefilled_values_editable"]
+    __properties: ClassVar[List[str]] = ["name", "email", "fields", "metadata", "role", "auth_type", "auth_second_factor_type", "auth_provider", "auth_session_started_at", "auth_session_id_hash", "auth_user_id_hash", "auth_username_hash", "auth_phone_number_hash", "ignore_unknown_fields", "prefilled_values_editable", "send_email", "signing_step"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -162,7 +164,9 @@ class SignatureRequestInput(BaseModel):
             "auth_username_hash": obj.get("auth_username_hash"),
             "auth_phone_number_hash": obj.get("auth_phone_number_hash"),
             "ignore_unknown_fields": obj.get("ignore_unknown_fields"),
-            "prefilled_values_editable": obj.get("prefilled_values_editable")
+            "prefilled_values_editable": obj.get("prefilled_values_editable"),
+            "send_email": obj.get("send_email"),
+            "signing_step": obj.get("signing_step")
         }, context={"skip_enum_validation": True})
         # store additional fields in additional_properties
         for _key in obj.keys():

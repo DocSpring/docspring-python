@@ -64,6 +64,15 @@ class TestCreateTemplateRequest(unittest.TestCase):
                 public_submissions = True,
                 public_web_form = True,
                 redirect_url = '',
+                signature_request_email_attachments = 'attachment',
+                signature_request_from_address = '',
+                signature_request_include_signing_token = True,
+                signature_request_from_name = '',
+                signature_request_notification_emails = [
+                    ''
+                    ],
+                signature_request_reply_to = '',
+                signature_request_signing_url = '',
                 slack_webhook_url = '',
                 defaults = docspring.models.template_defaults_input.TemplateDefaultsInput(
                     typeface = null, 
@@ -125,6 +134,7 @@ class TestCreateTemplateRequest(unittest.TestCase):
                     margin_left = '', 
                     margin_right = '', ),
                 html_escape_data = True,
+                layout = { },
                 cache_id = '',
                 document_url = '',
                 document_base64 = '',

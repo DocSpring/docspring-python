@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.3.0"
+__version__ = "4.4.0"
 
 # Define package exports
 __all__ = [
@@ -45,8 +45,11 @@ __all__ = [
     "CombinedPdfSourceType",
     "CombinedPdfState",
     "CopyTemplateRequest",
+    "CreateAccountEmailActionRequest",
     "CreateCombinedPdfRequest",
     "CreateCustomFileFromUploadRequest",
+    "CreateEmailActionRequest",
+    "CreateEmailDomainRequest",
     "CreateFolderRequest",
     "CreateSignatureRequestEventRequest",
     "CreateSignatureRequestTokenRequest",
@@ -58,6 +61,23 @@ __all__ = [
     "CustomFile",
     "CustomFileList",
     "CustomFileSourcePdf",
+    "DnsRecordType",
+    "EmailAction",
+    "EmailActionConditions",
+    "EmailActionConditionsInput",
+    "EmailActionCustomization",
+    "EmailActionDelivery",
+    "EmailActionFileFormats",
+    "EmailActionList",
+    "EmailActionSetting",
+    "EmailActionSubmissionType",
+    "EmailActionTestEmail",
+    "EmailDomain",
+    "EmailDomainDnsRecord",
+    "EmailDomainDnsRecordPurpose",
+    "EmailDomainList",
+    "EmailDomainRecordState",
+    "EmailDomainState",
     "ErrorCode",
     "ErrorDetail",
     "ErrorInfo",
@@ -110,17 +130,22 @@ __all__ = [
     "RenameFolderRequest",
     "ReorderTemplateFieldsRequest",
     "RestoreTemplateVersionRequest",
+    "SendAccountEmailActionTestEmailRequest",
     "ShapeType",
     "SignatureRequest",
     "SignatureRequestAuthSecondFactorType",
     "SignatureRequestAuthType",
+    "SignatureRequestEmailAttachments",
+    "SignatureRequestEmailStatus",
     "SignatureRequestEvent",
     "SignatureRequestEventType",
     "SignatureRequestInput",
     "SignatureRequestMessageType",
+    "SignatureRequestReminders",
     "SignatureRequestState",
     "SignatureRequestToken",
     "SignatureRequestTokenType",
+    "SigningOrder",
     "StringConditionType",
     "Submission",
     "SubmissionAction",
@@ -178,6 +203,9 @@ __all__ = [
     "TextOverflow",
     "TextVerticalAlignment",
     "Typeface",
+    "UpdateAccountEmailActionRequest",
+    "UpdateEmailActionCustomizationRequest",
+    "UpdateEmailActionRequest",
     "UpdateSignatureRequestRequest",
     "UpdateTemplateDocumentRequest",
     "UpdateTemplateFieldsRequest",
@@ -225,8 +253,11 @@ from docspring.models.combined_pdf_source_pdf import CombinedPdfSourcePdf as Com
 from docspring.models.combined_pdf_source_type import CombinedPdfSourceType as CombinedPdfSourceType
 from docspring.models.combined_pdf_state import CombinedPdfState as CombinedPdfState
 from docspring.models.copy_template_request import CopyTemplateRequest as CopyTemplateRequest
+from docspring.models.create_account_email_action_request import CreateAccountEmailActionRequest as CreateAccountEmailActionRequest
 from docspring.models.create_combined_pdf_request import CreateCombinedPdfRequest as CreateCombinedPdfRequest
 from docspring.models.create_custom_file_from_upload_request import CreateCustomFileFromUploadRequest as CreateCustomFileFromUploadRequest
+from docspring.models.create_email_action_request import CreateEmailActionRequest as CreateEmailActionRequest
+from docspring.models.create_email_domain_request import CreateEmailDomainRequest as CreateEmailDomainRequest
 from docspring.models.create_folder_request import CreateFolderRequest as CreateFolderRequest
 from docspring.models.create_signature_request_event_request import CreateSignatureRequestEventRequest as CreateSignatureRequestEventRequest
 from docspring.models.create_signature_request_token_request import CreateSignatureRequestTokenRequest as CreateSignatureRequestTokenRequest
@@ -238,6 +269,23 @@ from docspring.models.create_webhook_request import CreateWebhookRequest as Crea
 from docspring.models.custom_file import CustomFile as CustomFile
 from docspring.models.custom_file_list import CustomFileList as CustomFileList
 from docspring.models.custom_file_source_pdf import CustomFileSourcePdf as CustomFileSourcePdf
+from docspring.models.dns_record_type import DnsRecordType as DnsRecordType
+from docspring.models.email_action import EmailAction as EmailAction
+from docspring.models.email_action_conditions import EmailActionConditions as EmailActionConditions
+from docspring.models.email_action_conditions_input import EmailActionConditionsInput as EmailActionConditionsInput
+from docspring.models.email_action_customization import EmailActionCustomization as EmailActionCustomization
+from docspring.models.email_action_delivery import EmailActionDelivery as EmailActionDelivery
+from docspring.models.email_action_file_formats import EmailActionFileFormats as EmailActionFileFormats
+from docspring.models.email_action_list import EmailActionList as EmailActionList
+from docspring.models.email_action_setting import EmailActionSetting as EmailActionSetting
+from docspring.models.email_action_submission_type import EmailActionSubmissionType as EmailActionSubmissionType
+from docspring.models.email_action_test_email import EmailActionTestEmail as EmailActionTestEmail
+from docspring.models.email_domain import EmailDomain as EmailDomain
+from docspring.models.email_domain_dns_record import EmailDomainDnsRecord as EmailDomainDnsRecord
+from docspring.models.email_domain_dns_record_purpose import EmailDomainDnsRecordPurpose as EmailDomainDnsRecordPurpose
+from docspring.models.email_domain_list import EmailDomainList as EmailDomainList
+from docspring.models.email_domain_record_state import EmailDomainRecordState as EmailDomainRecordState
+from docspring.models.email_domain_state import EmailDomainState as EmailDomainState
 from docspring.models.error_code import ErrorCode as ErrorCode
 from docspring.models.error_detail import ErrorDetail as ErrorDetail
 from docspring.models.error_info import ErrorInfo as ErrorInfo
@@ -290,17 +338,22 @@ from docspring.models.remove_template_fields_request import RemoveTemplateFields
 from docspring.models.rename_folder_request import RenameFolderRequest as RenameFolderRequest
 from docspring.models.reorder_template_fields_request import ReorderTemplateFieldsRequest as ReorderTemplateFieldsRequest
 from docspring.models.restore_template_version_request import RestoreTemplateVersionRequest as RestoreTemplateVersionRequest
+from docspring.models.send_account_email_action_test_email_request import SendAccountEmailActionTestEmailRequest as SendAccountEmailActionTestEmailRequest
 from docspring.models.shape_type import ShapeType as ShapeType
 from docspring.models.signature_request import SignatureRequest as SignatureRequest
 from docspring.models.signature_request_auth_second_factor_type import SignatureRequestAuthSecondFactorType as SignatureRequestAuthSecondFactorType
 from docspring.models.signature_request_auth_type import SignatureRequestAuthType as SignatureRequestAuthType
+from docspring.models.signature_request_email_attachments import SignatureRequestEmailAttachments as SignatureRequestEmailAttachments
+from docspring.models.signature_request_email_status import SignatureRequestEmailStatus as SignatureRequestEmailStatus
 from docspring.models.signature_request_event import SignatureRequestEvent as SignatureRequestEvent
 from docspring.models.signature_request_event_type import SignatureRequestEventType as SignatureRequestEventType
 from docspring.models.signature_request_input import SignatureRequestInput as SignatureRequestInput
 from docspring.models.signature_request_message_type import SignatureRequestMessageType as SignatureRequestMessageType
+from docspring.models.signature_request_reminders import SignatureRequestReminders as SignatureRequestReminders
 from docspring.models.signature_request_state import SignatureRequestState as SignatureRequestState
 from docspring.models.signature_request_token import SignatureRequestToken as SignatureRequestToken
 from docspring.models.signature_request_token_type import SignatureRequestTokenType as SignatureRequestTokenType
+from docspring.models.signing_order import SigningOrder as SigningOrder
 from docspring.models.string_condition_type import StringConditionType as StringConditionType
 from docspring.models.submission import Submission as Submission
 from docspring.models.submission_action import SubmissionAction as SubmissionAction
@@ -358,6 +411,9 @@ from docspring.models.text_alignment import TextAlignment as TextAlignment
 from docspring.models.text_overflow import TextOverflow as TextOverflow
 from docspring.models.text_vertical_alignment import TextVerticalAlignment as TextVerticalAlignment
 from docspring.models.typeface import Typeface as Typeface
+from docspring.models.update_account_email_action_request import UpdateAccountEmailActionRequest as UpdateAccountEmailActionRequest
+from docspring.models.update_email_action_customization_request import UpdateEmailActionCustomizationRequest as UpdateEmailActionCustomizationRequest
+from docspring.models.update_email_action_request import UpdateEmailActionRequest as UpdateEmailActionRequest
 from docspring.models.update_signature_request_request import UpdateSignatureRequestRequest as UpdateSignatureRequestRequest
 from docspring.models.update_template_document_request import UpdateTemplateDocumentRequest as UpdateTemplateDocumentRequest
 from docspring.models.update_template_fields_request import UpdateTemplateFieldsRequest as UpdateTemplateFieldsRequest

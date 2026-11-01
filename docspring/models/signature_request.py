@@ -19,10 +19,11 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.signature_request_auth_second_factor_type import SignatureRequestAuthSecondFactorType
 from docspring.models.signature_request_auth_type import SignatureRequestAuthType
+from docspring.models.signature_request_email_status import SignatureRequestEmailStatus
 from docspring.models.signature_request_state import SignatureRequestState
 from typing import Optional, Set
 from typing_extensions import Self
@@ -35,11 +36,15 @@ class SignatureRequest(BaseModel):
     id: StrictStr = Field(description="The signature request's ID.")
     submission_id: StrictStr = Field(description="The ID of the submission the signature request belongs to.")
     name: Optional[StrictStr] = Field(description="The name of the person the request is for.")
-    email: Optional[StrictStr] = Field(description="Their email address.")
+    email: Optional[StrictStr] = Field(description="Their email address. Null when they have none.")
     fields: Optional[List[StrictStr]] = Field(description="The fields this person fills in. Null for a signature request created with API v1 without a field list: it asks for every field the submission's data doesn't have.")
     metadata: Dict[str, Any] = Field(description="Your own data about the signature request, such as an ID from your app.")
     role: StrictStr = Field(description="Which of the template's signers the person is. Until templates have roles of their own, a template's signers are `Signer 1`, `Signer 2` and so on, up to `Signer 100`: `Signer 1` is the one whose details the template's `@@signature_requests/0` fields print.")
     sort_order: StrictInt = Field(description="The signer's position, from 0: `Signer 1` is 0. The template's `@@signature_requests/<sort_order>` fields print this signature request's details.")
+    send_email: StrictBool = Field(description="Whether DocSpring emails this person their signing link.")
+    signing_step: Optional[StrictInt] = Field(description="When this person signs, when the submission's `signing_order` is `sequential`: everyone in step 1 first, then step 2, and so on. Null when everyone can sign at once.")
+    sent_at: Optional[datetime] = Field(description="When DocSpring first emailed this person their signing link. Null until it has, and when it doesn't email them (`send_email` is false).")
+    email_status: Optional[SignatureRequestEmailStatus] = Field(description="What happened to the latest email DocSpring sent this person with their signing link: `sent` until the email service reports on it, then `delayed` (still trying), `delivered`, `undelivered` (it stopped trying, as with a full mailbox), `bounced` (the address doesn't exist) or `complained` (marked as spam). `failed` means DocSpring couldn't send the first email with their link, and `unknown` that it couldn't tell whether that email went: neither is sent again. Null until DocSpring has emailed them or tried to.")
     state: SignatureRequestState = Field(description="`pending` until the person completes the signature request (`completed`) or declines it (`declined`).")
     data: Optional[Dict[str, Any]] = Field(description="The values this person entered for their own fields (`fields`). Null when their submission's data is left out: in lists without `include_data=true`, in the events of a webhook that leaves out submission data, and once the submission has expired.")
     viewed_at: Optional[datetime] = Field(description="When the person first opened the signature request.")
@@ -58,7 +63,7 @@ class SignatureRequest(BaseModel):
     created_at: datetime = Field(description="When the signature request was created.")
     updated_at: datetime = Field(description="When the signature request was last updated.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "submission_id", "name", "email", "fields", "metadata", "role", "sort_order", "state", "data", "viewed_at", "completed_at", "declined_at", "auth_type", "auth_second_factor_type", "auth_provider", "auth_session_started_at", "auth_session_id_hash", "auth_user_id_hash", "auth_username_hash", "auth_phone_number_hash", "ip_address", "user_agent", "created_at", "updated_at"]
+    __properties: ClassVar[List[str]] = ["id", "submission_id", "name", "email", "fields", "metadata", "role", "sort_order", "send_email", "signing_step", "sent_at", "email_status", "state", "data", "viewed_at", "completed_at", "declined_at", "auth_type", "auth_second_factor_type", "auth_provider", "auth_session_started_at", "auth_session_id_hash", "auth_user_id_hash", "auth_username_hash", "auth_phone_number_hash", "ip_address", "user_agent", "created_at", "updated_at"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -120,6 +125,21 @@ class SignatureRequest(BaseModel):
         # and model_fields_set contains the field
         if self.fields is None and "fields" in self.model_fields_set:
             _dict['fields'] = None
+
+        # set to None if signing_step (nullable) is None
+        # and model_fields_set contains the field
+        if self.signing_step is None and "signing_step" in self.model_fields_set:
+            _dict['signing_step'] = None
+
+        # set to None if sent_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.sent_at is None and "sent_at" in self.model_fields_set:
+            _dict['sent_at'] = None
+
+        # set to None if email_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.email_status is None and "email_status" in self.model_fields_set:
+            _dict['email_status'] = None
 
         # set to None if data (nullable) is None
         # and model_fields_set contains the field
@@ -201,6 +221,10 @@ class SignatureRequest(BaseModel):
             "metadata": obj.get("metadata"),
             "role": obj.get("role"),
             "sort_order": obj.get("sort_order"),
+            "send_email": obj.get("send_email"),
+            "signing_step": obj.get("signing_step"),
+            "sent_at": obj.get("sent_at"),
+            "email_status": obj.get("email_status"),
             "state": obj.get("state"),
             "data": obj.get("data"),
             "viewed_at": obj.get("viewed_at"),

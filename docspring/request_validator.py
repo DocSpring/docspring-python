@@ -274,6 +274,9 @@ def _check_object(schema: Dict[str, Any], data: Dict[str, Any], pointer: str, lo
     for name in schema.get("required") or []:
         if name not in data:
             details.append(_detail(location, f"{pointer}/{_escape(name)}", "required", "is required"))
+    # Only an update's body has minProperties, and it's always 1 (api_clients/scripts/extract_request_schemas)
+    if "minProperties" in schema and len(data) < schema["minProperties"]:
+        details.append(_detail(location, pointer, "minProperties", "must have at least one property to change"))
 
     properties = schema.get("properties") or {}
     additional = schema.get("additionalProperties")

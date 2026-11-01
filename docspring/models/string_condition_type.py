@@ -28,10 +28,17 @@ class StringConditionType(str, Enum):
     allowed enum values
     """
     EQUALS = 'equals'
+    NOT_EQUALS = 'not_equals'
     CONTAINS = 'contains'
+    NOT_CONTAINS = 'not_contains'
     STARTS_WITH = 'starts_with'
+    NOT_STARTS_WITH = 'not_starts_with'
     ENDS_WITH = 'ends_with'
+    NOT_ENDS_WITH = 'not_ends_with'
     REGEX = 'regex'
+    NOT_REGEX = 'not_regex'
+    BLANK = 'blank'
+    NOT_BLANK = 'not_blank'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -131,8 +131,25 @@ class TestValidateSubmissionRequest(unittest.TestCase):
                         auth_username_hash = '', 
                         auth_phone_number_hash = '', 
                         ignore_unknown_fields = True, 
-                        prefilled_values_editable = True, )
-                    ]
+                        prefilled_values_editable = True, 
+                        send_email = True, 
+                        signing_step = 56, )
+                    ],
+                send_email = True,
+                signing_order = 'parallel',
+                email_subject = '',
+                email_message = '',
+                cc = [
+                    ''
+                    ],
+                reply_to = '',
+                notification_emails = [
+                    ''
+                    ],
+                notify_when_signed = True,
+                reminders = docspring.models.signature_request_reminders.SignatureRequestReminders(
+                    interval_days = 56, 
+                    max_count = 56, )
             )
         else:
             return ValidateSubmissionRequest(

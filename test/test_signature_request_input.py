@@ -52,14 +52,15 @@ class TestSignatureRequestInput(unittest.TestCase):
                 auth_username_hash = '',
                 auth_phone_number_hash = '',
                 ignore_unknown_fields = True,
-                prefilled_values_editable = True
+                prefilled_values_editable = True,
+                send_email = True,
+                signing_step = 56
             )
         else:
             return SignatureRequestInput(
                 fields = [
                     ''
                     ],
-                auth_type = 'none',
         )
         """
 

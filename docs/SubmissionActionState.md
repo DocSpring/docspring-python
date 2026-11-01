@@ -1,6 +1,6 @@
 # SubmissionActionState
 
-Where a submission action (an upload to your storage) is.
+Where a submission action (an upload to your storage, or an email) is.
 
 ## Enum
 

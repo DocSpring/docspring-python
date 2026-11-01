@@ -6,8 +6,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_template_fields**](Client.md#add_template_fields) | **POST** /templates/{template_id}/fields | Add fields to a template
 [**copy_template**](Client.md#copy_template) | **POST** /templates/{template_id}/copy | Copy a template
+[**create_account_email_action**](Client.md#create_account_email_action) | **POST** /email_actions | Create an account email action
 [**create_combined_pdf**](Client.md#create_combined_pdf) | **POST** /combined_pdfs | Combine PDFs
 [**create_custom_file_from_upload**](Client.md#create_custom_file_from_upload) | **POST** /custom_files | Create a custom file from an upload
+[**create_email_action**](Client.md#create_email_action) | **POST** /templates/{template_id}/email_actions | Create an email action
+[**create_email_domain**](Client.md#create_email_domain) | **POST** /email_domains | Add an email domain
 [**create_folder**](Client.md#create_folder) | **POST** /folders | Create a folder
 [**create_signature_request_event**](Client.md#create_signature_request_event) | **POST** /signature_requests/{signature_request_id}/events | Record a signature request event
 [**create_signature_request_token**](Client.md#create_signature_request_token) | **POST** /signature_requests/{signature_request_id}/tokens | Create a signature request token
@@ -16,7 +19,11 @@ Method | HTTP request | Description
 [**create_template**](Client.md#create_template) | **POST** /templates | Create a template
 [**create_template_preview**](Client.md#create_template_preview) | **POST** /templates/{template_id}/previews | Preview a template with data
 [**create_webhook**](Client.md#create_webhook) | **POST** /webhooks | Create a webhook
+[**delete_account_email_action**](Client.md#delete_account_email_action) | **DELETE** /email_actions/{email_action_id} | Delete an account email action
 [**delete_custom_file**](Client.md#delete_custom_file) | **DELETE** /custom_files/{custom_file_id} | Delete a custom file
+[**delete_email_action**](Client.md#delete_email_action) | **DELETE** /templates/{template_id}/email_actions/{email_action_id} | Delete an email action
+[**delete_email_action_customization**](Client.md#delete_email_action_customization) | **DELETE** /templates/{template_id}/email_actions/{email_action_id}/customization | Reset an account email action's customization
+[**delete_email_domain**](Client.md#delete_email_domain) | **DELETE** /email_domains/{email_domain_id} | Remove an email domain
 [**delete_folder**](Client.md#delete_folder) | **DELETE** /folders/{folder_id} | Delete a folder
 [**delete_template**](Client.md#delete_template) | **DELETE** /templates/{template_id} | Delete a template
 [**delete_webhook**](Client.md#delete_webhook) | **DELETE** /webhooks/{webhook_id} | Delete a webhook
@@ -24,8 +31,11 @@ Method | HTTP request | Description
 [**expire_submission**](Client.md#expire_submission) | **DELETE** /submissions/{submission_id} | Expire a submission
 [**generate_submission_files**](Client.md#generate_submission_files) | **POST** /submissions/{submission_id}/generate_files | Generate more files
 [**generate_submission_preview**](Client.md#generate_submission_preview) | **POST** /submissions/{submission_id}/generate_preview | Generate a preview PDF
+[**get_account_email_action**](Client.md#get_account_email_action) | **GET** /email_actions/{email_action_id} | Get an account email action
 [**get_combined_pdf**](Client.md#get_combined_pdf) | **GET** /combined_pdfs/{combined_pdf_id} | Get a combined PDF
 [**get_custom_file**](Client.md#get_custom_file) | **GET** /custom_files/{custom_file_id} | Get a custom file
+[**get_email_action**](Client.md#get_email_action) | **GET** /templates/{template_id}/email_actions/{email_action_id} | Get an email action
+[**get_email_domain**](Client.md#get_email_domain) | **GET** /email_domains/{email_domain_id} | Get an email domain
 [**get_folder**](Client.md#get_folder) | **GET** /folders/{folder_id} | Get a folder
 [**get_presign_url**](Client.md#get_presign_url) | **GET** /uploads/presign | Get a presigned URL to upload a file
 [**get_signature_request**](Client.md#get_signature_request) | **GET** /signature_requests/{signature_request_id} | Get a signature request
@@ -38,8 +48,11 @@ Method | HTTP request | Description
 [**get_template_preview**](Client.md#get_template_preview) | **GET** /templates/{template_id}/previews/{preview_id} | Get a template preview
 [**get_template_schema**](Client.md#get_template_schema) | **GET** /templates/{template_id}/schema | Get the JSON Schema of a template's submission data
 [**get_webhook**](Client.md#get_webhook) | **GET** /webhooks/{webhook_id} | Get a webhook
+[**list_account_email_actions**](Client.md#list_account_email_actions) | **GET** /email_actions | List account email actions
 [**list_combined_pdfs**](Client.md#list_combined_pdfs) | **GET** /combined_pdfs | List combined PDFs
 [**list_custom_files**](Client.md#list_custom_files) | **GET** /custom_files | List custom files
+[**list_email_actions**](Client.md#list_email_actions) | **GET** /templates/{template_id}/email_actions | List email actions
+[**list_email_domains**](Client.md#list_email_domains) | **GET** /email_domains | List email domains
 [**list_folders**](Client.md#list_folders) | **GET** /folders | List folders
 [**list_submissions**](Client.md#list_submissions) | **GET** /submissions | List submissions
 [**list_template_fields**](Client.md#list_template_fields) | **GET** /templates/{template_id}/fields | List a template's fields
@@ -53,7 +66,12 @@ Method | HTTP request | Description
 [**rename_folder**](Client.md#rename_folder) | **POST** /folders/{folder_id}/rename | Rename a folder
 [**reorder_template_fields**](Client.md#reorder_template_fields) | **POST** /templates/{template_id}/fields/reorder | Reorder a template's fields
 [**restore_template_version**](Client.md#restore_template_version) | **POST** /templates/{template_id}/restore_version | Restore a template version
+[**send_account_email_action_test_email**](Client.md#send_account_email_action_test_email) | **POST** /email_actions/{email_action_id}/test_email | Send a test email for an account email action
+[**send_email_action_test_email**](Client.md#send_email_action_test_email) | **POST** /templates/{template_id}/email_actions/{email_action_id}/test_email | Send a test email
 [**test_authentication**](Client.md#test_authentication) | **GET** /authentication | Test authentication
+[**update_account_email_action**](Client.md#update_account_email_action) | **PUT** /email_actions/{email_action_id} | Update an account email action
+[**update_email_action**](Client.md#update_email_action) | **PUT** /templates/{template_id}/email_actions/{email_action_id} | Update an email action
+[**update_email_action_customization**](Client.md#update_email_action_customization) | **PUT** /templates/{template_id}/email_actions/{email_action_id}/customization | Customize an account email action for a template
 [**update_signature_request**](Client.md#update_signature_request) | **PUT** /signature_requests/{signature_request_id} | Update a signature request
 [**update_template**](Client.md#update_template) | **PUT** /templates/{template_id} | Update a template
 [**update_template_document**](Client.md#update_template_document) | **PUT** /templates/{template_id}/document | Replace a template's document
@@ -62,15 +80,18 @@ Method | HTTP request | Description
 [**upload_template**](Client.md#upload_template) | **POST** /templates/upload | Create a template from an uploaded PDF or Word document
 [**upload_template_document**](Client.md#upload_template_document) | **PUT** /templates/{template_id}/document/upload | Replace a template's document with an uploaded file
 [**validate_submission**](Client.md#validate_submission) | **POST** /templates/{template_id}/submissions/validate | Check a submission without creating it
+[**verify_email_domain**](Client.md#verify_email_domain) | **POST** /email_domains/{email_domain_id}/verify | Verify an email domain
 
 
 # **add_template_fields**
-> TemplateFields add_template_fields(template_id, body)
+> TemplateFields add_template_fields(template_id, body, idempotency_key=idempotency_key)
 
 Add fields to a template
 
 Adds fields to a template's draft and returns all of its fields. Publish a version for submissions of
-published versions to have them.
+published versions to have them. A field with the name of one of the template's fields shares its settings
+(`type`, `required`, `default`, ...), so a field that sets one to another value is refused: PUT
+/templates/{template_id}/fields changes them for every field with the name.
 
 
 ### Example
@@ -107,10 +128,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"fields":[{"name":"email","page":1,"x":100,"y":300,"width":600,"height":80,"type":"email","required":true},{"name":"signature","page":1,"x":100,"y":400,"width":600,"height":150,"type":"signature","display_type":"image"}]} # AddTemplateFieldsRequest | The fields to add to the template's draft.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Add fields to a template
-        api_response = api_instance.add_template_fields(template_id, body)
+        api_response = api_instance.add_template_fields(template_id, body, idempotency_key=idempotency_key)
         print("The response of Client->add_template_fields:\n")
         pprint(api_response)
     except Exception as e:
@@ -126,6 +148,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**AddTemplateFieldsRequest**](AddTemplateFieldsRequest.md)| The fields to add to the template's draft. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -154,7 +177,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **copy_template**
-> Template copy_template(template_id, body=body)
+> Template copy_template(template_id, body=body, idempotency_key=idempotency_key)
 
 Copy a template
 
@@ -194,10 +217,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"parent_folder_id":"fld_1234567890abcdef01"} # CopyTemplateRequest | Settings for the copy. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Copy a template
-        api_response = api_instance.copy_template(template_id, body=body)
+        api_response = api_instance.copy_template(template_id, body=body, idempotency_key=idempotency_key)
         print("The response of Client->copy_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -213,6 +237,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**CopyTemplateRequest**](CopyTemplateRequest.md)| Settings for the copy. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -235,6 +260,98 @@ Name | Type | Description  | Notes
 **422** | invalid copy |  -  |
 **403** | the plan's template limit is reached |  -  |
 **404** | template not found |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **create_account_email_action**
+> EmailAction create_account_email_action(body, idempotency_key=idempotency_key)
+
+Create an account email action
+
+Adds an email action to your account. It sends for every template, or only for the templates in
+`template_ids` and the templates in the folders in `folder_ids` (and the folders inside them). Each template
+can turn it off or change its settings for that template only (`PUT
+/templates/{template_id}/email_actions/{email_action_id}/customization`). Without a paid plan (Starter or
+higher), email actions only email your team: test submissions' emails go to your account's users, and live
+submissions' emails aren't sent.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.create_account_email_action_request import CreateAccountEmailActionRequest
+from docspring.models.email_action import EmailAction
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    body = {"name":"Records copy","to":["{{ data.tenant_email }}"],"bcc":["records@example.com"],"subject":"Your {{ template.name }}","folder_ids":["fld_1234567890abcdef01"]} # CreateAccountEmailActionRequest | The account email action to create. Properties left out get their defaults, and it sends for every template unless it lists `template_ids` or `folder_ids`.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Create an account email action
+        api_response = api_instance.create_account_email_action(body, idempotency_key=idempotency_key)
+        print("The response of Client->create_account_email_action:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->create_account_email_action: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**CreateAccountEmailActionRequest**](CreateAccountEmailActionRequest.md)| The account email action to create. Properties left out get their defaults, and it sends for every template unless it lists `template_ids` or `folder_ids`. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | account email action created |  -  |
+**422** | unknown template |  -  |
+**403** | email actions turned off for the account |  -  |
 **401** | authentication failed |  -  |
 **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
@@ -288,7 +405,7 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     body = {"source_pdfs":[{"type":"submission","id":"sub_1234567890abcdef01"},{"type":"template","id":"tpl_1234567890abcdef01"},{"type":"url","url":"https://example.com/terms.pdf"}],"metadata":{"user_id":42},"password":"secret","expires_in":3600} # CreateCombinedPdfRequest | The PDFs to merge, and the combined PDF's settings.
     wait = True # bool | Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)
-    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Combine PDFs
@@ -308,7 +425,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**CreateCombinedPdfRequest**](CreateCombinedPdfRequest.md)| The PDFs to merge, and the combined PDF's settings. | 
  **wait** | **bool**| Wait until the PDF has been generated before responding. Default true on sync.api hosts. | [optional] 
- **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -339,7 +456,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **create_custom_file_from_upload**
-> CustomFile create_custom_file_from_upload(body)
+> CustomFile create_custom_file_from_upload(body, idempotency_key=idempotency_key)
 
 Create a custom file from an upload
 
@@ -380,10 +497,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     body = {"cache_id":"cfi_1234567890abcdef01.pdf"} # CreateCustomFileFromUploadRequest | The uploaded file to create the custom file from.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Create a custom file from an upload
-        api_response = api_instance.create_custom_file_from_upload(body)
+        api_response = api_instance.create_custom_file_from_upload(body, idempotency_key=idempotency_key)
         print("The response of Client->create_custom_file_from_upload:\n")
         pprint(api_response)
     except Exception as e:
@@ -398,6 +516,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**CreateCustomFileFromUploadRequest**](CreateCustomFileFromUploadRequest.md)| The uploaded file to create the custom file from. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -423,8 +542,192 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
+# **create_email_action**
+> EmailAction create_email_action(template_id, body, idempotency_key=idempotency_key)
+
+Create an email action
+
+Adds an email action to a template's draft. From then on, each processed submission emails its PDF to the
+recipients in `to`, `cc` and `bcc`: addresses, and tags for the address in one of the submission's fields
+(`{{ data.tenant_email }}`) or in its metadata (`{{ metadata.agent_email }}`). With `send_when`, only the
+submissions whose values meet its conditions send one. Without a paid plan (Starter or higher), email actions
+only email your team: test submissions' emails go to your account's users, and live submissions' emails
+aren't sent.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.create_email_action_request import CreateEmailActionRequest
+from docspring.models.email_action import EmailAction
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'template_id_example' # str | The template's ID.
+    body = {"name":"Tenant copy","to":["{{ data.tenant_email }}"],"bcc":["records@example.com"],"reply_to":"jane@example.com","subject":"Your {{ template.name }}","message":"Hi,\n\nYour signed lease is attached.","file_name":"Lease {{ submission.id }}"} # CreateEmailActionRequest | The email action to create. Properties left out get their defaults.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Create an email action
+        api_response = api_instance.create_email_action(template_id, body, idempotency_key=idempotency_key)
+        print("The response of Client->create_email_action:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->create_email_action: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **body** | [**CreateEmailActionRequest**](CreateEmailActionRequest.md)| The email action to create. Properties left out get their defaults. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | email action created |  -  |
+**422** | invalid email action |  -  |
+**403** | email actions turned off for the account |  -  |
+**409** | locked template |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **create_email_domain**
+> EmailDomain create_email_domain(body, idempotency_key=idempotency_key)
+
+Add an email domain
+
+Adds a domain for email actions to send from, and returns the DNS records to add to it. DocSpring checks for
+them every few minutes, and the domain is verified once its DKIM and DMARC records are found. Needs a paid
+monthly plan.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.create_email_domain_request import CreateEmailDomainRequest
+from docspring.models.email_domain import EmailDomain
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    body = {"domain":"example.com"} # CreateEmailDomainRequest | The domain to add.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Add an email domain
+        api_response = api_instance.create_email_domain(body, idempotency_key=idempotency_key)
+        print("The response of Client->create_email_domain:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->create_email_domain: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**CreateEmailDomainRequest**](CreateEmailDomainRequest.md)| The domain to add. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailDomain**](EmailDomain.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | email domain added |  -  |
+**422** | invalid domain |  -  |
+**403** | plan without email actions |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
 # **create_folder**
-> Folder create_folder(body)
+> Folder create_folder(body, idempotency_key=idempotency_key)
 
 Create a folder
 
@@ -465,10 +768,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     body = {"name":"Folder 3","parent_folder_id":"fld_1234567890abcdef01"} # CreateFolderRequest | The folder to create.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Create a folder
-        api_response = api_instance.create_folder(body)
+        api_response = api_instance.create_folder(body, idempotency_key=idempotency_key)
         print("The response of Client->create_folder:\n")
         pprint(api_response)
     except Exception as e:
@@ -483,6 +787,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**CreateFolderRequest**](CreateFolderRequest.md)| The folder to create. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -509,7 +814,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **create_signature_request_event**
-> SignatureRequestEvent create_signature_request_event(signature_request_id, body)
+> SignatureRequestEvent create_signature_request_event(signature_request_id, body, idempotency_key=idempotency_key)
 
 Record a signature request event
 
@@ -553,10 +858,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     signature_request_id = 'srq_1234567890abcdef01' # str | The signature request's ID.
     body = {"event_type":"send_request","message_type":"email","message_recipient":"john@example.com","occurred_at":"2018-10-20T08:59:00Z"} # CreateSignatureRequestEventRequest | The event to record.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Record a signature request event
-        api_response = api_instance.create_signature_request_event(signature_request_id, body)
+        api_response = api_instance.create_signature_request_event(signature_request_id, body, idempotency_key=idempotency_key)
         print("The response of Client->create_signature_request_event:\n")
         pprint(api_response)
     except Exception as e:
@@ -572,6 +878,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **signature_request_id** | **str**| The signature request's ID. | 
  **body** | [**CreateSignatureRequestEventRequest**](CreateSignatureRequestEventRequest.md)| The event to record. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -601,7 +908,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **create_signature_request_token**
-> SignatureRequestToken create_signature_request_token(signature_request_id, body=body)
+> SignatureRequestToken create_signature_request_token(signature_request_id, body=body, idempotency_key=idempotency_key)
 
 Create a signature request token
 
@@ -645,10 +952,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     signature_request_id = 'srq_1234567890abcdef01' # str | The signature request's ID.
     body = {"type":"email"} # CreateSignatureRequestTokenRequest | The kind of link to make. Send no body for an `api` token. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Create a signature request token
-        api_response = api_instance.create_signature_request_token(signature_request_id, body=body)
+        api_response = api_instance.create_signature_request_token(signature_request_id, body=body, idempotency_key=idempotency_key)
         print("The response of Client->create_signature_request_token:\n")
         pprint(api_response)
     except Exception as e:
@@ -664,6 +972,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **signature_request_id** | **str**| The signature request's ID. | 
  **body** | [**CreateSignatureRequestTokenRequest**](CreateSignatureRequestTokenRequest.md)| The kind of link to make. Send no body for an `api` token. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -704,6 +1013,9 @@ background: on sync.api hosts the request waits for it (unless you pass `wait=fa
 Data that doesn't match the template's fields returns a 422 with an `invalid_data` error. The submission
 is still saved, with its errors, so you can find it in DocSpring: the error's `submission_id` is its ID.
 
+With `signature_requests`, the PDF is generated once everyone has signed. DocSpring emails each signer a
+link to sign, unless `send_email` is false, and can send reminders and the completed document.
+
 
 ### Example
 
@@ -739,9 +1051,9 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"data":{"first_name":"John","last_name":"Smith","phone_number":"+11234567890"},"metadata":{"user_id":42},"test":true} # CreateSubmissionRequest | The submission's data and settings.
-    version = 'version_example' # str | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). (optional)
+    version = 'version_example' # str | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`. (optional)
     wait = True # bool | Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)
-    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Generate a PDF
@@ -761,9 +1073,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**CreateSubmissionRequest**](CreateSubmissionRequest.md)| The submission's data and settings. | 
- **version** | **str**| The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional] 
+ **version** | **str**| The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`. | [optional] 
  **wait** | **bool**| Wait until the files have been generated before responding. Default true on sync.api hosts. | [optional] 
- **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -842,7 +1154,7 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     body = {"template_id":"tpl_1234567890abcdef01","metadata":{"job_id":54321},"submissions":[{"data":{"first_name":"John","last_name":"Smith"},"metadata":{"row":1}},{"data":{"first_name":"Jane","last_name":"Doe"},"test":true,"metadata":{"row":2}}]} # CreateSubmissionBatchRequest | The submissions to create, and the settings they share.
     wait = True # bool | Wait until every file in the batch has been generated before responding. Default true on sync.api hosts. (optional)
-    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Generate PDFs in a batch
@@ -862,7 +1174,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**CreateSubmissionBatchRequest**](CreateSubmissionBatchRequest.md)| The submissions to create, and the settings they share. | 
  **wait** | **bool**| Wait until every file in the batch has been generated before responding. Default true on sync.api hosts. | [optional] 
- **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -893,7 +1205,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **create_template**
-> Template create_template(body, wait=wait)
+> Template create_template(body, wait=wait, idempotency_key=idempotency_key)
 
 Create a template
 
@@ -902,7 +1214,8 @@ Creates an HTML template, or a PDF or Word template from a file you uploaded wit
 the file in base64 (`document_base64`) instead, or send the file with the request with POST
 /templates/upload. A Word template is made from a Word document (.docx) or an OpenDocument text file (.odt),
 which DocSpring converts to a Word document. It needs its `output_format`: what each submission makes, a Word
-document (`docx`), an OpenDocument file (`odt`) or a PDF.
+document (`docx`), an OpenDocument file (`odt`) or a PDF. A page design (`page_designer`) takes its `layout`
+in the Page Designer layout format, or starts with an empty page without one.
 
 A PDF template is ready to generate PDFs once DocSpring has processed its PDF, a template created from a
 `document_url` once its document has been downloaded, and one created from an .odt once it has been converted
@@ -943,10 +1256,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     body = {"template_type":"html","name":"Receipt","html":"<h1>Receipt for {{ name }}</h1>","scss":"h1 { font-size: 24px; }","html_engine_options":{"format":"A4","landscape":true},"parent_folder_id":"fld_1234567890abcdef01"} # CreateTemplateRequest | The template to create.
     wait = True # bool | Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Create a template
-        api_response = api_instance.create_template(body, wait=wait)
+        api_response = api_instance.create_template(body, wait=wait, idempotency_key=idempotency_key)
         print("The response of Client->create_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -962,6 +1276,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**CreateTemplateRequest**](CreateTemplateRequest.md)| The template to create. | 
  **wait** | **bool**| Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -990,12 +1305,13 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **create_template_preview**
-> TemplatePreview create_template_preview(template_id, body, version=version)
+> TemplatePreview create_template_preview(template_id, body, version=version, idempotency_key=idempotency_key)
 
 Preview a template with data
 
 Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an
-HTML, PDF or Word template prints with your data before you publish a version or send live data. A Word
+HTML, PDF or Word template or a page design prints with your data before you publish a version or send live
+data. A Word
 template's pages are its PDF's, whatever its `output_format`. It renders the template's draft, or the
 published `version` you ask for. A preview makes no submission and uses no credits, and its pages are
 watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET
@@ -1036,11 +1352,12 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef02' # str | The template's ID.
     body = {"data":{"invoice_number":"INV-001"}} # CreateTemplatePreviewRequest | The data to render the template with.
-    version = 'version_example' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. (optional)
+    version = 'version_example' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Preview a template with data
-        api_response = api_instance.create_template_preview(template_id, body, version=version)
+        api_response = api_instance.create_template_preview(template_id, body, version=version, idempotency_key=idempotency_key)
         print("The response of Client->create_template_preview:\n")
         pprint(api_response)
     except Exception as e:
@@ -1056,7 +1373,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**CreateTemplatePreviewRequest**](CreateTemplatePreviewRequest.md)| The data to render the template with. | 
- **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional] 
+ **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1083,7 +1401,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **create_webhook**
-> Webhook create_webhook(body)
+> Webhook create_webhook(body, idempotency_key=idempotency_key)
 
 Create a webhook
 
@@ -1124,10 +1442,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     body = {"name":"Test Webhook","url":"https://example.com/webhook","event_types":["submission.processed","signature_request.completed"],"template_ids":["tpl_1234567890abcdef01"],"headers":{"X-Zapier-Subscription":"123"}} # CreateWebhookRequest | The webhook to create.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Create a webhook
-        api_response = api_instance.create_webhook(body)
+        api_response = api_instance.create_webhook(body, idempotency_key=idempotency_key)
         print("The response of Client->create_webhook:\n")
         pprint(api_response)
     except Exception as e:
@@ -1142,6 +1461,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**CreateWebhookRequest**](CreateWebhookRequest.md)| The webhook to create. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1168,8 +1488,93 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
+# **delete_account_email_action**
+> EmailAction delete_account_email_action(email_action_id, idempotency_key=idempotency_key)
+
+Delete an account email action
+
+Deletes one of your account's email actions, with every template's customization of it. Emails it has already
+queued for submissions aren't sent. Submissions keep the record of the emails it sent.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action import EmailAction
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    email_action_id = 'email_action_id_example' # str | The account email action's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Delete an account email action
+        api_response = api_instance.delete_account_email_action(email_action_id, idempotency_key=idempotency_key)
+        print("The response of Client->delete_account_email_action:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->delete_account_email_action: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_action_id** | **str**| The account email action's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | account email action deleted |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
 # **delete_custom_file**
-> CustomFile delete_custom_file(custom_file_id)
+> CustomFile delete_custom_file(custom_file_id, idempotency_key=idempotency_key)
 
 Delete a custom file
 
@@ -1208,10 +1613,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     custom_file_id = 'custom_file_id_example' # str | The custom file's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Delete a custom file
-        api_response = api_instance.delete_custom_file(custom_file_id)
+        api_response = api_instance.delete_custom_file(custom_file_id, idempotency_key=idempotency_key)
         print("The response of Client->delete_custom_file:\n")
         pprint(api_response)
     except Exception as e:
@@ -1226,6 +1632,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **custom_file_id** | **str**| The custom file's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1252,8 +1659,269 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
+# **delete_email_action**
+> EmailAction delete_email_action(template_id, email_action_id, idempotency_key=idempotency_key)
+
+Delete an email action
+
+Deletes an email action. Emails it has already queued for submissions aren't sent. Submissions keep the record
+of the emails it sent.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action import EmailAction
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'template_id_example' # str | The template's ID.
+    email_action_id = 'email_action_id_example' # str | The email action's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Delete an email action
+        api_response = api_instance.delete_email_action(template_id, email_action_id, idempotency_key=idempotency_key)
+        print("The response of Client->delete_email_action:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->delete_email_action: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **email_action_id** | **str**| The email action's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | email action deleted |  -  |
+**409** | locked template |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **delete_email_action_customization**
+> EmailAction delete_email_action_customization(template_id, email_action_id, idempotency_key=idempotency_key)
+
+Reset an account email action's customization
+
+Removes the template's changes to one of your account's email actions: it sends for this template as it is,
+and again if the template had turned it off.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action import EmailAction
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'template_id_example' # str | The template's ID.
+    email_action_id = 'email_action_id_example' # str | The ID of one of your account's email actions that sends for the template.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Reset an account email action's customization
+        api_response = api_instance.delete_email_action_customization(template_id, email_action_id, idempotency_key=idempotency_key)
+        print("The response of Client->delete_email_action_customization:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->delete_email_action_customization: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **email_action_id** | **str**| The ID of one of your account's email actions that sends for the template. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | customization reset |  -  |
+**409** | locked template |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **delete_email_domain**
+> EmailDomain delete_email_domain(email_domain_id, idempotency_key=idempotency_key)
+
+Remove an email domain
+
+Removes an email domain. Email actions that send from an address at it fail until you add and verify it again,
+or change their `from_address`. You can then remove its DNS records.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_domain import EmailDomain
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    email_domain_id = 'email_domain_id_example' # str | The email domain's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Remove an email domain
+        api_response = api_instance.delete_email_domain(email_domain_id, idempotency_key=idempotency_key)
+        print("The response of Client->delete_email_domain:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->delete_email_domain: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_domain_id** | **str**| The email domain's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailDomain**](EmailDomain.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | email domain removed |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
 # **delete_folder**
-> Folder delete_folder(folder_id)
+> Folder delete_folder(folder_id, idempotency_key=idempotency_key)
 
 Delete a folder
 
@@ -1292,10 +1960,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     folder_id = 'folder_id_example' # str | The folder's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Delete a folder
-        api_response = api_instance.delete_folder(folder_id)
+        api_response = api_instance.delete_folder(folder_id, idempotency_key=idempotency_key)
         print("The response of Client->delete_folder:\n")
         pprint(api_response)
     except Exception as e:
@@ -1310,6 +1979,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **folder_id** | **str**| The folder's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1337,7 +2007,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **delete_template**
-> Template delete_template(template_id, version=version)
+> Template delete_template(template_id, version=version, idempotency_key=idempotency_key)
 
 Delete a template
 
@@ -1378,10 +2048,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef02' # str | The template's ID.
     version = 'version_example' # str | Delete only this published version (`1.2.0`) or the draft (`draft`, when no version has been published). Without it, the draft and every published version are deleted. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Delete a template
-        api_response = api_instance.delete_template(template_id, version=version)
+        api_response = api_instance.delete_template(template_id, version=version, idempotency_key=idempotency_key)
         print("The response of Client->delete_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -1397,6 +2068,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **version** | **str**| Delete only this published version (`1.2.0`) or the draft (`draft`, when no version has been published). Without it, the draft and every published version are deleted. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1425,7 +2097,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **delete_webhook**
-> Webhook delete_webhook(webhook_id)
+> Webhook delete_webhook(webhook_id, idempotency_key=idempotency_key)
 
 Delete a webhook
 
@@ -1463,10 +2135,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     webhook_id = 'webhook_id_example' # str | The webhook's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Delete a webhook
-        api_response = api_instance.delete_webhook(webhook_id)
+        api_response = api_instance.delete_webhook(webhook_id, idempotency_key=idempotency_key)
         print("The response of Client->delete_webhook:\n")
         pprint(api_response)
     except Exception as e:
@@ -1481,6 +2154,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **webhook_id** | **str**| The webhook's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1507,7 +2181,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **expire_combined_pdf**
-> CombinedPdf expire_combined_pdf(combined_pdf_id)
+> CombinedPdf expire_combined_pdf(combined_pdf_id, idempotency_key=idempotency_key)
 
 Expire a combined PDF
 
@@ -1545,10 +2219,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     combined_pdf_id = 'com_1234567890abcdef05' # str | The combined PDF's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Expire a combined PDF
-        api_response = api_instance.expire_combined_pdf(combined_pdf_id)
+        api_response = api_instance.expire_combined_pdf(combined_pdf_id, idempotency_key=idempotency_key)
         print("The response of Client->expire_combined_pdf:\n")
         pprint(api_response)
     except Exception as e:
@@ -1563,6 +2238,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **combined_pdf_id** | **str**| The combined PDF's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1590,7 +2266,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **expire_submission**
-> Submission expire_submission(submission_id)
+> Submission expire_submission(submission_id, idempotency_key=idempotency_key)
 
 Expire a submission
 
@@ -1628,10 +2304,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     submission_id = 'sub_1234567890abcdef01' # str | The submission's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Expire a submission
-        api_response = api_instance.expire_submission(submission_id)
+        api_response = api_instance.expire_submission(submission_id, idempotency_key=idempotency_key)
         print("The response of Client->expire_submission:\n")
         pprint(api_response)
     except Exception as e:
@@ -1646,6 +2323,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submission_id** | **str**| The submission's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1673,7 +2351,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **generate_submission_files**
-> Submission generate_submission_files(submission_id, body, wait=wait)
+> Submission generate_submission_files(submission_id, body, wait=wait, idempotency_key=idempotency_key)
 
 Generate more files
 
@@ -1726,10 +2404,11 @@ with docspring.ApiClient(configuration) as api_client:
     submission_id = 'sub_1234567890abcdef01' # str | The submission's ID.
     body = {"formats":["png"]} # GenerateSubmissionFilesRequest | The formats to make.
     wait = True # bool | Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Generate more files
-        api_response = api_instance.generate_submission_files(submission_id, body, wait=wait)
+        api_response = api_instance.generate_submission_files(submission_id, body, wait=wait, idempotency_key=idempotency_key)
         print("The response of Client->generate_submission_files:\n")
         pprint(api_response)
     except Exception as e:
@@ -1746,6 +2425,7 @@ Name | Type | Description  | Notes
  **submission_id** | **str**| The submission's ID. | 
  **body** | [**GenerateSubmissionFilesRequest**](GenerateSubmissionFilesRequest.md)| The formats to make. | 
  **wait** | **bool**| Wait until the files have been generated before responding. Default true on sync.api hosts. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1775,7 +2455,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **generate_submission_preview**
-> Submission generate_submission_preview(submission_id)
+> Submission generate_submission_preview(submission_id, idempotency_key=idempotency_key)
 
 Generate a preview PDF
 
@@ -1815,10 +2495,11 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     submission_id = 'sub_1234567890abcdef03' # str | The submission's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Generate a preview PDF
-        api_response = api_instance.generate_submission_preview(submission_id)
+        api_response = api_instance.generate_submission_preview(submission_id, idempotency_key=idempotency_key)
         print("The response of Client->generate_submission_preview:\n")
         pprint(api_response)
     except Exception as e:
@@ -1833,6 +2514,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submission_id** | **str**| The submission's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -1854,6 +2536,88 @@ Name | Type | Description  | Notes
 **200** | preview requested |  -  |
 **409** | preview not possible |  -  |
 **404** | submission not found |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **get_account_email_action**
+> EmailAction get_account_email_action(email_action_id)
+
+Get an account email action
+
+Returns one of your account's email actions, with its settings and whether its emails are failing.
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action import EmailAction
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    email_action_id = 'email_action_id_example' # str | The account email action's ID.
+
+    try:
+        # Get an account email action
+        api_response = api_instance.get_account_email_action(email_action_id)
+        print("The response of Client->get_account_email_action:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->get_account_email_action: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_action_id** | **str**| The account email action's ID. | 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | account email action |  -  |
+**404** | account email action not found |  -  |
 **401** | authentication failed |  -  |
 **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
@@ -2018,6 +2782,172 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | custom file found |  -  |
 **404** | custom file not found |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **get_email_action**
+> EmailAction get_email_action(template_id, email_action_id)
+
+Get an email action
+
+Returns one of a template's email actions, with its settings and whether its emails are failing.
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action import EmailAction
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'template_id_example' # str | The template's ID.
+    email_action_id = 'email_action_id_example' # str | The email action's ID.
+
+    try:
+        # Get an email action
+        api_response = api_instance.get_email_action(template_id, email_action_id)
+        print("The response of Client->get_email_action:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->get_email_action: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **email_action_id** | **str**| The email action's ID. | 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | email action |  -  |
+**404** | email action not found |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **get_email_domain**
+> EmailDomain get_email_domain(email_domain_id)
+
+Get an email domain
+
+Returns an email domain, whether it's verified, and the DNS records to add to it.
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_domain import EmailDomain
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    email_domain_id = 'email_domain_id_example' # str | The email domain's ID.
+
+    try:
+        # Get an email domain
+        api_response = api_instance.get_email_domain(email_domain_id)
+        print("The response of Client->get_email_domain:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->get_email_domain: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_domain_id** | **str**| The email domain's ID. | 
+
+### Return type
+
+[**EmailDomain**](EmailDomain.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | email domain |  -  |
+**404** | email domain not found |  -  |
 **401** | authentication failed |  -  |
 **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
@@ -2474,7 +3404,7 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
-    version = 'latest' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. (optional)
+    version = 'latest' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. (optional)
 
     try:
         # Get a template
@@ -2493,7 +3423,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
- **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional] 
+ **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. | [optional] 
 
 ### Return type
 
@@ -2562,7 +3492,7 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
-    version = '0.1.0' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. (optional)
+    version = '0.1.0' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. (optional)
 
     try:
         # Compare a version of a template with the one before it
@@ -2581,7 +3511,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
- **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional] 
+ **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. | [optional] 
 
 ### Return type
 
@@ -2654,7 +3584,7 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     lang = docspring.ModelCodeLanguage() # ModelCodeLanguage | The language to generate the code in.
-    version = 'draft' # str | The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default. (optional)
+    version = 'draft' # str | The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`, the version a submission uses by default. (optional)
     just_types = true # bool | Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types, PHP has no types-only code, and Rust's code is only types (serde converts the JSON), so theirs is the same either way. (optional)
 
     try:
@@ -2675,7 +3605,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **lang** | [**ModelCodeLanguage**](.md)| The language to generate the code in. | 
- **version** | **str**| The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default. | [optional] 
+ **version** | **str**| The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`, the version a submission uses by default. | [optional] 
  **just_types** | **bool**| Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types, PHP has no types-only code, and Rust's code is only types (serde converts the JSON), so theirs is the same either way. | [optional] 
 
 ### Return type
@@ -2744,7 +3674,7 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
-    version = 'latest' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. (optional)
+    version = 'latest' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. (optional)
 
     try:
         # Get images of a template's pages
@@ -2763,7 +3693,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
- **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional] 
+ **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. | [optional] 
 
 ### Return type
 
@@ -2916,7 +3846,7 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
-    version = 'draft' # str | The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default. (optional)
+    version = 'draft' # str | The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`, the version a submission uses by default. (optional)
 
     try:
         # Get the JSON Schema of a template's submission data
@@ -2935,7 +3865,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
- **version** | **str**| The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default. | [optional] 
+ **version** | **str**| The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`, the version a submission uses by default. | [optional] 
 
 ### Return type
 
@@ -3038,6 +3968,92 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | webhook found |  -  |
 **404** | webhook not found |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **list_account_email_actions**
+> EmailActionList list_account_email_actions(limit=limit, cursor=cursor)
+
+List account email actions
+
+Returns your account's email actions, newest first, one page at a time. Each one emails the files of every
+template's processed submissions, or of the templates and folders it lists. A template's own email actions are
+listed with the template (`GET /templates/{template_id}/email_actions`).
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action_list import EmailActionList
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    limit = 50 # int | How many items to return (1-100, default 50). (optional) (default to 50)
+    cursor = 'cursor_example' # str | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. (optional)
+
+    try:
+        # List account email actions
+        api_response = api_instance.list_account_email_actions(limit=limit, cursor=cursor)
+        print("The response of Client->list_account_email_actions:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->list_account_email_actions: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int**| How many items to return (1-100, default 50). | [optional] [default to 50]
+ **cursor** | **str**| The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional] 
+
+### Return type
+
+[**EmailActionList**](EmailActionList.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | account email actions |  -  |
 **401** | authentication failed |  -  |
 **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
@@ -3206,6 +4222,181 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | custom files |  -  |
 **422** | invalid query parameters |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **list_email_actions**
+> EmailActionList list_email_actions(template_id, limit=limit, cursor=cursor)
+
+List email actions
+
+Returns the email actions of a template's draft, and your account's email actions that send for it, newest
+first, one page at a time. Each one emails every processed submission's files to the people it lists. An account
+email action (`template_id` null) shows the settings it sends for this template, with the template's changes
+in `customization`.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action_list import EmailActionList
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'template_id_example' # str | The template's ID.
+    limit = 50 # int | How many items to return (1-100, default 50). (optional) (default to 50)
+    cursor = 'cursor_example' # str | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. (optional)
+
+    try:
+        # List email actions
+        api_response = api_instance.list_email_actions(template_id, limit=limit, cursor=cursor)
+        print("The response of Client->list_email_actions:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->list_email_actions: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **limit** | **int**| How many items to return (1-100, default 50). | [optional] [default to 50]
+ **cursor** | **str**| The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional] 
+
+### Return type
+
+[**EmailActionList**](EmailActionList.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | email actions |  -  |
+**404** | template not found |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **list_email_domains**
+> EmailDomainList list_email_domains(limit=limit, cursor=cursor)
+
+List email domains
+
+Returns the domains in your account that email actions can send from once they're verified, newest first,
+one page at a time.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_domain_list import EmailDomainList
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    limit = 50 # int | How many items to return (1-100, default 50). (optional) (default to 50)
+    cursor = 'cursor_example' # str | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. (optional)
+
+    try:
+        # List email domains
+        api_response = api_instance.list_email_domains(limit=limit, cursor=cursor)
+        print("The response of Client->list_email_domains:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->list_email_domains: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int**| How many items to return (1-100, default 50). | [optional] [default to 50]
+ **cursor** | **str**| The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional] 
+
+### Return type
+
+[**EmailDomainList**](EmailDomainList.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | email domains |  -  |
 **401** | authentication failed |  -  |
 **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
@@ -3443,7 +4634,7 @@ with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
-    version = 'latest' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. (optional)
+    version = 'latest' # str | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. (optional)
 
     try:
         # List a template's fields
@@ -3462,7 +4653,7 @@ with docspring.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
- **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional] 
+ **version** | **str**| A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `draft`. | [optional] 
 
 ### Return type
 
@@ -3629,7 +4820,7 @@ configuration = docspring.Configuration(
 with docspring.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = docspring.Client(api_client)
-    query = 'rental' # str | Only list templates whose name contains this text (ignoring case). (optional)
+    query = 'rental' # str | Only list templates whose name contains this text (ignoring case). `%` and `_` match themselves. (optional)
     parent_folder_id = 'fld_1234567890abcdef01' # str | Only list the templates in this folder (not in its subfolders). (optional)
     limit = 50 # int | How many items to return (1-100, default 50). (optional) (default to 50)
     cursor = 'cursor_example' # str | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. (optional)
@@ -3650,7 +4841,7 @@ with docspring.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **query** | **str**| Only list templates whose name contains this text (ignoring case). | [optional] 
+ **query** | **str**| Only list templates whose name contains this text (ignoring case). `%` and `_` match themselves. | [optional] 
  **parent_folder_id** | **str**| Only list the templates in this folder (not in its subfolders). | [optional] 
  **limit** | **int**| How many items to return (1-100, default 50). | [optional] [default to 50]
  **cursor** | **str**| The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional] 
@@ -3778,7 +4969,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **move_folder**
-> Folder move_folder(folder_id, body)
+> Folder move_folder(folder_id, body, idempotency_key=idempotency_key)
 
 Move a folder
 
@@ -3820,10 +5011,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     folder_id = 'folder_id_example' # str | The folder's ID.
     body = {"parent_folder_id":"fld_1234567890abcdef02"} # MoveFolderRequest | Where to move the folder.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Move a folder
-        api_response = api_instance.move_folder(folder_id, body)
+        api_response = api_instance.move_folder(folder_id, body, idempotency_key=idempotency_key)
         print("The response of Client->move_folder:\n")
         pprint(api_response)
     except Exception as e:
@@ -3839,6 +5031,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **folder_id** | **str**| The folder's ID. | 
  **body** | [**MoveFolderRequest**](MoveFolderRequest.md)| Where to move the folder. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -3866,7 +5059,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **move_template**
-> Template move_template(template_id, body)
+> Template move_template(template_id, body, idempotency_key=idempotency_key)
 
 Move a template to a folder
 
@@ -3906,10 +5099,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"parent_folder_id":null} # MoveTemplateRequest | Where to move the template.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Move a template to a folder
-        api_response = api_instance.move_template(template_id, body)
+        api_response = api_instance.move_template(template_id, body, idempotency_key=idempotency_key)
         print("The response of Client->move_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -3925,6 +5119,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**MoveTemplateRequest**](MoveTemplateRequest.md)| Where to move the template. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -3952,7 +5147,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **publish_template_version**
-> TemplateVersion publish_template_version(template_id, body)
+> TemplateVersion publish_template_version(template_id, body, idempotency_key=idempotency_key)
 
 Publish a template version
 
@@ -3996,10 +5191,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"version_type":"minor","description":"Added the signature fields"} # PublishTemplateVersionRequest | The version to publish.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Publish a template version
-        api_response = api_instance.publish_template_version(template_id, body)
+        api_response = api_instance.publish_template_version(template_id, body, idempotency_key=idempotency_key)
         print("The response of Client->publish_template_version:\n")
         pprint(api_response)
     except Exception as e:
@@ -4015,6 +5211,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**PublishTemplateVersionRequest**](PublishTemplateVersionRequest.md)| The version to publish. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4043,7 +5240,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **remove_template_fields**
-> TemplateFields remove_template_fields(template_id, body)
+> TemplateFields remove_template_fields(template_id, body, idempotency_key=idempotency_key)
 
 Remove fields from a template
 
@@ -4085,10 +5282,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"field_ids":[3]} # RemoveTemplateFieldsRequest | The fields to remove from the template's draft.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Remove fields from a template
-        api_response = api_instance.remove_template_fields(template_id, body)
+        api_response = api_instance.remove_template_fields(template_id, body, idempotency_key=idempotency_key)
         print("The response of Client->remove_template_fields:\n")
         pprint(api_response)
     except Exception as e:
@@ -4104,6 +5302,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**RemoveTemplateFieldsRequest**](RemoveTemplateFieldsRequest.md)| The fields to remove from the template's draft. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4131,7 +5330,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **rename_folder**
-> Folder rename_folder(folder_id, body)
+> Folder rename_folder(folder_id, body, idempotency_key=idempotency_key)
 
 Rename a folder
 
@@ -4172,10 +5371,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     folder_id = 'folder_id_example' # str | The folder's ID.
     body = {"name":"Folder 3"} # RenameFolderRequest | The folder's new name.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Rename a folder
-        api_response = api_instance.rename_folder(folder_id, body)
+        api_response = api_instance.rename_folder(folder_id, body, idempotency_key=idempotency_key)
         print("The response of Client->rename_folder:\n")
         pprint(api_response)
     except Exception as e:
@@ -4191,6 +5391,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **folder_id** | **str**| The folder's ID. | 
  **body** | [**RenameFolderRequest**](RenameFolderRequest.md)| The folder's new name. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4218,7 +5419,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **reorder_template_fields**
-> TemplateFields reorder_template_fields(template_id, body)
+> TemplateFields reorder_template_fields(template_id, body, idempotency_key=idempotency_key)
 
 Reorder a template's fields
 
@@ -4261,10 +5462,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"field_ids":[3,1,2]} # ReorderTemplateFieldsRequest | The new order of the fields in the template's draft.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Reorder a template's fields
-        api_response = api_instance.reorder_template_fields(template_id, body)
+        api_response = api_instance.reorder_template_fields(template_id, body, idempotency_key=idempotency_key)
         print("The response of Client->reorder_template_fields:\n")
         pprint(api_response)
     except Exception as e:
@@ -4280,6 +5482,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**ReorderTemplateFieldsRequest**](ReorderTemplateFieldsRequest.md)| The new order of the fields in the template's draft. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4307,7 +5510,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **restore_template_version**
-> Template restore_template_version(template_id, body)
+> Template restore_template_version(template_id, body, idempotency_key=idempotency_key)
 
 Restore a template version
 
@@ -4347,10 +5550,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"version":"0.1.0"} # RestoreTemplateVersionRequest | The version to restore.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Restore a template version
-        api_response = api_instance.restore_template_version(template_id, body)
+        api_response = api_instance.restore_template_version(template_id, body, idempotency_key=idempotency_key)
         print("The response of Client->restore_template_version:\n")
         pprint(api_response)
     except Exception as e:
@@ -4366,6 +5570,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**RestoreTemplateVersionRequest**](RestoreTemplateVersionRequest.md)| The version to restore. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4388,6 +5593,189 @@ Name | Type | Description  | Notes
 **409** | template is locked |  -  |
 **422** | unknown version |  -  |
 **404** | template not found |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **send_account_email_action_test_email**
+> EmailActionTestEmail send_account_email_action_test_email(email_action_id, body=body, idempotency_key=idempotency_key)
+
+Send a test email for an account email action
+
+Sends the account email action's email to the API token's user only, as it would go for one template it sends
+for, with each field shown as its name in brackets, so you can check how it looks. When the email action
+attaches its files and that template is a PDF template, the test attaches the template's blank PDF. It isn't
+recorded on any submission.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action_test_email import EmailActionTestEmail
+from docspring.models.send_account_email_action_test_email_request import SendAccountEmailActionTestEmailRequest
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    email_action_id = 'email_action_id_example' # str | The account email action's ID.
+    body = {"template_id":"tpl_1234567890abcdef01"} # SendAccountEmailActionTestEmailRequest | Which template the test email is for. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Send a test email for an account email action
+        api_response = api_instance.send_account_email_action_test_email(email_action_id, body=body, idempotency_key=idempotency_key)
+        print("The response of Client->send_account_email_action_test_email:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->send_account_email_action_test_email: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_action_id** | **str**| The account email action's ID. | 
+ **body** | [**SendAccountEmailActionTestEmailRequest**](SendAccountEmailActionTestEmailRequest.md)| Which template the test email is for. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailActionTestEmail**](EmailActionTestEmail.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | test email sent |  -  |
+**422** | template it does not send for |  -  |
+**409** | no template to send for |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **send_email_action_test_email**
+> EmailActionTestEmail send_email_action_test_email(template_id, email_action_id, idempotency_key=idempotency_key)
+
+Send a test email
+
+Sends the email action's email to the API token's user only, with each field and metadata value shown as its
+name in brackets, so you can check how it looks. When the email action attaches its files and the template is
+a PDF template, the test attaches the template's blank PDF. It isn't recorded on any submission. Without a paid
+plan, the user needs a confirmed email address.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action_test_email import EmailActionTestEmail
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'template_id_example' # str | The template's ID.
+    email_action_id = 'email_action_id_example' # str | The email action's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Send a test email
+        api_response = api_instance.send_email_action_test_email(template_id, email_action_id, idempotency_key=idempotency_key)
+        print("The response of Client->send_email_action_test_email:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->send_email_action_test_email: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **email_action_id** | **str**| The email action's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailActionTestEmail**](EmailActionTestEmail.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | test email sent |  -  |
+**409** | email action that cannot send |  -  |
+**403** | email actions turned off for the account |  -  |
 **401** | authentication failed |  -  |
 **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
@@ -4472,8 +5860,282 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
+# **update_account_email_action**
+> EmailAction update_account_email_action(email_action_id, body, idempotency_key=idempotency_key)
+
+Update an account email action
+
+Changes one of your account's email actions. Properties left out keep their values. Its templates'
+customizations keep their own changes, and follow the rest. Set `enabled` to false to stop its emails for
+every template.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action import EmailAction
+from docspring.models.update_account_email_action_request import UpdateAccountEmailActionRequest
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    email_action_id = 'email_action_id_example' # str | The account email action's ID.
+    body = {"template_ids":["tpl_1234567890abcdef01"],"delivery":"link"} # UpdateAccountEmailActionRequest | The settings to change. Properties left out keep their values.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Update an account email action
+        api_response = api_instance.update_account_email_action(email_action_id, body, idempotency_key=idempotency_key)
+        print("The response of Client->update_account_email_action:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->update_account_email_action: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_action_id** | **str**| The account email action's ID. | 
+ **body** | [**UpdateAccountEmailActionRequest**](UpdateAccountEmailActionRequest.md)| The settings to change. Properties left out keep their values. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | account email action updated |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **update_email_action**
+> EmailAction update_email_action(template_id, email_action_id, body, idempotency_key=idempotency_key)
+
+Update an email action
+
+Changes an email action's settings. Properties left out keep their values. Set `enabled` to false to stop its
+emails, or to true to turn it back on after DocSpring turned it off.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action import EmailAction
+from docspring.models.update_email_action_request import UpdateEmailActionRequest
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'template_id_example' # str | The template's ID.
+    email_action_id = 'email_action_id_example' # str | The email action's ID.
+    body = {"cc":["manager@example.com"],"delivery":"link"} # UpdateEmailActionRequest | The settings to change. Properties left out keep their values.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Update an email action
+        api_response = api_instance.update_email_action(template_id, email_action_id, body, idempotency_key=idempotency_key)
+        print("The response of Client->update_email_action:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->update_email_action: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **email_action_id** | **str**| The email action's ID. | 
+ **body** | [**UpdateEmailActionRequest**](UpdateEmailActionRequest.md)| The settings to change. Properties left out keep their values. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | email action updated |  -  |
+**422** | invalid email action |  -  |
+**409** | account email action |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **update_email_action_customization**
+> EmailAction update_email_action_customization(template_id, email_action_id, body, idempotency_key=idempotency_key)
+
+Customize an account email action for a template
+
+Changes one of your account's email actions for this template only, replacing any changes the template had.
+Each setting you send is changed for this template, and the ones you leave out follow the account email
+action, including later changes to it. Set `enabled` to false to stop it sending for this template.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_action import EmailAction
+from docspring.models.update_email_action_customization_request import UpdateEmailActionCustomizationRequest
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    template_id = 'template_id_example' # str | The template's ID.
+    email_action_id = 'email_action_id_example' # str | The ID of one of your account's email actions that sends for the template.
+    body = {"subject":"Your signed {{ template.name }}","cc":["leasing@example.com"]} # UpdateEmailActionCustomizationRequest | The template's changes to the account email action, replacing any it had. Each setting you send is changed for this template, and the ones you leave out follow the account email action. `enabled: false` stops it sending for this template; left out, it sends.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Customize an account email action for a template
+        api_response = api_instance.update_email_action_customization(template_id, email_action_id, body, idempotency_key=idempotency_key)
+        print("The response of Client->update_email_action_customization:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->update_email_action_customization: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **template_id** | **str**| The template's ID. | 
+ **email_action_id** | **str**| The ID of one of your account's email actions that sends for the template. | 
+ **body** | [**UpdateEmailActionCustomizationRequest**](UpdateEmailActionCustomizationRequest.md)| The template's changes to the account email action, replacing any it had. Each setting you send is changed for this template, and the ones you leave out follow the account email action. `enabled: false` stops it sending for this template; left out, it sends. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailAction**](EmailAction.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | customization saved |  -  |
+**422** | invalid customization |  -  |
+**409** | template's own email action |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
 # **update_signature_request**
-> SignatureRequest update_signature_request(signature_request_id, body)
+> SignatureRequest update_signature_request(signature_request_id, body, idempotency_key=idempotency_key)
 
 Update a signature request
 
@@ -4516,10 +6178,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     signature_request_id = 'srq_1234567890abcdef01' # str | The signature request's ID.
     body = {"metadata":{"user_id":43},"auth_type":"oauth","auth_provider":"google","auth_session_started_at":"2018-10-20T08:00:00Z","auth_user_id_hash":"8ae0e445664ca53407906db8638d8ba07a2383f656383a4427bed1ab645ca29a"} # UpdateSignatureRequestRequest | The settings to change. Properties left out keep their values.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Update a signature request
-        api_response = api_instance.update_signature_request(signature_request_id, body)
+        api_response = api_instance.update_signature_request(signature_request_id, body, idempotency_key=idempotency_key)
         print("The response of Client->update_signature_request:\n")
         pprint(api_response)
     except Exception as e:
@@ -4535,6 +6198,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **signature_request_id** | **str**| The signature request's ID. | 
  **body** | [**UpdateSignatureRequestRequest**](UpdateSignatureRequestRequest.md)| The settings to change. Properties left out keep their values. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4563,14 +6227,15 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **update_template**
-> Template update_template(template_id, body)
+> Template update_template(template_id, body, idempotency_key=idempotency_key)
 
 Update a template
 
-Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options`
-replace the whole object, and `field_groups` changes only the groups it lists. Settings such as
-`webhook_url`, `public_submissions` and `expire_after` apply to every published version too, and setting
-`parent_folder_id` moves the template and all of its published versions.
+Changes a template's draft. Properties left out keep their values. `defaults`, `html_engine_options` and a
+page design's `layout` replace the whole object, and `field_groups` changes only the groups it lists. A new
+layout adds a field for each new value it reads. Settings such as `webhook_url`, `public_submissions` and
+`expire_after` apply to every published version too, and setting `parent_folder_id` moves the template and
+all of its published versions.
 
 
 ### Example
@@ -4607,10 +6272,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"name":"Rental Contract 2025","parent_folder_id":null,"slack_webhook_url":"https://hooks.slack.com/services/T000/B000/XXXX","encrypt_pdfs_password":null,"default_form_mode":"dual","ai_field_naming_language":"form_language","defaults":{"typeface":"Helvetica","font_size":10,"bold":true}} # UpdateTemplateRequest | The settings to change. Properties left out keep their values.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Update a template
-        api_response = api_instance.update_template(template_id, body)
+        api_response = api_instance.update_template(template_id, body, idempotency_key=idempotency_key)
         print("The response of Client->update_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -4626,6 +6292,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**UpdateTemplateRequest**](UpdateTemplateRequest.md)| The settings to change. Properties left out keep their values. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4654,7 +6321,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **update_template_document**
-> Template update_template_document(template_id, body, wait=wait)
+> Template update_template_document(template_id, body, wait=wait, idempotency_key=idempotency_key)
 
 Replace a template's document
 
@@ -4701,10 +6368,11 @@ with docspring.ApiClient(configuration) as api_client:
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"cache_id":"cache/original-0000000000","filename":"fw8ben.pdf","reimport_fields":true} # UpdateTemplateDocumentRequest | The new PDF, or a Word template's new Word document, as one of `cache_id`, `document_url` and `document_base64`.
     wait = True # bool | Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Replace a template's document
-        api_response = api_instance.update_template_document(template_id, body, wait=wait)
+        api_response = api_instance.update_template_document(template_id, body, wait=wait, idempotency_key=idempotency_key)
         print("The response of Client->update_template_document:\n")
         pprint(api_response)
     except Exception as e:
@@ -4721,6 +6389,7 @@ Name | Type | Description  | Notes
  **template_id** | **str**| The template's ID. | 
  **body** | [**UpdateTemplateDocumentRequest**](UpdateTemplateDocumentRequest.md)| The new PDF, or a Word template's new Word document, as one of `cache_id`, `document_url` and `document_base64`. | 
  **wait** | **bool**| Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4750,7 +6419,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **update_template_fields**
-> TemplateFields update_template_fields(template_id, body)
+> TemplateFields update_template_fields(template_id, body, idempotency_key=idempotency_key)
 
 Update a template's fields
 
@@ -4792,10 +6461,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"fields":[{"id":0,"x":5}]} # UpdateTemplateFieldsRequest | The fields to change in the template's draft.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Update a template's fields
-        api_response = api_instance.update_template_fields(template_id, body)
+        api_response = api_instance.update_template_fields(template_id, body, idempotency_key=idempotency_key)
         print("The response of Client->update_template_fields:\n")
         pprint(api_response)
     except Exception as e:
@@ -4811,6 +6481,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**UpdateTemplateFieldsRequest**](UpdateTemplateFieldsRequest.md)| The fields to change in the template's draft. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4838,7 +6509,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **update_webhook**
-> Webhook update_webhook(webhook_id, body)
+> Webhook update_webhook(webhook_id, body, idempotency_key=idempotency_key)
 
 Update a webhook
 
@@ -4878,10 +6549,11 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     webhook_id = 'webhook_id_example' # str | The webhook's ID.
     body = {"name":"Updated Webhook","enabled":false} # UpdateWebhookRequest | The settings to change. Properties left out keep their values.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Update a webhook
-        api_response = api_instance.update_webhook(webhook_id, body)
+        api_response = api_instance.update_webhook(webhook_id, body, idempotency_key=idempotency_key)
         print("The response of Client->update_webhook:\n")
         pprint(api_response)
     except Exception as e:
@@ -4897,6 +6569,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **webhook_id** | **str**| The webhook's ID. | 
  **body** | [**UpdateWebhookRequest**](UpdateWebhookRequest.md)| The settings to change. Properties left out keep their values. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -4925,7 +6598,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **upload_template**
-> Template upload_template(document, wait=wait, name=name, description=description, parent_folder_id=parent_folder_id, ai_field_naming_language=ai_field_naming_language, detect_fields=detect_fields, field_source=field_source, field_naming=field_naming, field_logic=field_logic, output_format=output_format)
+> Template upload_template(document, wait=wait, name=name, description=description, parent_folder_id=parent_folder_id, ai_field_naming_language=ai_field_naming_language, detect_fields=detect_fields, field_source=field_source, field_naming=field_naming, field_logic=field_logic, output_format=output_format, idempotency_key=idempotency_key)
 
 Create a template from an uploaded PDF or Word document
 
@@ -4977,10 +6650,11 @@ with docspring.ApiClient(configuration) as api_client:
     field_naming = docspring.FieldSetupNaming() # FieldSetupNaming | With `detect_fields`, how the fields are named. `ai` (the default) names them and sets their types and settings with AI; `preserve` keeps the names of the PDF's form fields, and AI only names the fields it detected. `preserve` needs `field_source` `auto` or `pdf_form_fields`. (optional)
     field_logic = docspring.FieldSetupLogic() # FieldSetupLogic | With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings. (optional)
     output_format = docspring.OutputFormat() # OutputFormat | What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Create a template from an uploaded PDF or Word document
-        api_response = api_instance.upload_template(document, wait=wait, name=name, description=description, parent_folder_id=parent_folder_id, ai_field_naming_language=ai_field_naming_language, detect_fields=detect_fields, field_source=field_source, field_naming=field_naming, field_logic=field_logic, output_format=output_format)
+        api_response = api_instance.upload_template(document, wait=wait, name=name, description=description, parent_folder_id=parent_folder_id, ai_field_naming_language=ai_field_naming_language, detect_fields=detect_fields, field_source=field_source, field_naming=field_naming, field_logic=field_logic, output_format=output_format, idempotency_key=idempotency_key)
         print("The response of Client->upload_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -5005,6 +6679,7 @@ Name | Type | Description  | Notes
  **field_naming** | [**FieldSetupNaming**](FieldSetupNaming.md)| With `detect_fields`, how the fields are named. `ai` (the default) names them and sets their types and settings with AI; `preserve` keeps the names of the PDF's form fields, and AI only names the fields it detected. `preserve` needs `field_source` `auto` or `pdf_form_fields`. | [optional] 
  **field_logic** | [**FieldSetupLogic**](FieldSetupLogic.md)| With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings. | [optional] 
  **output_format** | [**OutputFormat**](OutputFormat.md)| What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -5033,7 +6708,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **upload_template_document**
-> Template upload_template_document(template_id, document, wait=wait, reimport_fields=reimport_fields)
+> Template upload_template_document(template_id, document, wait=wait, reimport_fields=reimport_fields, idempotency_key=idempotency_key)
 
 Replace a template's document with an uploaded file
 
@@ -5077,10 +6752,11 @@ with docspring.ApiClient(configuration) as api_client:
     document = None # bytes | The new PDF, or the new Word document (.docx or .odt) of a Word template.
     wait = True # bool | Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. (optional)
     reimport_fields = True # bool | Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Replace a template's document with an uploaded file
-        api_response = api_instance.upload_template_document(template_id, document, wait=wait, reimport_fields=reimport_fields)
+        api_response = api_instance.upload_template_document(template_id, document, wait=wait, reimport_fields=reimport_fields, idempotency_key=idempotency_key)
         print("The response of Client->upload_template_document:\n")
         pprint(api_response)
     except Exception as e:
@@ -5098,6 +6774,7 @@ Name | Type | Description  | Notes
  **document** | **bytes**| The new PDF, or the new Word document (.docx or .odt) of a Word template. | 
  **wait** | **bool**| Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. | [optional] 
  **reimport_fields** | **bool**| Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -5126,7 +6803,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
 
 # **validate_submission**
-> SubmissionValidation validate_submission(template_id, body, version=version)
+> SubmissionValidation validate_submission(template_id, body, version=version, idempotency_key=idempotency_key)
 
 Check a submission without creating it
 
@@ -5169,11 +6846,12 @@ with docspring.ApiClient(configuration) as api_client:
     api_instance = docspring.Client(api_client)
     template_id = 'tpl_1234567890abcdef01' # str | The template's ID.
     body = {"data":{"first_name":"John","last_name":"Smith","phone_number":"+11234567890"}} # ValidateSubmissionRequest | The submission's data and settings.
-    version = 'latest' # str | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). (optional)
+    version = 'latest' # str | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`. (optional)
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
 
     try:
         # Check a submission without creating it
-        api_response = api_instance.validate_submission(template_id, body, version=version)
+        api_response = api_instance.validate_submission(template_id, body, version=version, idempotency_key=idempotency_key)
         print("The response of Client->validate_submission:\n")
         pprint(api_response)
     except Exception as e:
@@ -5189,7 +6867,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **template_id** | **str**| The template's ID. | 
  **body** | [**ValidateSubmissionRequest**](ValidateSubmissionRequest.md)| The submission's data and settings. | 
- **version** | **str**| The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional] 
+ **version** | **str**| The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`. | [optional] 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
 
 ### Return type
 
@@ -5211,6 +6890,92 @@ Name | Type | Description  | Notes
 **200** | valid submission |  -  |
 **404** | template not found |  -  |
 **422** | invalid request |  -  |
+**401** | authentication failed |  -  |
+**429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#methods) [[Back to Model list]](../README.md#methods) [[Back to README]](../README.md)
+
+# **verify_email_domain**
+> EmailDomain verify_email_domain(email_domain_id, idempotency_key=idempotency_key)
+
+Verify an email domain
+
+Checks the email domain's DNS records now, instead of waiting for the next check. If DocSpring has stopped
+looking for its DKIM records (3 days after they were created), it starts again with new ones: replace the
+CNAME records with them.
+
+
+### Example
+
+* Basic Authentication (api_token_basic):
+
+```python
+import docspring
+from docspring.models.email_domain import EmailDomain
+from docspring.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sync.api.docspring.com/api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = docspring.Configuration(
+    host = "https://sync.api.docspring.com/api/v2"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: api_token_basic
+configuration = docspring.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with docspring.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = docspring.Client(api_client)
+    email_domain_id = 'email_domain_id_example' # str | The email domain's ID.
+    idempotency_key = 'idempotency_key_example' # str | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. (optional)
+
+    try:
+        # Verify an email domain
+        api_response = api_instance.verify_email_domain(email_domain_id, idempotency_key=idempotency_key)
+        print("The response of Client->verify_email_domain:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Client->verify_email_domain: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_domain_id** | **str**| The email domain's ID. | 
+ **idempotency_key** | **str**| A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. | [optional] 
+
+### Return type
+
+[**EmailDomain**](EmailDomain.md)
+
+### Authorization
+
+[api_token_basic](../README.md#install-and-configure)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | email domain verified |  -  |
 **401** | authentication failed |  -  |
 **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 

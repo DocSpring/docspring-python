@@ -16,6 +16,10 @@ Something that happened to a signature request.
 
 * `ALL_COMPLETED` (value: `'all_completed'`)
 
+* `EMAIL_BOUNCED` (value: `'email_bounced'`)
+
+* `EMAIL_MARKED_AS_SPAM` (value: `'email_marked_as_spam'`)
+
 [[Back to Model list]](../README.md#methods) [[Back to API list]](../README.md#methods) [[Back to README]](../README.md)
 
 

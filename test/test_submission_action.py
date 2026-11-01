@@ -38,6 +38,7 @@ class TestSubmissionAction(unittest.TestCase):
             return SubmissionAction(
                 id = '',
                 integration_id = '',
+                email_action_id = '',
                 state = 'pending',
                 action_type = 'webhook',
                 result_data = { },
@@ -47,6 +48,7 @@ class TestSubmissionAction(unittest.TestCase):
             return SubmissionAction(
                 id = '',
                 integration_id = '',
+                email_action_id = '',
                 state = 'pending',
                 action_type = 'webhook',
                 result_data = { },

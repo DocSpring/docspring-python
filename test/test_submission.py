@@ -63,6 +63,7 @@ class TestSubmission(unittest.TestCase):
                         'key' : null
                         }
                     ],
+                signing_order = 'parallel',
                 actions = [
                     {
                         'key' : null
@@ -107,6 +108,7 @@ class TestSubmission(unittest.TestCase):
                         'key' : null
                         }
                     ],
+                signing_order = 'parallel',
                 actions = [
                     {
                         'key' : null

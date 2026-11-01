@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class SubmissionActionType(str, Enum):
     """
-    The kind of storage a submission action uploads the PDF to.
+    The kind of storage a submission action uploads the PDF to, or `email`.
     """
 
     """

@@ -10,11 +10,15 @@ An event that a webhook can subscribe to.
 
 * `SUBMISSION_DOT_DECLINED` (value: `'submission.declined'`)
 
+* `SIGNATURE_REQUEST_DOT_SENT` (value: `'signature_request.sent'`)
+
 * `SIGNATURE_REQUEST_DOT_VIEWED` (value: `'signature_request.viewed'`)
 
 * `SIGNATURE_REQUEST_DOT_COMPLETED` (value: `'signature_request.completed'`)
 
 * `SIGNATURE_REQUEST_DOT_DECLINED` (value: `'signature_request.declined'`)
+
+* `SIGNATURE_REQUEST_DOT_EMAIL_BOUNCED` (value: `'signature_request.email_bounced'`)
 
 * `COMBINED_PDF_DOT_PROCESSED` (value: `'combined_pdf.processed'`)
 

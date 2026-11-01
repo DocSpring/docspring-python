@@ -41,6 +41,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_create_account_email_action(self) -> None:
+        """Test case for create_account_email_action
+
+        Create an account email action
+        """
+        pass
+
     def test_create_combined_pdf(self) -> None:
         """Test case for create_combined_pdf
 
@@ -52,6 +59,20 @@ class TestClient(unittest.TestCase):
         """Test case for create_custom_file_from_upload
 
         Create a custom file from an upload
+        """
+        pass
+
+    def test_create_email_action(self) -> None:
+        """Test case for create_email_action
+
+        Create an email action
+        """
+        pass
+
+    def test_create_email_domain(self) -> None:
+        """Test case for create_email_domain
+
+        Add an email domain
         """
         pass
 
@@ -111,10 +132,38 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_delete_account_email_action(self) -> None:
+        """Test case for delete_account_email_action
+
+        Delete an account email action
+        """
+        pass
+
     def test_delete_custom_file(self) -> None:
         """Test case for delete_custom_file
 
         Delete a custom file
+        """
+        pass
+
+    def test_delete_email_action(self) -> None:
+        """Test case for delete_email_action
+
+        Delete an email action
+        """
+        pass
+
+    def test_delete_email_action_customization(self) -> None:
+        """Test case for delete_email_action_customization
+
+        Reset an account email action's customization
+        """
+        pass
+
+    def test_delete_email_domain(self) -> None:
+        """Test case for delete_email_domain
+
+        Remove an email domain
         """
         pass
 
@@ -167,6 +216,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_get_account_email_action(self) -> None:
+        """Test case for get_account_email_action
+
+        Get an account email action
+        """
+        pass
+
     def test_get_combined_pdf(self) -> None:
         """Test case for get_combined_pdf
 
@@ -178,6 +234,20 @@ class TestClient(unittest.TestCase):
         """Test case for get_custom_file
 
         Get a custom file
+        """
+        pass
+
+    def test_get_email_action(self) -> None:
+        """Test case for get_email_action
+
+        Get an email action
+        """
+        pass
+
+    def test_get_email_domain(self) -> None:
+        """Test case for get_email_domain
+
+        Get an email domain
         """
         pass
 
@@ -265,6 +335,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_list_account_email_actions(self) -> None:
+        """Test case for list_account_email_actions
+
+        List account email actions
+        """
+        pass
+
     def test_list_combined_pdfs(self) -> None:
         """Test case for list_combined_pdfs
 
@@ -276,6 +353,20 @@ class TestClient(unittest.TestCase):
         """Test case for list_custom_files
 
         List custom files
+        """
+        pass
+
+    def test_list_email_actions(self) -> None:
+        """Test case for list_email_actions
+
+        List email actions
+        """
+        pass
+
+    def test_list_email_domains(self) -> None:
+        """Test case for list_email_domains
+
+        List email domains
         """
         pass
 
@@ -370,10 +461,45 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_send_account_email_action_test_email(self) -> None:
+        """Test case for send_account_email_action_test_email
+
+        Send a test email for an account email action
+        """
+        pass
+
+    def test_send_email_action_test_email(self) -> None:
+        """Test case for send_email_action_test_email
+
+        Send a test email
+        """
+        pass
+
     def test_test_authentication(self) -> None:
         """Test case for test_authentication
 
         Test authentication
+        """
+        pass
+
+    def test_update_account_email_action(self) -> None:
+        """Test case for update_account_email_action
+
+        Update an account email action
+        """
+        pass
+
+    def test_update_email_action(self) -> None:
+        """Test case for update_email_action
+
+        Update an email action
+        """
+        pass
+
+    def test_update_email_action_customization(self) -> None:
+        """Test case for update_email_action_customization
+
+        Customize an account email action for a template
         """
         pass
 
@@ -430,6 +556,13 @@ class TestClient(unittest.TestCase):
         """Test case for validate_submission
 
         Check a submission without creating it
+        """
+        pass
+
+    def test_verify_email_domain(self) -> None:
+        """Test case for verify_email_domain
+
+        Verify an email domain
         """
         pass
 

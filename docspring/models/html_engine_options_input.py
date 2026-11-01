@@ -32,7 +32,7 @@ class HtmlEngineOptionsInput(BaseModel):
     format: Optional[PageFormat] = Field(default=None, description="The paper size. `Custom` uses `width` and `height`.")
     width: Optional[StrictStr] = Field(default=None, description="The page width for the `Custom` format, with a unit (`8.5in`, `210mm`).")
     height: Optional[StrictStr] = Field(default=None, description="The page height for the `Custom` format, with a unit.")
-    scale: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="How much to scale the page, such as `0.8`. `1` prints it at its normal size.")
+    scale: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="How much to scale the page, from 0.1 to 2, such as `0.8`. `1` prints it at its normal size.")
     landscape: Optional[StrictBool] = Field(default=None, description="Print pages in landscape orientation.")
     print_background: Optional[StrictBool] = Field(default=None, description="Print background colors and images.")
     margin_top: Optional[StrictStr] = Field(default=None, description="The top margin, with a unit, such as `1in` or `20mm`.")

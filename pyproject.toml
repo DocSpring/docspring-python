@@ -1,11 +1,12 @@
 [project]
 name = "docspring"
-version = "4.3.0"
+version = "4.4.0"
 description = "DocSpring API"
 authors = [
   {name = "DocSpring",email = "support@docspring.com"},
 ]
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 readme = "README.md"
 keywords = ["OpenAPI", "OpenAPI-Generator", "DocSpring API"]
 requires-python = ">=3.10"
@@ -32,7 +33,7 @@ dev = [
 
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [tool.pylint.'MESSAGES CONTROL']

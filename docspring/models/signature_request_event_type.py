@@ -33,6 +33,8 @@ class SignatureRequestEventType(str, Enum):
     DECLINE_REQUEST = 'decline_request'
     SIGN_REQUEST = 'sign_request'
     ALL_COMPLETED = 'all_completed'
+    EMAIL_BOUNCED = 'email_bounced'
+    EMAIL_MARKED_AS_SPAM = 'email_marked_as_spam'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

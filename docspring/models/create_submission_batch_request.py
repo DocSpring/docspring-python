@@ -32,10 +32,10 @@ class CreateSubmissionBatchRequest(BaseModel):
     """ # noqa: E501
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Your own data about the batch, such as an ID from your app.")
     template_id: Optional[StrictStr] = Field(default=None, description="The template for each submission that doesn't name its own `template_id`.")
-    template_version: Optional[StrictStr] = Field(default=None, description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published).")
+    template_version: Optional[StrictStr] = Field(default=None, description="The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` (the newest published version, or the draft when none has been published) or `draft`. Default `latest`.")
     test: Optional[StrictBool] = Field(default=None, description="The default `test` for each submission that doesn't set its own.")
     output_formats: Optional[List[OutputFormat]] = Field(default=None, description="The default `output_formats` for each submission that doesn't set its own.")
-    submissions: List[SubmissionInput] = Field(description="Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except `signature_requests`, plus `template_id` and `template_version` when it uses a different template from the batch.")
+    submissions: List[SubmissionInput] = Field(description="Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except `signature_requests` and the options for DocSpring's emails to signers (`send_email`, `signing_order`, `email_subject`, `email_message`, `cc`, `reply_to`, `notification_emails`, `notify_when_signed` and `reminders`), plus `template_id` and `template_version` when it uses a different template from the batch.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["metadata", "template_id", "template_version", "test", "output_formats", "submissions"]
 

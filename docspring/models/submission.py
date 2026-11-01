@@ -24,6 +24,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from docspring.models.error_detail import ErrorDetail
 from docspring.models.output_format import OutputFormat
 from docspring.models.signature_request import SignatureRequest
+from docspring.models.signing_order import SigningOrder
 from docspring.models.submission_action import SubmissionAction
 from docspring.models.submission_files import SubmissionFiles
 from docspring.models.submission_source import SubmissionSource
@@ -44,7 +45,7 @@ class Submission(BaseModel):
     batch_id: Optional[StrictStr] = Field(description="The ID of the batch the submission was created in.")
     source: SubmissionSource = Field(description="`api`: created with the API. `web`: a web form. `reprocess`: a copy of another submission, made to generate its PDF again.")
     state: SubmissionState = Field(description="`pending` until the files have been generated, then `processed`. `waiting_for_signature_requests` until every signature request is completed. `insufficient_credits`: waiting for credits; `error_message` says whether the files are generated once you add them. `account_suspended`: waiting for the account to be reactivated, for up to 30 days. Waiting ends in `error` if it's discarded or takes over 30 days. Every other state is final, with no files: `invalid_data` (the data doesn't match the template's fields: see `data_errors`), `declined` (a signature request was declined), and the states where generating the files failed, which have an `error_message`: `syntax_error` (a mistake in an HTML template's Liquid or SCSS, or in a Word template's tags), `image_download_failed` or `image_processing_failed` (an image in the data or the template couldn't be downloaded or read) and `error` (anything else). Older submissions can also be `license_revoked` or `accidental`.")
-    test: StrictBool = Field(description="Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.")
+    test: StrictBool = Field(description="Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token's are always live.")
     editable: StrictBool = Field(description="`true` keeps the PDF's text and check fields fillable, and `false` flattens every field. Left out, the template decides: its `editable_submissions` setting, or each field's own Editable option. A response shows the template's setting when the request left this out. Can't be `true` with `signature_requests`.")
     data: Optional[Dict[str, Any]] = Field(description="The submission's data, with the values entered in completed signature requests. Empty once the submission has expired. Null in a batch's submissions unless you pass `include_data=true`, and in the events of a webhook that leaves out submission data.")
     data_errors: List[ErrorDetail] = Field(description="Why the data doesn't match the template's fields, when `state` is `invalid_data`: the same details as the 422 response that recorded it, with pointers into the request that created the submission (`/data/name`). Cleared once the submission has expired.")
@@ -58,12 +59,13 @@ class Submission(BaseModel):
     updated_at: datetime = Field(description="When the submission was last updated.")
     has_password: StrictBool = Field(description="Whether the PDF needs a password to open (`password`).")
     signature_requests: List[SignatureRequest] = Field(description="The people asked to sign the submission (and fill in their fields), in order.")
-    actions: List[SubmissionAction] = Field(description="The uploads of the submission's PDF to your storage (account integrations).")
+    signing_order: SigningOrder = Field(description="`parallel`: everyone can sign at once. `sequential`: people sign one step at a time (each signature request's `signing_step`).")
+    actions: List[SubmissionAction] = Field(description="The uploads of the submission's PDF to your storage (account integrations), and the emails its template's email actions sent.")
     truncated_text: Optional[Dict[str, List[StrictStr]]] = Field(description="The text of each field that didn't fit in it, by field name. Left out (null) with `data`, and empty once the submission has expired.")
     output_formats: List[OutputFormat] = Field(description="What the submission makes: `pdf`, `docx` (a Word document, from a Word template), `odt` (an OpenDocument file, the format LibreOffice uses, converted from a Word template's Word document), and `png` (an image of each page of the PDF, up to 100 pages, which adds `pdf`) when you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`. POST /submissions/{submission_id}/generate_files adds `png`, and a Word template's submission's `pdf`, `docx` or `odt`, to a processed submission.")
     preview_generated_at: Optional[datetime] = Field(description="When the preview PDF was generated. Null if there is no preview.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "template_id", "template_type", "template_version", "batch_id", "source", "state", "test", "editable", "data", "data_errors", "error_message", "metadata", "files", "expired", "expires_at", "processed_at", "created_at", "updated_at", "has_password", "signature_requests", "actions", "truncated_text", "output_formats", "preview_generated_at"]
+    __properties: ClassVar[List[str]] = ["id", "template_id", "template_type", "template_version", "batch_id", "source", "state", "test", "editable", "data", "data_errors", "error_message", "metadata", "files", "expired", "expires_at", "processed_at", "created_at", "updated_at", "has_password", "signature_requests", "signing_order", "actions", "truncated_text", "output_formats", "preview_generated_at"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -210,6 +212,7 @@ class Submission(BaseModel):
             "updated_at": obj.get("updated_at"),
             "has_password": obj.get("has_password"),
             "signature_requests": [SignatureRequest.from_dict(_item) for _item in obj["signature_requests"]] if obj.get("signature_requests") is not None else None,
+            "signing_order": obj.get("signing_order"),
             "actions": [SubmissionAction.from_dict(_item) for _item in obj["actions"]] if obj.get("actions") is not None else None,
             "truncated_text": obj.get("truncated_text"),
             "output_formats": obj.get("output_formats"),

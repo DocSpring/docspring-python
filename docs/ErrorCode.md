@@ -12,6 +12,8 @@ A machine-readable error code. New codes can be added.
 
 * `INSUFFICIENT_CREDITS` (value: `'insufficient_credits'`)
 
+* `INSUFFICIENT_CREDITS_TO_SEND` (value: `'insufficient_credits_to_send'`)
+
 * `FORBIDDEN` (value: `'forbidden'`)
 
 * `UPGRADE_REQUIRED` (value: `'upgrade_required'`)
@@ -35,6 +37,8 @@ A machine-readable error code. New codes can be added.
 * `INVALID_DATA` (value: `'invalid_data'`)
 
 * `RATE_LIMITED` (value: `'rate_limited'`)
+
+* `DAILY_EMAIL_LIMIT_REACHED` (value: `'daily_email_limit_reached'`)
 
 * `INTERNAL_ERROR` (value: `'internal_error'`)
 
