@@ -73,6 +73,9 @@ class TestCreateTemplateRequest(unittest.TestCase):
                     ],
                 signature_request_reply_to = '',
                 signature_request_signing_url = '',
+                success_title = '',
+                success_message = '',
+                show_fill_again_button = True,
                 slack_webhook_url = '',
                 defaults = docspring.models.template_defaults_input.TemplateDefaultsInput(
                     typeface = null, 
@@ -142,7 +145,8 @@ class TestCreateTemplateRequest(unittest.TestCase):
                 detect_fields = True,
                 field_source = 'auto',
                 field_naming = 'ai',
-                field_logic = 'ai'
+                field_logic = 'ai',
+                include_office_use_fields = True
             )
         else:
             return CreateTemplateRequest(

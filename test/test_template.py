@@ -110,6 +110,9 @@ class TestTemplate(unittest.TestCase):
                     ],
                 signature_request_reply_to = '',
                 signature_request_signing_url = '',
+                success_title = '',
+                success_message = '',
+                show_fill_again_button = True,
                 has_slack_webhook_url = True,
                 last_changed_by = docspring.models.template_actor.TemplateActor(
                     type = null, 
@@ -122,6 +125,9 @@ class TestTemplate(unittest.TestCase):
                     { }
                     ],
                 field_groups = [
+                    { }
+                    ],
+                form_sections = [
                     { }
                     ],
                 predefined_fields = [
@@ -233,6 +239,9 @@ class TestTemplate(unittest.TestCase):
                     ],
                 signature_request_reply_to = '',
                 signature_request_signing_url = '',
+                success_title = '',
+                success_message = '',
+                show_fill_again_button = True,
                 has_slack_webhook_url = True,
                 last_changed_by = docspring.models.template_actor.TemplateActor(
                     type = null, 
@@ -245,6 +254,9 @@ class TestTemplate(unittest.TestCase):
                     { }
                     ],
                 field_groups = [
+                    { }
+                    ],
+                form_sections = [
                     { }
                     ],
                 predefined_fields = [

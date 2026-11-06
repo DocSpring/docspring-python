@@ -168,6 +168,8 @@ from docspring.models.template_field_logic_status import TemplateFieldLogicStatu
 from docspring.models.template_field_move import TemplateFieldMove
 from docspring.models.template_fields import TemplateFields
 from docspring.models.template_form_mode import TemplateFormMode
+from docspring.models.template_form_section import TemplateFormSection
+from docspring.models.template_form_section_input import TemplateFormSectionInput
 from docspring.models.template_model_code import TemplateModelCode
 from docspring.models.template_page_ai_error import TemplatePageAiError
 from docspring.models.template_page_ai_naming_status import TemplatePageAiNamingStatus

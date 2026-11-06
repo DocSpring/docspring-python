@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.4.0"
+__version__ = "4.5.0"
 
 # Define package exports
 __all__ = [
@@ -184,6 +184,8 @@ __all__ = [
     "TemplateFieldMove",
     "TemplateFields",
     "TemplateFormMode",
+    "TemplateFormSection",
+    "TemplateFormSectionInput",
     "TemplateModelCode",
     "TemplatePageAiError",
     "TemplatePageAiNamingStatus",
@@ -392,6 +394,8 @@ from docspring.models.template_field_logic_status import TemplateFieldLogicStatu
 from docspring.models.template_field_move import TemplateFieldMove as TemplateFieldMove
 from docspring.models.template_fields import TemplateFields as TemplateFields
 from docspring.models.template_form_mode import TemplateFormMode as TemplateFormMode
+from docspring.models.template_form_section import TemplateFormSection as TemplateFormSection
+from docspring.models.template_form_section_input import TemplateFormSectionInput as TemplateFormSectionInput
 from docspring.models.template_model_code import TemplateModelCode as TemplateModelCode
 from docspring.models.template_page_ai_error import TemplatePageAiError as TemplatePageAiError
 from docspring.models.template_page_ai_naming_status import TemplatePageAiNamingStatus as TemplatePageAiNamingStatus

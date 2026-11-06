@@ -48,7 +48,9 @@ class TestErrorInfo(unittest.TestCase):
                 template_id = '',
                 folder_id = '',
                 custom_file_id = '',
-                webhook_id = ''
+                webhook_id = '',
+                email_action_id = '',
+                email_domain_id = ''
             )
         else:
             return ErrorInfo(

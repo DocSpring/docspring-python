@@ -72,6 +72,9 @@ class TestUpdateTemplateRequest(unittest.TestCase):
                     ],
                 signature_request_reply_to = '',
                 signature_request_signing_url = '',
+                success_title = '',
+                success_message = '',
+                show_fill_again_button = True,
                 slack_webhook_url = '',
                 defaults = docspring.models.template_defaults_input.TemplateDefaultsInput(
                     typeface = null, 
@@ -115,6 +118,15 @@ class TestUpdateTemplateRequest(unittest.TestCase):
                         min_items = 56, 
                         max_items = 56, 
                         allow_additional_items = True, )
+                    ],
+                form_sections = [
+                    docspring.models.template_form_section_input.TemplateFormSectionInput(
+                        id = '', 
+                        title = '', 
+                        description = '', 
+                        field_ids = [
+                            56
+                            ], )
                     ],
                 predefined_fields = [
                     docspring.models.predefined_field_input.PredefinedFieldInput(

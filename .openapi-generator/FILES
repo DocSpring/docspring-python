@@ -158,6 +158,8 @@ docs/TemplateFieldLogicStatus.md
 docs/TemplateFieldMove.md
 docs/TemplateFields.md
 docs/TemplateFormMode.md
+docs/TemplateFormSection.md
+docs/TemplateFormSectionInput.md
 docs/TemplateModelCode.md
 docs/TemplatePageAiError.md
 docs/TemplatePageAiNamingStatus.md
@@ -355,6 +357,8 @@ docspring/models/template_field_logic_status.py
 docspring/models/template_field_move.py
 docspring/models/template_fields.py
 docspring/models/template_form_mode.py
+docspring/models/template_form_section.py
+docspring/models/template_form_section_input.py
 docspring/models/template_model_code.py
 docspring/models/template_page_ai_error.py
 docspring/models/template_page_ai_naming_status.py
@@ -554,6 +558,8 @@ test/test_template_field_logic_status.py
 test/test_template_field_move.py
 test/test_template_fields.py
 test/test_template_form_mode.py
+test/test_template_form_section.py
+test/test_template_form_section_input.py
 test/test_template_model_code.py
 test/test_template_page_ai_error.py
 test/test_template_page_ai_naming_status.py

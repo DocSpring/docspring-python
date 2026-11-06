@@ -30,6 +30,7 @@ from docspring.models.signature_request_email_attachments import SignatureReques
 from docspring.models.template_defaults_input import TemplateDefaultsInput
 from docspring.models.template_field_dependency_input import TemplateFieldDependencyInput
 from docspring.models.template_form_mode import TemplateFormMode
+from docspring.models.template_form_section_input import TemplateFormSectionInput
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -49,7 +50,7 @@ class UpdateTemplateRequest(BaseModel):
     allow_skipping_optional_fields: Optional[StrictBool] = Field(default=None, description="Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The `allowSkippingOptionalFields` embed option overrides it.")
     default_form_mode: Optional[TemplateFormMode] = Field(default=None, description="The hosted form that /templates/{template_id}/form shows when its URL has no `mode` parameter: `web` (the web form), `visual` (the visual form, where fields are filled in on the PDF) or `dual` (both, in tabs). Only PDF templates have a visual form, so other templates accept only `web`.")
     editable_submissions: Optional[StrictBool] = Field(default=None, description="Generate PDFs whose text and check fields stay fillable (\"Generate Editable PDFs\"). A submission's `editable` overrides it.")
-    embed_domains: Optional[List[StrictStr]] = Field(default=None, description="The sites that can embed the template's live signature requests and its embedded template editor: a host such as `app.example.com`, with an optional leading wildcard (`*.example.com`), port (`localhost:3000`) or scheme (`https://app.example.com`; without one, `http` and `https` both work), without a path. Browsers open a live signature request in a frame only on these sites (and DocSpring's), so with an empty list it can't be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren't restricted.")
+    embed_domains: Optional[List[StrictStr]] = Field(default=None, description="The sites that can embed the template's live signature requests and its embedded template editor: a host such as `app.example.com`, with an optional leading wildcard (`*.example.com`), port (`localhost:3000`) or scheme (`https://app.example.com`; without one, `http` and `https` both work), without a path. Each one is stored in lowercase, without a trailing slash. Browsers open a live signature request in a frame only on these sites (and DocSpring's), so with an empty list it can't be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and Web Forms JS) aren't restricted.")
     embed_edit_allow_settings: Optional[StrictBool] = Field(default=None, description="Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).")
     embed_edit_allow_versioning: Optional[StrictBool] = Field(default=None, description="Allow the embedded template editor to publish, restore, compare and delete published versions.")
     embed_edit_allow_document_replacement: Optional[StrictBool] = Field(default=None, description="Allow the embedded template editor to replace the template's PDF.")
@@ -62,7 +63,7 @@ class UpdateTemplateRequest(BaseModel):
     parse_dates_using_template_date_format: Optional[StrictBool] = Field(default=None, description="Date fields also accept NN/NN/YYYY dates (with slashes, dashes or dots), read in the order of the template's default date format: month first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields only accept YYYY-MM-DD. Applies to PDF templates: an HTML or Word template's date fields only accept YYYY-MM-DD. Date fields that include a time take RFC 3339 date-times either way.")
     public_submissions: Optional[StrictBool] = Field(default=None, description="Allow anyone with a submission's ID to download its PDF.")
     public_web_form: Optional[StrictBool] = Field(default=None, description="Allow anyone to fill in the template's web form.")
-    redirect_url: Optional[StrictStr] = Field(default=None, description="Where the web form sends people after they submit it.")
+    redirect_url: Optional[StrictStr] = Field(default=None, description="Where the web form sends people after they submit it, instead of showing its success screen. After its `?` or `#`, it can have variables such as `{{ data.first_name }}`, which the form fills in with what they submitted.")
     signature_request_email_attachments: Optional[SignatureRequestEmailAttachments] = Field(default=None, description="How DocSpring's completed emails send the signed PDF to your signers and CCs: `attachment` (attached, or a download link when it's too big to attach) or `link` (a download link). Null uses your account's rule: a link if your account has signed a BAA, otherwise attached. PDF templates only. A signature request uses the value it had when the request was created.")
     signature_request_from_address: Optional[StrictStr] = Field(default=None, description="The address DocSpring's emails to your signers come from: an address at one of your verified email domains, on the Growth plan or higher. Null sends them from DocSpring's shared address, with \"via DocSpring\" after the sender name. PDF templates only.")
     signature_request_include_signing_token: Optional[StrictBool] = Field(default=None, description="Puts a signing token in `signature_request_signing_url`, as `{{ token_id }}` and `{{ token_secret }}`, so your page can open the signing form without creating a token itself. The email then carries a credential: anyone who has it can open the form and sign. PDF templates only.")
@@ -70,10 +71,14 @@ class UpdateTemplateRequest(BaseModel):
     signature_request_notification_emails: Optional[List[StrictStr]] = Field(default=None, description="Who DocSpring tells when a signature request's document is completed or declined, or an email bounces or can't be sent: members of your DocSpring team or addresses at your verified email domains. Empty means your account's owner. A submission's `notification_emails` replaces them. PDF templates only.")
     signature_request_reply_to: Optional[StrictStr] = Field(default=None, description="Where your signers' replies to DocSpring's emails go: a member of your DocSpring team or an address at one of your verified email domains. Null means your account's owner. A submission's `reply_to` replaces it. PDF templates only.")
     signature_request_signing_url: Optional[StrictStr] = Field(default=None, description="A page on your own site that the button in DocSpring's email to a signer opens, instead of DocSpring's signing page: an https URL on one of your verified email domains or a subdomain of one, on the Growth plan or higher. It must include `{{ signature_request_id }}`. Your page authenticates the signer, creates a token for the signature request, and opens the signing form with it. Null links to DocSpring's signing page. PDF templates only.")
+    success_title: Optional[StrictStr] = Field(default=None, description="The title of the web form's success screen. When it's null or empty, the screen says \"Thanks for filling out\" and the template's name. It can have variables such as `{{ data.first_name }}`.")
+    success_message: Optional[StrictStr] = Field(default=None, description="A message under the title of the web form's success screen, as plain text. Line breaks show, and web addresses become links. It can have variables such as `{{ data.first_name }}`.")
+    show_fill_again_button: Optional[StrictBool] = Field(default=None, description="Whether the web form's success screen has a \"Fill out again\" button, which clears the form so someone can fill it in again.")
     slack_webhook_url: Optional[StrictStr] = Field(default=None, description="A Slack incoming webhook URL that is notified about the template's submissions. It's never returned; `has_slack_webhook_url` says if it's set.")
     defaults: Optional[TemplateDefaultsInput] = Field(default=None, description="The default style of the template's fields. Setting it replaces the whole object.")
     field_dependencies: Optional[List[TemplateFieldDependencyInput]] = Field(default=None, description="The template's conditional logic rules. Setting them replaces all of the rules.")
     field_groups: Optional[List[FieldGroupInput]] = Field(default=None, description="Changes to the settings of the template's field groups, each with the `name` of the group it changes. Settings left out keep their values, and groups left out are unchanged.")
+    form_sections: Optional[List[TemplateFormSectionInput]] = Field(default=None, description="The web form's sections, in order. Setting them replaces all of the sections; an empty list removes them.")
     predefined_fields: Optional[List[PredefinedFieldInput]] = Field(default=None, description="The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it's given that name. Setting it replaces the whole list; an empty list turns them off.")
     predefined_fields_sample_data: Optional[Dict[str, Any]] = Field(default=None, description="Sample submission data that sets `predefined_fields`: each value becomes a predefined field, with a type that fits it (`string`, `number`, `boolean`, `date`, `email` or `url`) and `required_in_template` true. Nested objects and arrays become names with `/`, such as `customer/email`. Without `predefined_fields` in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.")
     html: Optional[StrictStr] = Field(default=None, description="The HTML of an HTML template, as a Liquid template. Null for other templates.")
@@ -84,7 +89,7 @@ class UpdateTemplateRequest(BaseModel):
     html_escape_data: Optional[StrictBool] = Field(default=None, description="Whether an HTML template HTML-escapes the values it prints. When true, `{{ value }}` prints a value as text, so a `<` or `&` in it is printed as that character, and `{{ value | raw }}` prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for other templates.")
     layout: Optional[Dict[str, Any]] = Field(default=None, description="A page design's layout: its page setup, its sections and the elements placed in them, in the Page Designer layout format (https://docspring.com/docs/page-designer/layout-format/). Its JSON Schema is at https://docspring.com/schemas/page-designer/layout.v1.json. Null for other templates. Setting it replaces the whole layout, and DocSpring adds a field for each value it reads. Left out when a page design is created, it starts with an empty page.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "description", "output_format", "parent_folder_id", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "signature_request_email_attachments", "signature_request_from_address", "signature_request_include_signing_token", "signature_request_from_name", "signature_request_notification_emails", "signature_request_reply_to", "signature_request_signing_url", "slack_webhook_url", "defaults", "field_dependencies", "field_groups", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "html_escape_data", "layout"]
+    __properties: ClassVar[List[str]] = ["name", "description", "output_format", "parent_folder_id", "locked", "add_signature_request_submission_id_footers", "ai_field_naming_language", "allow_additional_properties", "allow_skipping_optional_fields", "default_form_mode", "editable_submissions", "embed_domains", "embed_edit_allow_settings", "embed_edit_allow_versioning", "embed_edit_allow_document_replacement", "encrypt_pdfs", "encrypt_pdfs_password", "expire_submissions", "expire_after", "expiration_interval", "merge_audit_trail_pdf", "parse_dates_using_template_date_format", "public_submissions", "public_web_form", "redirect_url", "signature_request_email_attachments", "signature_request_from_address", "signature_request_include_signing_token", "signature_request_from_name", "signature_request_notification_emails", "signature_request_reply_to", "signature_request_signing_url", "success_title", "success_message", "show_fill_again_button", "slack_webhook_url", "defaults", "field_dependencies", "field_groups", "form_sections", "predefined_fields", "predefined_fields_sample_data", "html", "scss", "header_html", "footer_html", "html_engine_options", "html_escape_data", "layout"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -143,6 +148,12 @@ class UpdateTemplateRequest(BaseModel):
             for _item_field_groups in self.field_groups:
                 _items.append(_item_field_groups.to_dict() if _item_field_groups is not None else None)
             _dict['field_groups'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in form_sections (list)
+        _items = []
+        if self.form_sections:
+            for _item_form_sections in self.form_sections:
+                _items.append(_item_form_sections.to_dict() if _item_form_sections is not None else None)
+            _dict['form_sections'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in predefined_fields (list)
         _items = []
         if self.predefined_fields:
@@ -201,6 +212,16 @@ class UpdateTemplateRequest(BaseModel):
         # and model_fields_set contains the field
         if self.signature_request_signing_url is None and "signature_request_signing_url" in self.model_fields_set:
             _dict['signature_request_signing_url'] = None
+
+        # set to None if success_title (nullable) is None
+        # and model_fields_set contains the field
+        if self.success_title is None and "success_title" in self.model_fields_set:
+            _dict['success_title'] = None
+
+        # set to None if success_message (nullable) is None
+        # and model_fields_set contains the field
+        if self.success_message is None and "success_message" in self.model_fields_set:
+            _dict['success_message'] = None
 
         # set to None if slack_webhook_url (nullable) is None
         # and model_fields_set contains the field
@@ -286,10 +307,14 @@ class UpdateTemplateRequest(BaseModel):
             "signature_request_notification_emails": obj.get("signature_request_notification_emails"),
             "signature_request_reply_to": obj.get("signature_request_reply_to"),
             "signature_request_signing_url": obj.get("signature_request_signing_url"),
+            "success_title": obj.get("success_title"),
+            "success_message": obj.get("success_message"),
+            "show_fill_again_button": obj.get("show_fill_again_button"),
             "slack_webhook_url": obj.get("slack_webhook_url"),
             "defaults": TemplateDefaultsInput.from_dict(obj["defaults"]) if obj.get("defaults") is not None else None,
             "field_dependencies": [TemplateFieldDependencyInput.from_dict(_item) for _item in obj["field_dependencies"]] if obj.get("field_dependencies") is not None else None,
             "field_groups": [FieldGroupInput.from_dict(_item) for _item in obj["field_groups"]] if obj.get("field_groups") is not None else None,
+            "form_sections": [TemplateFormSectionInput.from_dict(_item) for _item in obj["form_sections"]] if obj.get("form_sections") is not None else None,
             "predefined_fields": [PredefinedFieldInput.from_dict(_item) for _item in obj["predefined_fields"]] if obj.get("predefined_fields") is not None else None,
             "predefined_fields_sample_data": obj.get("predefined_fields_sample_data"),
             "html": obj.get("html"),

@@ -30,14 +30,14 @@ class HtmlEngineOptionsInput(BaseModel):
     How an HTML template's PDFs are printed.
     """ # noqa: E501
     format: Optional[PageFormat] = Field(default=None, description="The paper size. `Custom` uses `width` and `height`.")
-    width: Optional[StrictStr] = Field(default=None, description="The page width for the `Custom` format, with a unit (`8.5in`, `210mm`).")
-    height: Optional[StrictStr] = Field(default=None, description="The page height for the `Custom` format, with a unit.")
+    width: Optional[StrictStr] = Field(default=None, description="The page width for the `Custom` format, with a unit (`8.5in`, `210mm`), from 0.05in to 200in.")
+    height: Optional[StrictStr] = Field(default=None, description="The page height for the `Custom` format, with a unit, from 0.05in to 200in.")
     scale: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="How much to scale the page, from 0.1 to 2, such as `0.8`. `1` prints it at its normal size.")
     landscape: Optional[StrictBool] = Field(default=None, description="Print pages in landscape orientation.")
     print_background: Optional[StrictBool] = Field(default=None, description="Print background colors and images.")
-    margin_top: Optional[StrictStr] = Field(default=None, description="The top margin, with a unit, such as `1in` or `20mm`.")
+    margin_top: Optional[StrictStr] = Field(default=None, description="The top margin, with a unit, such as `1in` or `20mm`. The top and bottom margins together must be less than the page's height.")
     margin_bottom: Optional[StrictStr] = Field(default=None, description="The bottom margin, with a unit.")
-    margin_left: Optional[StrictStr] = Field(default=None, description="The left margin, with a unit.")
+    margin_left: Optional[StrictStr] = Field(default=None, description="The left margin, with a unit. The left and right margins together must be less than the page's width.")
     margin_right: Optional[StrictStr] = Field(default=None, description="The right margin, with a unit.")
     __properties: ClassVar[List[str]] = ["format", "width", "height", "scale", "landscape", "print_background", "margin_top", "margin_bottom", "margin_left", "margin_right"]
 
