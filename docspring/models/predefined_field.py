@@ -34,9 +34,10 @@ class PredefinedField(BaseModel):
     title: Optional[StrictStr] = Field(default=None, description="The Title setting a field gets when it's given this name. Null leaves the field's title as it is.")
     type: FieldType = Field(description="The data type a field gets when it's given this name, as a field's `type`.")
     option_list: Optional[StrictStr] = Field(default=None, description="String fields only: the values allowed, separated by commas, such as `Yes,No`. Null allows any value.")
+    option_labels: Optional[Dict[str, StrictStr]] = Field(default=None, description="The labels forms show for `option_list`'s values, by value, as a field's `option_labels`, such as `{\"married_filing_jointly\": \"Married filing jointly\"}`. Each key must be one of `option_list`'s values. A value without a label shows the value, or its sentence case when the values are lowercase words joined by underscores. Null gives no value a label of its own.")
     required_in_template: Optional[StrictBool] = Field(default=None, description="Whether the template must have a field with this name. The embedded editor shows the names that are missing, and with `disableDoneButtonIfPredefinedFieldsMissing` keeps its Done button disabled until the template has them. Default false.")
     field_required: Optional[StrictBool] = Field(default=None, description="The Required setting a field gets when it's given this name. Default true.")
-    __properties: ClassVar[List[str]] = ["name", "display_name", "title", "type", "option_list", "required_in_template", "field_required"]
+    __properties: ClassVar[List[str]] = ["name", "display_name", "title", "type", "option_list", "option_labels", "required_in_template", "field_required"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -92,6 +93,11 @@ class PredefinedField(BaseModel):
         if self.option_list is None and "option_list" in self.model_fields_set:
             _dict['option_list'] = None
 
+        # set to None if option_labels (nullable) is None
+        # and model_fields_set contains the field
+        if self.option_labels is None and "option_labels" in self.model_fields_set:
+            _dict['option_labels'] = None
+
         return _dict
 
     @classmethod
@@ -109,6 +115,7 @@ class PredefinedField(BaseModel):
             "title": obj.get("title"),
             "type": obj.get("type"),
             "option_list": obj.get("option_list"),
+            "option_labels": obj.get("option_labels"),
             "required_in_template": obj.get("required_in_template"),
             "field_required": obj.get("field_required")
         }, context={"skip_enum_validation": True})

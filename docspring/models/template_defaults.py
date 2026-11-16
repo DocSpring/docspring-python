@@ -41,7 +41,7 @@ class TemplateDefaults(BaseModel):
     alignment: Optional[TextAlignment] = Field(default=None, description="How text is aligned in its field. `justify` lines up both edges of every line of multiline text except the last of each paragraph.")
     opacity: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The opacity of the field's content, from 0 (invisible) to 1.")
     date_format: Optional[StrictStr] = Field(default=None, description="How date fields are printed, as a strftime format such as `%m/%d/%Y`.")
-    date_time_format: Optional[StrictStr] = Field(default=None, description="How date-time fields are printed, as a strftime format such as `%m/%d/%Y %H:%M:%S`.")
+    date_time_format: Optional[StrictStr] = Field(default=None, description="How date-time fields are printed, as a strftime format such as `%m/%d/%Y %H:%M`.")
     check_color: Optional[StrictStr] = Field(default=None, description="The color of check marks, as 6 hex digits.")
     check_character: Optional[CheckCharacter] = Field(default=None, description="The character that a ticked check box prints.")
     check_background_color: Optional[StrictStr] = Field(default=None, description="The check box's background color, as 6 hex digits.")

@@ -46,6 +46,7 @@ class TestCreateTemplateRequest(unittest.TestCase):
                 ai_field_naming_language = 'auto',
                 allow_additional_properties = True,
                 allow_skipping_optional_fields = True,
+                continue_before_optional_fields = True,
                 default_form_mode = 'web',
                 editable_submissions = True,
                 embed_domains = [
@@ -76,6 +77,7 @@ class TestCreateTemplateRequest(unittest.TestCase):
                 success_title = '',
                 success_message = '',
                 show_fill_again_button = True,
+                form_sections_in_order = True,
                 slack_webhook_url = '',
                 defaults = docspring.models.template_defaults_input.TemplateDefaultsInput(
                     typeface = null, 
@@ -110,6 +112,17 @@ class TestCreateTemplateRequest(unittest.TestCase):
                             ], 
                         group = '', )
                     ],
+                signer_roles = [
+                    docspring.models.template_signer_role_input.TemplateSignerRoleInput(
+                        id = '', 
+                        key = '', 
+                        name = '', 
+                        name_expression = '', 
+                        email_expression = '', )
+                    ],
+                signature_request_cc = [
+                    ''
+                    ],
                 predefined_fields = [
                     docspring.models.predefined_field_input.PredefinedFieldInput(
                         name = '', 
@@ -117,6 +130,9 @@ class TestCreateTemplateRequest(unittest.TestCase):
                         title = '', 
                         type = null, 
                         option_list = '', 
+                        option_labels = {
+                            'key' : ''
+                            }, 
                         required_in_template = True, 
                         field_required = True, )
                     ],
@@ -138,6 +154,8 @@ class TestCreateTemplateRequest(unittest.TestCase):
                     margin_right = '', ),
                 html_escape_data = True,
                 layout = { },
+                override_account_expiry = True,
+                sync_fields = True,
                 cache_id = '',
                 document_url = '',
                 document_base64 = '',

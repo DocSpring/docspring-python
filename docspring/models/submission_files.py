@@ -32,12 +32,13 @@ class SubmissionFiles(BaseModel):
     """ # noqa: E501
     pdf: Optional[GeneratedFile] = Field(default=None, description="The submission's PDF.")
     audit_trail: Optional[GeneratedFile] = Field(default=None, description="The audit trail of a submission with signature requests: who signed, when and how. It's also added to the end of the PDF when the template's `merge_audit_trail_pdf` is on.")
+    signing_manifest: Optional[GeneratedFile] = Field(default=None, description="The audit data behind the audit trail of a submission with signature requests, as JSON: the hashes of the document and the audit trail, and each signing event with the salt and hash that DocSpring's signing record holds for it. It has who signed, like the audit trail, and goes when the submission expires, so keep it with the PDF and the audit trail.")
     preview: Optional[GeneratedFile] = Field(default=None, description="The preview PDF from POST /submissions/{submission_id}/generate_preview, such as for a submission still waiting for its signature requests.")
     docx: Optional[GeneratedFile] = Field(default=None, description="The Word document of a Word template's submission, when the submission makes one (`output_formats`).")
     odt: Optional[GeneratedFile] = Field(default=None, description="The OpenDocument file (.odt, the format LibreOffice uses) of a Word template's submission, converted from its Word document, when the submission makes one (`output_formats`).")
     png: Optional[PageImages] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["pdf", "audit_trail", "preview", "docx", "odt", "png"]
+    __properties: ClassVar[List[str]] = ["pdf", "audit_trail", "signing_manifest", "preview", "docx", "odt", "png"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -86,6 +87,9 @@ class SubmissionFiles(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of audit_trail
         if self.audit_trail:
             _dict['audit_trail'] = self.audit_trail.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of signing_manifest
+        if self.signing_manifest:
+            _dict['signing_manifest'] = self.signing_manifest.to_dict()
         # override the default output from pydantic by calling `to_dict()` of preview
         if self.preview:
             _dict['preview'] = self.preview.to_dict()
@@ -117,6 +121,7 @@ class SubmissionFiles(BaseModel):
         _obj = cls.model_validate({
             "pdf": GeneratedFile.from_dict(obj["pdf"]) if obj.get("pdf") is not None else None,
             "audit_trail": GeneratedFile.from_dict(obj["audit_trail"]) if obj.get("audit_trail") is not None else None,
+            "signing_manifest": GeneratedFile.from_dict(obj["signing_manifest"]) if obj.get("signing_manifest") is not None else None,
             "preview": GeneratedFile.from_dict(obj["preview"]) if obj.get("preview") is not None else None,
             "docx": GeneratedFile.from_dict(obj["docx"]) if obj.get("docx") is not None else None,
             "odt": GeneratedFile.from_dict(obj["odt"]) if obj.get("odt") is not None else None,

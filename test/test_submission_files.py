@@ -38,6 +38,7 @@ class TestSubmissionFiles(unittest.TestCase):
             return SubmissionFiles(
                 pdf = { },
                 audit_trail = { },
+                signing_manifest = { },
                 preview = { },
                 docx = { },
                 odt = { },

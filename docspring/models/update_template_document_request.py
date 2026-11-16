@@ -33,7 +33,8 @@ class UpdateTemplateDocumentRequest(BaseModel):
     document_base64: Optional[StrictStr] = Field(default=None, description="The template's document (a PDF, or a Word template's Word document), encoded as base64 (a `data:` URI works too), instead of `cache_id`. Line breaks and spaces in it are ignored. Up to 7 MB before it's encoded: send a larger file with `cache_id` or `document_url`.")
     filename: Optional[StrictStr] = Field(default=None, description="The file's name, for a `cache_id` (presigned uploads don't send one) or `document_base64`. A `document_url`'s is the last part of its path unless you set it.")
     reimport_fields: Optional[StrictBool] = Field(default=None, description="Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.")
-    __properties: ClassVar[List[str]] = ["cache_id", "document_url", "document_base64", "filename", "reimport_fields"]
+    sync_fields: Optional[StrictBool] = Field(default=None, description="Add a field for each value the template's code, Word document or layout reads for the first time, with a type worked out from how it's used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn't on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs.")
+    __properties: ClassVar[List[str]] = ["cache_id", "document_url", "document_base64", "filename", "reimport_fields", "sync_fields"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -91,7 +92,8 @@ class UpdateTemplateDocumentRequest(BaseModel):
             "document_url": obj.get("document_url"),
             "document_base64": obj.get("document_base64"),
             "filename": obj.get("filename"),
-            "reimport_fields": obj.get("reimport_fields")
+            "reimport_fields": obj.get("reimport_fields"),
+            "sync_fields": obj.get("sync_fields")
         }, context={"skip_enum_validation": True})
         return _obj
 

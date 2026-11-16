@@ -29,6 +29,7 @@ from docspring.models.field_type import FieldType
 from docspring.models.image_gravity import ImageGravity
 from docspring.models.image_scale_type import ImageScaleType
 from docspring.models.number_condition_type import NumberConditionType
+from docspring.models.number_part import NumberPart
 from docspring.models.shape_type import ShapeType
 from docspring.models.string_condition_type import StringConditionType
 from docspring.models.text_alignment import TextAlignment
@@ -55,6 +56,8 @@ class FieldInput(BaseModel):
     metadata: Optional[StrictStr] = Field(default=None, description="Text for your own use, added to the template's data schema as `x-metadata`. DocSpring doesn't use it. Shared by every field with the same `name`.")
     required: Optional[StrictBool] = Field(default=None, description="Whether each submission must include a value for the field. A submission without one fails validation, and no PDF is generated. Shared by every field with the same `name`.")
     option_list: Optional[StrictStr] = Field(default=None, description="String fields only: a comma-separated list of the values the field accepts. It's added to the template's data schema as an `enum`, forms show it as a select list, and an `editable` field becomes a dropdown. Shared by every field with the same `name`.")
+    option_labels: Optional[Dict[str, StrictStr]] = Field(default=None, description="With `option_list`: the label forms show for each option, keyed by its value, such as `{\"head_of_household\": \"Head of household\"}`. The data, the API and webhooks keep the value, and the PDF prints it unless `print_option_labels` is set. An option without a label shows its value, or its sentence case when the options are lowercase words joined by underscores (`head_of_household` shows as \"Head of household\"). The template's data schema has them as `x-option-labels`. Each key must be one of the options, and each label must have some text. Shared by every field with the same `name`.")
+    print_option_labels: Optional[StrictBool] = Field(default=None, description="Text display, with `option_labels`: the PDF prints the chosen option's label instead of its value, and an `editable` field's dropdown lists the labels. Shared by every field with the same `name`.")
     combined_field_names: Optional[StrictStr] = Field(default=None, description="Combined fields only: a comma-separated list of the names of the fields whose values are combined, in order. Shared by every field with the same `name`.")
     combined_field_type: Optional[CombinedFieldType] = Field(default=None, description="Combined fields only: `separator` joins the values with `combined_field_separator`, and `format` puts them into `combined_field_format`. Shared by every field with the same `name`.")
     combined_field_separator: Optional[StrictStr] = Field(default=None, description="Combined fields only: the text placed between the values when `combined_field_type` is `separator`. Empty values are skipped. Defaults to a space. Shared by every field with the same `name`.")
@@ -68,6 +71,9 @@ class FieldInput(BaseModel):
     signature_allow_draw: Optional[StrictBool] = Field(default=None, description="Signature and initials fields only: lets signers draw their signature on forms and in data requests. Shared by every field with the same `name`.")
     signature_allow_type: Optional[StrictBool] = Field(default=None, description="Signature and initials fields only: lets signers type their name and choose a script font instead of drawing, on forms and in data requests. Shared by every field with the same `name`.")
     barcode_symbology: Optional[BarcodeSymbology] = Field(default=None, description="Barcode fields only: the barcode format, which the value must match. `code_128` and `pdf417` take any ASCII text; `code_39` and `code_93` take capital letters, digits, spaces and `- . $ / + %`; `code_25` takes digits; `ean_13` takes 12 digits, `ean_8` 7 digits and `upc_a` 11 digits (the check digit is added). Shared by every field with the same `name`.")
+    comb_fill_from_right: Optional[StrictBool] = Field(default=None, description="With `comb`: the value fills the last boxes of the comb fields with this name, padded on the left with spaces, or with zeros with `comb_pad_with_zeros`, as amounts are written on paper forms. A number with `decimal_places` in one row of boxes lines up on its decimal point, which takes no box: the decimal places fill the last boxes. Date fields ignore it: a date prints in its format. Shared by every field with the same `name`.")
+    comb_pad_with_zeros: Optional[StrictBool] = Field(default=None, description="With `comb_fill_from_right`: pads the value on the left with zeros instead of spaces, such as `000123`. A negative number keeps its minus sign in the first box. Shared by every field with the same `name`.")
+    print_digits_only: Optional[StrictBool] = Field(default=None, description="With `comb`, for string fields: only the value's digits print, one in each box, and any punctuation is left out, so `123-45-6789` fills the 9 boxes of an SSN. The template's data schema accepts as many digits as the boxes hold, with anything but letters between them. Number and date fields ignore it. Shared by every field with the same `name`.")
     hidden: Optional[StrictBool] = Field(default=None, description="Leaves the field off the PDF. It stays in the template's data schema (marked `x-hidden`) and on forms, so other fields, such as combined fields, can use its value. A hidden static check mark or shape isn't printed.")
     x: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The distance from the page's left edge to the field's left edge. Positions and sizes are in units where every page is 2480 wide: one unit is the page's width in points divided by 2480 (about 0.247 points on a US Letter page).")
     y: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The distance from the top edge of the field's `page` down to the field's top edge, in the units of `x`. A page is 2480 times its height divided by its width units tall: about 3209 for US Letter and 3508 for A4.")
@@ -99,8 +105,8 @@ class FieldInput(BaseModel):
     alignment: Optional[TextAlignment] = Field(default=None, description="Text display only: how the text is aligned across the field: `left`, `center`, `right` or `justify` (both edges of every line of multiline text except the last of each paragraph).")
     v_alignment: Optional[TextVerticalAlignment] = Field(default=None, description="Text display only: how the text is aligned vertically in the field: `bottom`, `center` or `top`.")
     comb: Optional[StrictBool] = Field(default=None, description="Text display only: splits the field into `comb_number_of_cells` boxes of equal width and prints one character, centered, in each.")
-    comb_number_of_cells: Optional[StrictInt] = Field(default=None, description="With `comb`: how many boxes the field has. The value's maximum length in the template's data schema is this plus `comb_value_offset`.")
-    comb_value_offset: Optional[StrictInt] = Field(default=None, description="With `comb`: the position, from 0, of the first character of the value that this field prints. For an SSN printed in boxes of 3, 2 and 4 digits, three fields named `ssn` use offsets 0, 3 and 5.")
+    comb_number_of_cells: Optional[StrictInt] = Field(default=None, description="With `comb`: how many boxes the field has, up to 10,000. The value's maximum length in the template's data schema is the furthest that a comb field of its name reaches: its `comb_value_offset` plus its boxes. With `print_digits_only`, that many digits. A number field is split from its printed form (with `decimal_places`), and a number with a digit that no box prints (more digits than the boxes, or a digit where the offsets leave a gap) is a data error.")
+    comb_value_offset: Optional[StrictInt] = Field(default=None, description="With `comb`: how many boxes of the value's row come before this field, from 0 to 10,000. The comb fields that share a name make one row of boxes, and each prints the row's characters from its offset. For an SSN printed in boxes of 3, 2 and 4 digits, three fields named `ssn` use offsets 0, 3 and 5. The fields that print a number's whole part (`number_part`) make a row of their own, and so do the ones that print its decimal places.")
     shape_type: Optional[ShapeType] = Field(default=None, description="Shape display only: `square`, `rectangle`, `circle`, `ellipse`, `triangle` or `polygon`. A square or circle uses the smaller of `width` and `height`.")
     shape_sides: Optional[StrictInt] = Field(default=None, description="Shape display only, with `shape_type` `polygon`: the number of sides, 3 to 12.")
     shape_border_width: Optional[StrictInt] = Field(default=None, description="Shape display only: the width of the shape's border, in points.")
@@ -129,11 +135,13 @@ class FieldInput(BaseModel):
     invert_boolean_condition: Optional[StrictBool] = Field(default=None, description="Boolean fields with check or shape display: prints the check mark or shape when the value is `false` or missing, instead of `true`.")
     currency: Optional[StrictBool] = Field(default=None, description="Number fields only: forms show a currency input, and the template's data schema gives the field `format: currency`. It doesn't change how the number prints.")
     decimal_places: Optional[StrictInt] = Field(default=None, description="Number fields with text display: prints the number with this many decimal places, from 0 (rounds to a whole number) to 99. Empty prints the number as it was sent.")
+    number_part: Optional[NumberPart] = Field(default=None, description="Number fields with text display: which part of the number this field prints. `all` prints the whole number, `whole` only the part before the decimal point (with a minus sign) and `decimals` only the decimal places. For an amount printed as `$ ____ . __`, two fields with the same name: one `whole`, and one `decimals` with `decimal_places` 2. The number is rounded once, to the `decimals` field's decimal places (2 when it sets none).")
     image_scale_type: Optional[ImageScaleType] = Field(default=None, description="Image fields only: how the image is resized to the field. `fit` keeps its proportions and fits it inside the field, which can leave empty space; `fill` keeps its proportions and crops it to fill the field; `stretch` stretches it to the field's size. Signatures and initials always fit.")
     image_gravity: Optional[ImageGravity] = Field(default=None, description="Image, signature and initials fields: where the image sits in the field with `fit`, or which part is kept with `fill`: `NorthWest` (top left), `North`, `NorthEast`, `West`, `Center`, `East`, `SouthWest`, `South` or `SouthEast` (bottom right). It also aligns typed signatures, and isn't used with `stretch`.")
+    signer_role: Optional[StrictStr] = Field(default=None, description="Who fills in or signs the field when a submission has signature requests: one of the template's `signer_roles`, by its key, or `sender` for a field that submission data fills in, which no signer is asked for. Null when it has no role: a submission's only signer fills it in when data doesn't, and with two or more signature requests one of them has to list it in its `fields`. In an HTML or Word template, a field whose tag gives it a role (`{% form_field tenant_name, role: tenant %}`) has that one, which only the code can change. Shared by every field with the same `name`.")
     dependencies: Optional[FieldDependencyInput] = Field(default=None, description="The field's own conditional logic rule: when other fields' values meet its conditions, the field is shown, made required, or both. Null when it has none. The template's rules (`field_dependencies`) can apply to the field too. Shared by every field with the same `name`.")
     id: Optional[StrictInt] = Field(default=None, description="The field's ID. Required when updating a field. When adding one, leave it out for the next free ID.")
-    __properties: ClassVar[List[str]] = ["name", "page", "type", "static", "editable", "default", "title", "description", "placeholder", "metadata", "required", "option_list", "combined_field_names", "combined_field_type", "combined_field_separator", "combined_field_format", "integer", "minimum", "maximum", "exclusive_minimum", "exclusive_maximum", "include_time", "signature_allow_draw", "signature_allow_type", "barcode_symbology", "hidden", "x", "y", "width", "height", "rotation", "display_type", "opacity", "date_time_format", "typeface", "font_size", "character_spacing", "bold", "uppercase", "strikethrough", "keep_leading_spaces", "overflow", "multiline", "multiline_lines", "min_length", "max_length", "auto_calculate_max_length", "color", "color_field_name", "color_field_required", "background_color", "background_color_field_name", "background_color_field_required", "alignment", "v_alignment", "comb", "comb_number_of_cells", "comb_value_offset", "shape_type", "shape_sides", "shape_border_width", "shape_border_color", "shape_border_color_field_name", "shape_border_color_field_required", "shape_fill_color", "shape_fill_color_field_name", "shape_fill_color_field_required", "check_character", "check_color", "check_color_field_name", "check_color_field_required", "qrcode_color", "qrcode_color_field_name", "qrcode_color_field_required", "true_text", "false_text", "condition", "string_condition_type", "number_condition_type", "number_condition_range_min", "number_condition_range_max", "number_condition_range_exclusive_min", "number_condition_range_exclusive_max", "invert_boolean_condition", "currency", "decimal_places", "image_scale_type", "image_gravity", "dependencies", "id"]
+    __properties: ClassVar[List[str]] = ["name", "page", "type", "static", "editable", "default", "title", "description", "placeholder", "metadata", "required", "option_list", "option_labels", "print_option_labels", "combined_field_names", "combined_field_type", "combined_field_separator", "combined_field_format", "integer", "minimum", "maximum", "exclusive_minimum", "exclusive_maximum", "include_time", "signature_allow_draw", "signature_allow_type", "barcode_symbology", "comb_fill_from_right", "comb_pad_with_zeros", "print_digits_only", "hidden", "x", "y", "width", "height", "rotation", "display_type", "opacity", "date_time_format", "typeface", "font_size", "character_spacing", "bold", "uppercase", "strikethrough", "keep_leading_spaces", "overflow", "multiline", "multiline_lines", "min_length", "max_length", "auto_calculate_max_length", "color", "color_field_name", "color_field_required", "background_color", "background_color_field_name", "background_color_field_required", "alignment", "v_alignment", "comb", "comb_number_of_cells", "comb_value_offset", "shape_type", "shape_sides", "shape_border_width", "shape_border_color", "shape_border_color_field_name", "shape_border_color_field_required", "shape_fill_color", "shape_fill_color_field_name", "shape_fill_color_field_required", "check_character", "check_color", "check_color_field_name", "check_color_field_required", "qrcode_color", "qrcode_color_field_name", "qrcode_color_field_required", "true_text", "false_text", "condition", "string_condition_type", "number_condition_type", "number_condition_range_min", "number_condition_range_max", "number_condition_range_exclusive_min", "number_condition_range_exclusive_max", "invert_boolean_condition", "currency", "decimal_places", "number_part", "image_scale_type", "image_gravity", "signer_role", "dependencies", "id"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -192,6 +200,11 @@ class FieldInput(BaseModel):
         # and model_fields_set contains the field
         if self.option_list is None and "option_list" in self.model_fields_set:
             _dict['option_list'] = None
+
+        # set to None if option_labels (nullable) is None
+        # and model_fields_set contains the field
+        if self.option_labels is None and "option_labels" in self.model_fields_set:
+            _dict['option_labels'] = None
 
         # set to None if minimum (nullable) is None
         # and model_fields_set contains the field
@@ -318,6 +331,11 @@ class FieldInput(BaseModel):
         if self.decimal_places is None and "decimal_places" in self.model_fields_set:
             _dict['decimal_places'] = None
 
+        # set to None if signer_role (nullable) is None
+        # and model_fields_set contains the field
+        if self.signer_role is None and "signer_role" in self.model_fields_set:
+            _dict['signer_role'] = None
+
         # set to None if dependencies (nullable) is None
         # and model_fields_set contains the field
         if self.dependencies is None and "dependencies" in self.model_fields_set:
@@ -347,6 +365,8 @@ class FieldInput(BaseModel):
             "metadata": obj.get("metadata"),
             "required": obj.get("required"),
             "option_list": obj.get("option_list"),
+            "option_labels": obj.get("option_labels"),
+            "print_option_labels": obj.get("print_option_labels"),
             "combined_field_names": obj.get("combined_field_names"),
             "combined_field_type": obj.get("combined_field_type"),
             "combined_field_separator": obj.get("combined_field_separator"),
@@ -360,6 +380,9 @@ class FieldInput(BaseModel):
             "signature_allow_draw": obj.get("signature_allow_draw"),
             "signature_allow_type": obj.get("signature_allow_type"),
             "barcode_symbology": obj.get("barcode_symbology"),
+            "comb_fill_from_right": obj.get("comb_fill_from_right"),
+            "comb_pad_with_zeros": obj.get("comb_pad_with_zeros"),
+            "print_digits_only": obj.get("print_digits_only"),
             "hidden": obj.get("hidden"),
             "x": obj.get("x"),
             "y": obj.get("y"),
@@ -421,8 +444,10 @@ class FieldInput(BaseModel):
             "invert_boolean_condition": obj.get("invert_boolean_condition"),
             "currency": obj.get("currency"),
             "decimal_places": obj.get("decimal_places"),
+            "number_part": obj.get("number_part"),
             "image_scale_type": obj.get("image_scale_type"),
             "image_gravity": obj.get("image_gravity"),
+            "signer_role": obj.get("signer_role"),
             "dependencies": FieldDependencyInput.from_dict(obj["dependencies"]) if obj.get("dependencies") is not None else None,
             "id": obj.get("id")
         }, context={"skip_enum_validation": True})

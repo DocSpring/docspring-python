@@ -58,9 +58,6 @@ class TestSignatureRequestInput(unittest.TestCase):
             )
         else:
             return SignatureRequestInput(
-                fields = [
-                    ''
-                    ],
         )
         """
 

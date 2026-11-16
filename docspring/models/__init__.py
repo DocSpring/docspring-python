@@ -103,6 +103,7 @@ from docspring.models.model_field import ModelField
 from docspring.models.move_folder_request import MoveFolderRequest
 from docspring.models.move_template_request import MoveTemplateRequest
 from docspring.models.number_condition_type import NumberConditionType
+from docspring.models.number_part import NumberPart
 from docspring.models.output_format import OutputFormat
 from docspring.models.page_format import PageFormat
 from docspring.models.page_image import PageImage
@@ -179,6 +180,8 @@ from docspring.models.template_page_images import TemplatePageImages
 from docspring.models.template_page_processing_status import TemplatePageProcessingStatus
 from docspring.models.template_preview import TemplatePreview
 from docspring.models.template_preview_state import TemplatePreviewState
+from docspring.models.template_signer_role import TemplateSignerRole
+from docspring.models.template_signer_role_input import TemplateSignerRoleInput
 from docspring.models.template_source_pdf import TemplateSourcePdf
 from docspring.models.template_summary import TemplateSummary
 from docspring.models.template_summary_list import TemplateSummaryList

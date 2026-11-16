@@ -48,6 +48,10 @@ class TestFieldInput(unittest.TestCase):
                 metadata = '',
                 required = True,
                 option_list = '',
+                option_labels = {
+                    'key' : ''
+                    },
+                print_option_labels = True,
                 combined_field_names = '',
                 combined_field_type = 'separator',
                 combined_field_separator = '',
@@ -61,6 +65,9 @@ class TestFieldInput(unittest.TestCase):
                 signature_allow_draw = True,
                 signature_allow_type = True,
                 barcode_symbology = 'code_25',
+                comb_fill_from_right = True,
+                comb_pad_with_zeros = True,
+                print_digits_only = True,
                 hidden = True,
                 x = 1.337,
                 y = 1.337,
@@ -122,8 +129,10 @@ class TestFieldInput(unittest.TestCase):
                 invert_boolean_condition = True,
                 currency = True,
                 decimal_places = 56,
+                number_part = 'all',
                 image_scale_type = 'fit',
                 image_gravity = 'NorthWest',
+                signer_role = '',
                 dependencies = docspring.models.field_dependency_input.FieldDependencyInput(
                     action = null, 
                     match = null, 

@@ -53,6 +53,10 @@ class TestSubmissionInput(unittest.TestCase):
                         title = '', 
                         required = True, 
                         option_list = '', 
+                        option_labels = {
+                            'key' : ''
+                            }, 
+                        print_option_labels = True, 
                         combined_field_names = '', 
                         combined_field_type = null, 
                         combined_field_separator = '', 
@@ -62,6 +66,8 @@ class TestSubmissionInput(unittest.TestCase):
                         signature_allow_draw = True, 
                         signature_allow_type = True, 
                         barcode_symbology = null, 
+                        comb_fill_from_right = True, 
+                        comb_pad_with_zeros = True, 
                         hidden = True, 
                         x = 1.337, 
                         y = 1.337, 
@@ -108,6 +114,7 @@ class TestSubmissionInput(unittest.TestCase):
                         number_condition_range_exclusive_max = True, 
                         invert_boolean_condition = True, 
                         decimal_places = 56, 
+                        number_part = null, 
                         image_scale_type = null, 
                         image_gravity = null, )
                     },

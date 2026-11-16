@@ -41,6 +41,9 @@ class TestPredefinedField(unittest.TestCase):
                 title = '',
                 type = 'string',
                 option_list = '',
+                option_labels = {
+                    'key' : ''
+                    },
                 required_in_template = True,
                 field_required = True
             )

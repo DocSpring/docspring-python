@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.5.0"
+__version__ = "4.6.0"
 
 # Define package exports
 __all__ = [
@@ -119,6 +119,7 @@ __all__ = [
     "MoveFolderRequest",
     "MoveTemplateRequest",
     "NumberConditionType",
+    "NumberPart",
     "OutputFormat",
     "PageFormat",
     "PageImage",
@@ -195,6 +196,8 @@ __all__ = [
     "TemplatePageProcessingStatus",
     "TemplatePreview",
     "TemplatePreviewState",
+    "TemplateSignerRole",
+    "TemplateSignerRoleInput",
     "TemplateSourcePdf",
     "TemplateSummary",
     "TemplateSummaryList",
@@ -329,6 +332,7 @@ from docspring.models.model_field import ModelField as ModelField
 from docspring.models.move_folder_request import MoveFolderRequest as MoveFolderRequest
 from docspring.models.move_template_request import MoveTemplateRequest as MoveTemplateRequest
 from docspring.models.number_condition_type import NumberConditionType as NumberConditionType
+from docspring.models.number_part import NumberPart as NumberPart
 from docspring.models.output_format import OutputFormat as OutputFormat
 from docspring.models.page_format import PageFormat as PageFormat
 from docspring.models.page_image import PageImage as PageImage
@@ -405,6 +409,8 @@ from docspring.models.template_page_images import TemplatePageImages as Template
 from docspring.models.template_page_processing_status import TemplatePageProcessingStatus as TemplatePageProcessingStatus
 from docspring.models.template_preview import TemplatePreview as TemplatePreview
 from docspring.models.template_preview_state import TemplatePreviewState as TemplatePreviewState
+from docspring.models.template_signer_role import TemplateSignerRole as TemplateSignerRole
+from docspring.models.template_signer_role_input import TemplateSignerRoleInput as TemplateSignerRoleInput
 from docspring.models.template_source_pdf import TemplateSourcePdf as TemplateSourcePdf
 from docspring.models.template_summary import TemplateSummary as TemplateSummary
 from docspring.models.template_summary_list import TemplateSummaryList as TemplateSummaryList

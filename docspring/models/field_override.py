@@ -27,6 +27,7 @@ from docspring.models.field_display_type import FieldDisplayType
 from docspring.models.image_gravity import ImageGravity
 from docspring.models.image_scale_type import ImageScaleType
 from docspring.models.number_condition_type import NumberConditionType
+from docspring.models.number_part import NumberPart
 from docspring.models.shape_type import ShapeType
 from docspring.models.string_condition_type import StringConditionType
 from docspring.models.text_alignment import TextAlignment
@@ -47,6 +48,8 @@ class FieldOverride(BaseModel):
     title: Optional[StrictStr] = Field(default=None, description="The field's label on the signing form.")
     required: Optional[StrictBool] = Field(default=None, description="Whether `data` must have a value for the field.")
     option_list: Optional[StrictStr] = Field(default=None, description="The values the field can take, separated by commas, such as `Yes,No`. Null allows any value.")
+    option_labels: Optional[Dict[str, StrictStr]] = Field(default=None, description="The label forms show for each option, keyed by its value, such as `{\"no\": \"No, I don't\"}`. Each key must be one of the options.")
+    print_option_labels: Optional[StrictBool] = Field(default=None, description="Print the chosen option's label instead of its value.")
     combined_field_names: Optional[StrictStr] = Field(default=None, description="The names of the fields a combined field joins, separated by commas.")
     combined_field_type: Optional[CombinedFieldType] = Field(default=None, description="How a combined field joins its fields' values.")
     combined_field_separator: Optional[StrictStr] = Field(default=None, description="The text between the values of a combined field, such as `, `.")
@@ -56,6 +59,8 @@ class FieldOverride(BaseModel):
     signature_allow_draw: Optional[StrictBool] = Field(default=None, description="Let the person draw their signature or initials on the signing form.")
     signature_allow_type: Optional[StrictBool] = Field(default=None, description="Let the person type their signature or initials on the signing form.")
     barcode_symbology: Optional[BarcodeSymbology] = Field(default=None, description="The kind of barcode a field with display_type `barcode` prints.")
+    comb_fill_from_right: Optional[StrictBool] = Field(default=None, description="Fill the last boxes of the field's comb fields, padding the value on the left, as amounts are written on paper forms.")
+    comb_pad_with_zeros: Optional[StrictBool] = Field(default=None, description="With `comb_fill_from_right`, pad the value with zeros instead of spaces.")
     hidden: Optional[StrictBool] = Field(default=None, description="Leave the field off the PDF. Its value is still in the data, and combined fields can use it.")
     x: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The distance from the left edge of the page, in the template editor's page units.")
     y: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The distance from the top of the page, in the template editor's page units.")
@@ -82,7 +87,7 @@ class FieldOverride(BaseModel):
     v_alignment: Optional[TextVerticalAlignment] = Field(default=None, description="How text is aligned vertically in its field.")
     comb: Optional[StrictBool] = Field(default=None, description="Print one character in each of the field's equally spaced boxes (combs).")
     comb_number_of_cells: Optional[StrictInt] = Field(default=None, description="The number of boxes in a comb field.")
-    comb_value_offset: Optional[StrictInt] = Field(default=None, description="The character of the value that the first box starts from, for a value split over several comb fields (such as the parts of a Social Security number).")
+    comb_value_offset: Optional[StrictInt] = Field(default=None, description="How many boxes of the value's row come before this field, for a value split over several comb fields (such as the parts of a Social Security number).")
     shape_type: Optional[ShapeType] = Field(default=None, description="The shape a field with display_type `shape` draws.")
     shape_sides: Optional[StrictInt] = Field(default=None, description="The number of sides of a `polygon` shape.")
     shape_border_width: Optional[StrictInt] = Field(default=None, description="The width of a shape's border, in points, a whole number.")
@@ -102,9 +107,10 @@ class FieldOverride(BaseModel):
     number_condition_range_exclusive_max: Optional[StrictBool] = Field(default=None, description="Leave the upper end itself out of a `range` condition.")
     invert_boolean_condition: Optional[StrictBool] = Field(default=None, description="Draw a boolean field's check mark or shape for `false` instead of `true`.")
     decimal_places: Optional[StrictInt] = Field(default=None, description="The number of decimal places a number field prints. Null prints the value as it was sent.")
+    number_part: Optional[NumberPart] = Field(default=None, description="Which part of a number field's number this field prints: the whole number, only the part before the decimal point, or only the decimal places.")
     image_scale_type: Optional[ImageScaleType] = Field(default=None, description="How an image is resized to its field.")
     image_gravity: Optional[ImageGravity] = Field(default=None, description="Where an image sits in its field when it doesn't fill it, or which part is kept when it's cropped.")
-    __properties: ClassVar[List[str]] = ["static", "editable", "default", "title", "required", "option_list", "combined_field_names", "combined_field_type", "combined_field_separator", "combined_field_format", "integer", "include_time", "signature_allow_draw", "signature_allow_type", "barcode_symbology", "hidden", "x", "y", "width", "height", "rotation", "display_type", "opacity", "date_time_format", "typeface", "font_size", "character_spacing", "bold", "uppercase", "strikethrough", "keep_leading_spaces", "overflow", "multiline", "multiline_lines", "max_length", "color", "background_color", "alignment", "v_alignment", "comb", "comb_number_of_cells", "comb_value_offset", "shape_type", "shape_sides", "shape_border_width", "shape_border_color", "shape_fill_color", "check_character", "check_color", "qrcode_color", "true_text", "false_text", "condition", "string_condition_type", "number_condition_type", "number_condition_range_min", "number_condition_range_max", "number_condition_range_exclusive_min", "number_condition_range_exclusive_max", "invert_boolean_condition", "decimal_places", "image_scale_type", "image_gravity"]
+    __properties: ClassVar[List[str]] = ["static", "editable", "default", "title", "required", "option_list", "option_labels", "print_option_labels", "combined_field_names", "combined_field_type", "combined_field_separator", "combined_field_format", "integer", "include_time", "signature_allow_draw", "signature_allow_type", "barcode_symbology", "comb_fill_from_right", "comb_pad_with_zeros", "hidden", "x", "y", "width", "height", "rotation", "display_type", "opacity", "date_time_format", "typeface", "font_size", "character_spacing", "bold", "uppercase", "strikethrough", "keep_leading_spaces", "overflow", "multiline", "multiline_lines", "max_length", "color", "background_color", "alignment", "v_alignment", "comb", "comb_number_of_cells", "comb_value_offset", "shape_type", "shape_sides", "shape_border_width", "shape_border_color", "shape_fill_color", "check_character", "check_color", "qrcode_color", "true_text", "false_text", "condition", "string_condition_type", "number_condition_type", "number_condition_range_min", "number_condition_range_max", "number_condition_range_exclusive_min", "number_condition_range_exclusive_max", "invert_boolean_condition", "decimal_places", "number_part", "image_scale_type", "image_gravity"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -155,6 +161,11 @@ class FieldOverride(BaseModel):
         # and model_fields_set contains the field
         if self.option_list is None and "option_list" in self.model_fields_set:
             _dict['option_list'] = None
+
+        # set to None if option_labels (nullable) is None
+        # and model_fields_set contains the field
+        if self.option_labels is None and "option_labels" in self.model_fields_set:
+            _dict['option_labels'] = None
 
         # set to None if include_time (nullable) is None
         # and model_fields_set contains the field
@@ -259,6 +270,8 @@ class FieldOverride(BaseModel):
             "title": obj.get("title"),
             "required": obj.get("required"),
             "option_list": obj.get("option_list"),
+            "option_labels": obj.get("option_labels"),
+            "print_option_labels": obj.get("print_option_labels"),
             "combined_field_names": obj.get("combined_field_names"),
             "combined_field_type": obj.get("combined_field_type"),
             "combined_field_separator": obj.get("combined_field_separator"),
@@ -268,6 +281,8 @@ class FieldOverride(BaseModel):
             "signature_allow_draw": obj.get("signature_allow_draw"),
             "signature_allow_type": obj.get("signature_allow_type"),
             "barcode_symbology": obj.get("barcode_symbology"),
+            "comb_fill_from_right": obj.get("comb_fill_from_right"),
+            "comb_pad_with_zeros": obj.get("comb_pad_with_zeros"),
             "hidden": obj.get("hidden"),
             "x": obj.get("x"),
             "y": obj.get("y"),
@@ -314,6 +329,7 @@ class FieldOverride(BaseModel):
             "number_condition_range_exclusive_max": obj.get("number_condition_range_exclusive_max"),
             "invert_boolean_condition": obj.get("invert_boolean_condition"),
             "decimal_places": obj.get("decimal_places"),
+            "number_part": obj.get("number_part"),
             "image_scale_type": obj.get("image_scale_type"),
             "image_gravity": obj.get("image_gravity")
         }, context={"skip_enum_validation": True})

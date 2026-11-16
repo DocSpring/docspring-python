@@ -83,6 +83,7 @@ class TestTemplate(unittest.TestCase):
                 ai_field_naming_language = 'auto',
                 allow_additional_properties = True,
                 allow_skipping_optional_fields = True,
+                continue_before_optional_fields = True,
                 default_form_mode = 'web',
                 editable_submissions = True,
                 embed_domains = [
@@ -113,6 +114,7 @@ class TestTemplate(unittest.TestCase):
                 success_title = '',
                 success_message = '',
                 show_fill_again_button = True,
+                form_sections_in_order = True,
                 has_slack_webhook_url = True,
                 last_changed_by = docspring.models.template_actor.TemplateActor(
                     type = null, 
@@ -130,6 +132,12 @@ class TestTemplate(unittest.TestCase):
                 form_sections = [
                     { }
                     ],
+                signer_roles = [
+                    { }
+                    ],
+                signature_request_cc = [
+                    ''
+                    ],
                 predefined_fields = [
                     docspring.models.predefined_field.PredefinedField(
                         name = '', 
@@ -137,6 +145,9 @@ class TestTemplate(unittest.TestCase):
                         title = '', 
                         type = null, 
                         option_list = '', 
+                        option_labels = {
+                            'key' : ''
+                            }, 
                         required_in_template = True, 
                         field_required = True, )
                     ],
@@ -161,7 +172,8 @@ class TestTemplate(unittest.TestCase):
                 embed_edit_token = '',
                 versions = [
                     { }
-                    ]
+                    ],
+                override_account_expiry = True
             )
         else:
             return Template(
@@ -212,6 +224,7 @@ class TestTemplate(unittest.TestCase):
                 ai_field_naming_language = 'auto',
                 allow_additional_properties = True,
                 allow_skipping_optional_fields = True,
+                continue_before_optional_fields = True,
                 default_form_mode = 'web',
                 editable_submissions = True,
                 embed_domains = [
@@ -242,6 +255,7 @@ class TestTemplate(unittest.TestCase):
                 success_title = '',
                 success_message = '',
                 show_fill_again_button = True,
+                form_sections_in_order = True,
                 has_slack_webhook_url = True,
                 last_changed_by = docspring.models.template_actor.TemplateActor(
                     type = null, 
@@ -259,6 +273,12 @@ class TestTemplate(unittest.TestCase):
                 form_sections = [
                     { }
                     ],
+                signer_roles = [
+                    { }
+                    ],
+                signature_request_cc = [
+                    ''
+                    ],
                 predefined_fields = [
                     docspring.models.predefined_field.PredefinedField(
                         name = '', 
@@ -266,6 +286,9 @@ class TestTemplate(unittest.TestCase):
                         title = '', 
                         type = null, 
                         option_list = '', 
+                        option_labels = {
+                            'key' : ''
+                            }, 
                         required_in_template = True, 
                         field_required = True, )
                     ],
@@ -291,6 +314,7 @@ class TestTemplate(unittest.TestCase):
                 versions = [
                     { }
                     ],
+                override_account_expiry = True,
         )
         """
 

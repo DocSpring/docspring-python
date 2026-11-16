@@ -40,7 +40,8 @@ class TestUpdateTemplateDocumentRequest(unittest.TestCase):
                 document_url = '',
                 document_base64 = '',
                 filename = '',
-                reimport_fields = True
+                reimport_fields = True,
+                sync_fields = True
             )
         else:
             return UpdateTemplateDocumentRequest(
