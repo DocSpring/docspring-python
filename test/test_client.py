@@ -34,6 +34,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_ask_support_help(self) -> None:
+        """Test case for ask_support_help
+
+        Ask for help
+        """
+        pass
+
     def test_copy_template(self) -> None:
         """Test case for copy_template
 
@@ -286,6 +293,20 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_get_support_help(self) -> None:
+        """Test case for get_support_help
+
+        Get a help request
+        """
+        pass
+
+    def test_get_support_ticket(self) -> None:
+        """Test case for get_support_ticket
+
+        Get a support ticket
+        """
+        pass
+
     def test_get_template(self) -> None:
         """Test case for get_template
 
@@ -384,6 +405,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_list_support_tickets(self) -> None:
+        """Test case for list_support_tickets
+
+        List support tickets
+        """
+        pass
+
     def test_list_template_fields(self) -> None:
         """Test case for list_template_fields
 
@@ -426,6 +454,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_open_support_ticket(self) -> None:
+        """Test case for open_support_ticket
+
+        Open a support ticket
+        """
+        pass
+
     def test_publish_template_version(self) -> None:
         """Test case for publish_template_version
 
@@ -454,6 +489,13 @@ class TestClient(unittest.TestCase):
         """
         pass
 
+    def test_reply_to_support_ticket(self) -> None:
+        """Test case for reply_to_support_ticket
+
+        Reply to a support ticket
+        """
+        pass
+
     def test_restore_template_version(self) -> None:
         """Test case for restore_template_version
 
@@ -472,6 +514,13 @@ class TestClient(unittest.TestCase):
         """Test case for send_email_action_test_email
 
         Send a test email
+        """
+        pass
+
+    def test_send_support_feedback(self) -> None:
+        """Test case for send_support_feedback
+
+        Send feedback
         """
         pass
 

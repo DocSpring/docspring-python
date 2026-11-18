@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.6.0"
+__version__ = "4.7.0"
 
 # Define package exports
 __all__ = [
@@ -32,6 +32,7 @@ __all__ = [
     "verify_webhook_signature",
     "AddTemplateFieldsRequest",
     "AiFieldNamingLanguage",
+    "AskSupportHelpRequest",
     "AuthenticationCheck",
     "BarcodeSymbology",
     "CheckCharacter",
@@ -120,6 +121,7 @@ __all__ = [
     "MoveTemplateRequest",
     "NumberConditionType",
     "NumberPart",
+    "OpenSupportTicketRequest",
     "OutputFormat",
     "PageFormat",
     "PageImage",
@@ -130,8 +132,10 @@ __all__ = [
     "RemoveTemplateFieldsRequest",
     "RenameFolderRequest",
     "ReorderTemplateFieldsRequest",
+    "ReplyToSupportTicketRequest",
     "RestoreTemplateVersionRequest",
     "SendAccountEmailActionTestEmailRequest",
+    "SendSupportFeedbackRequest",
     "ShapeType",
     "SignatureRequest",
     "SignatureRequestAuthSecondFactorType",
@@ -162,6 +166,28 @@ __all__ = [
     "SubmissionState",
     "SubmissionSummary",
     "SubmissionValidation",
+    "SupportFeedback",
+    "SupportHelp",
+    "SupportHelpSource",
+    "SupportHelpState",
+    "SupportHelpTurn",
+    "SupportHelpTurnRole",
+    "SupportMessage",
+    "SupportMessageAuthor",
+    "SupportReportAgent",
+    "SupportReportCategory",
+    "SupportReportImpact",
+    "SupportReportKind",
+    "SupportReportSource",
+    "SupportTicket",
+    "SupportTicketList",
+    "SupportTicketListStatus",
+    "SupportTicketNotifications",
+    "SupportTicketReply",
+    "SupportTicketReplyOutcome",
+    "SupportTicketResolution",
+    "SupportTicketStatus",
+    "SupportTicketWatch",
     "Template",
     "TemplateActor",
     "TemplateActorType",
@@ -245,6 +271,7 @@ from docspring.webhook_signature import verify_webhook_signature as verify_webho
 # import models into sdk package
 from docspring.models.add_template_fields_request import AddTemplateFieldsRequest as AddTemplateFieldsRequest
 from docspring.models.ai_field_naming_language import AiFieldNamingLanguage as AiFieldNamingLanguage
+from docspring.models.ask_support_help_request import AskSupportHelpRequest as AskSupportHelpRequest
 from docspring.models.authentication_check import AuthenticationCheck as AuthenticationCheck
 from docspring.models.barcode_symbology import BarcodeSymbology as BarcodeSymbology
 from docspring.models.check_character import CheckCharacter as CheckCharacter
@@ -333,6 +360,7 @@ from docspring.models.move_folder_request import MoveFolderRequest as MoveFolder
 from docspring.models.move_template_request import MoveTemplateRequest as MoveTemplateRequest
 from docspring.models.number_condition_type import NumberConditionType as NumberConditionType
 from docspring.models.number_part import NumberPart as NumberPart
+from docspring.models.open_support_ticket_request import OpenSupportTicketRequest as OpenSupportTicketRequest
 from docspring.models.output_format import OutputFormat as OutputFormat
 from docspring.models.page_format import PageFormat as PageFormat
 from docspring.models.page_image import PageImage as PageImage
@@ -343,8 +371,10 @@ from docspring.models.publish_template_version_request import PublishTemplateVer
 from docspring.models.remove_template_fields_request import RemoveTemplateFieldsRequest as RemoveTemplateFieldsRequest
 from docspring.models.rename_folder_request import RenameFolderRequest as RenameFolderRequest
 from docspring.models.reorder_template_fields_request import ReorderTemplateFieldsRequest as ReorderTemplateFieldsRequest
+from docspring.models.reply_to_support_ticket_request import ReplyToSupportTicketRequest as ReplyToSupportTicketRequest
 from docspring.models.restore_template_version_request import RestoreTemplateVersionRequest as RestoreTemplateVersionRequest
 from docspring.models.send_account_email_action_test_email_request import SendAccountEmailActionTestEmailRequest as SendAccountEmailActionTestEmailRequest
+from docspring.models.send_support_feedback_request import SendSupportFeedbackRequest as SendSupportFeedbackRequest
 from docspring.models.shape_type import ShapeType as ShapeType
 from docspring.models.signature_request import SignatureRequest as SignatureRequest
 from docspring.models.signature_request_auth_second_factor_type import SignatureRequestAuthSecondFactorType as SignatureRequestAuthSecondFactorType
@@ -375,6 +405,28 @@ from docspring.models.submission_source_pdf import SubmissionSourcePdf as Submis
 from docspring.models.submission_state import SubmissionState as SubmissionState
 from docspring.models.submission_summary import SubmissionSummary as SubmissionSummary
 from docspring.models.submission_validation import SubmissionValidation as SubmissionValidation
+from docspring.models.support_feedback import SupportFeedback as SupportFeedback
+from docspring.models.support_help import SupportHelp as SupportHelp
+from docspring.models.support_help_source import SupportHelpSource as SupportHelpSource
+from docspring.models.support_help_state import SupportHelpState as SupportHelpState
+from docspring.models.support_help_turn import SupportHelpTurn as SupportHelpTurn
+from docspring.models.support_help_turn_role import SupportHelpTurnRole as SupportHelpTurnRole
+from docspring.models.support_message import SupportMessage as SupportMessage
+from docspring.models.support_message_author import SupportMessageAuthor as SupportMessageAuthor
+from docspring.models.support_report_agent import SupportReportAgent as SupportReportAgent
+from docspring.models.support_report_category import SupportReportCategory as SupportReportCategory
+from docspring.models.support_report_impact import SupportReportImpact as SupportReportImpact
+from docspring.models.support_report_kind import SupportReportKind as SupportReportKind
+from docspring.models.support_report_source import SupportReportSource as SupportReportSource
+from docspring.models.support_ticket import SupportTicket as SupportTicket
+from docspring.models.support_ticket_list import SupportTicketList as SupportTicketList
+from docspring.models.support_ticket_list_status import SupportTicketListStatus as SupportTicketListStatus
+from docspring.models.support_ticket_notifications import SupportTicketNotifications as SupportTicketNotifications
+from docspring.models.support_ticket_reply import SupportTicketReply as SupportTicketReply
+from docspring.models.support_ticket_reply_outcome import SupportTicketReplyOutcome as SupportTicketReplyOutcome
+from docspring.models.support_ticket_resolution import SupportTicketResolution as SupportTicketResolution
+from docspring.models.support_ticket_status import SupportTicketStatus as SupportTicketStatus
+from docspring.models.support_ticket_watch import SupportTicketWatch as SupportTicketWatch
 from docspring.models.template import Template as Template
 from docspring.models.template_actor import TemplateActor as TemplateActor
 from docspring.models.template_actor_type import TemplateActorType as TemplateActorType

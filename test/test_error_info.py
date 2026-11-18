@@ -45,6 +45,7 @@ class TestErrorInfo(unittest.TestCase):
                 submission_id = '',
                 submission_batch_id = '',
                 combined_pdf_id = '',
+                support_help_id = '',
                 template_id = '',
                 folder_id = '',
                 custom_file_id = '',
